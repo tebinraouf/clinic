@@ -1,7 +1,9 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 
 class SignIn extends React.Component {
   render() {
+    const { name, password, handleChange, handleButton } = this.props;
     return (
       <div className="container">
         <div className="row">
@@ -16,8 +18,8 @@ class SignIn extends React.Component {
                     <input
                       type="text"
                       id="inputName"
-                      value={this.props.name}
-                      onChange={this.props.handleChange}
+                      value={name}
+                      onChange={handleChange}
                       className="form-control"
                       placeholder="Name"
                       required
@@ -29,8 +31,8 @@ class SignIn extends React.Component {
                     <input
                       type="password"
                       id="inputPassword"
-                      value={this.props.password}
-                      onChange={this.props.handleChange}
+                      value={password}
+                      onChange={handleChange}
                       className="form-control"
                       placeholder="Password"
                       required
@@ -48,7 +50,7 @@ class SignIn extends React.Component {
                   <button
                     className="btn btn-lg btn-primary btn-block text-uppercase"
                     type="submit"
-                    onClick={this.props.handleButton}
+                    onClick={handleButton}
                   >
                     Sign in
                   </button>
@@ -62,5 +64,10 @@ class SignIn extends React.Component {
     );
   }
 }
-
+SignIn.propTypes = {
+  name: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  handleButton: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
 module.exports = SignIn;

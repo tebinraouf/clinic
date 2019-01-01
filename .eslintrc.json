@@ -1,4 +1,18 @@
 {
     "extends": "airbnb",
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "rules": {
+        "react/prefer-stateless-function": 0,
+        "object-curly-newline":"off",
+        "jsx-a11y/label-has-associated-control": [ 0, {
+            "labelComponents": ["label"],
+            "labelAttributes": ["htmlFor"],
+            "controlComponents": ["input"]
+          }],
+        "jsx-a11y/label-has-for": [ 0, {
+        "labelComponents": ["label"],
+        "labelAttributes": ["htmlFor"],
+        "controlComponents": ["input"]
+        }]
+    }
 }
