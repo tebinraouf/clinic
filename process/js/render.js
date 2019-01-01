@@ -23,21 +23,32 @@ class MainInterface extends React.Component {
       showComponent: false,
     };
     this.handleButton = this.handleButton.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handlePassChange = this.handlePassChange.bind(this);
   }
 
-  handleChange(event) {
+  handleNameChange(event) {
     this.setState({ name: event.target.value });
   }
+  handlePassChange(event) {
+    this.setState({ password: event.target.value });
+  }
 
-  handleButton() {
+  handleButton(e) {
+    e.preventDefault();
     const res = db.exec('SELECT * FROM User');
-
-    console.log(this.state.name);
-
-    this.setState({
-      showComponent: true,
-    });
+    const name = res[0].values[0][1];
+    const pass = res[0].values[0][2].toString();
+    if (name === this.state.name && pass === this.state.password) {
+      this.setState({
+        showComponent: true,
+      });
+    } else {
+      this.setState({
+        showComponent: false,
+      });
+    }
+   
   }
 
   render() {
@@ -48,7 +59,8 @@ class MainInterface extends React.Component {
             handleButton={this.handleButton}
             name={this.state.name}
             password={this.state.password}
-            handleChange={this.handleChange} />
+            handleNameChange={this.handleNameChange}
+            handlePassChange={this.handlePassChange} />
         )}
       </div>
     );
