@@ -1,0 +1,33 @@
+{
+  "name": "ElectronApp",
+  "version": "1.0.0",
+  "main": "app/main.js",
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "electron": "^1.3.4",
+    "electron-packager": "^8.0.0",
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.0",
+    "gulp": "^3.8.8",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat-css": "^2.3.0",
+    "gulp-react": "^3.1.0",
+    "gulp-run": "^1.7.1",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "reactify": "^1.1.1"
+  },
+  "dependencies": {
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "bootstrap": "^4.2.1",
+    "electron-reload": "^1.0.2",
+    "jquery": "^3.1.0",
+    "lodash": "^4.13.1",
+    "popper.js": "^1.14.6",
+    "sql.js": "^0.5.0"
+  }
+}
