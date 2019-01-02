@@ -11,7 +11,7 @@ class SignIn extends React.Component {
             <div className="card card-signin my-5">
               <div className="card-body">
                 <h5 className="card-title text-center">
-                  Dr Tanya Clinic Portal Sign In
+                  Dr Tanya Clinic
                 </h5>
                 <form className="form-signin">
                   <div className="form-label-group">
@@ -65,10 +65,20 @@ class SignIn extends React.Component {
   }
 }
 SignIn.propTypes = {
-  name: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  handleButton: PropTypes.func.isRequired,
-  handlePassChange: PropTypes.func.isRequired,
-  handleNameChange: PropTypes.func.isRequired,
+  name: PropTypes.string,
+  password: PropTypes.string,
+  handleButton: PropTypes.func,
+  handlePassChange: PropTypes.func,
+  handleNameChange: PropTypes.func,
 };
+
+SignIn.defaultProps = {
+  name: '',
+  password: '',
+  handleButton: () => {},
+  handlePassChange: () => {},
+  handleNameChange: () => {},
+};
+
+
 module.exports = SignIn;

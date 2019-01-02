@@ -8,6 +8,9 @@
 body {
   background: lightgray;
 }
+#main-logo {
+  max-width: 25px;
+}
 
 .card-signin {
   border: 0;
