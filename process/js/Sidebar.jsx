@@ -52,7 +52,7 @@ class Sidebar extends React.Component {
               </a>
             </li>
             <li className="nav-item" onClick={e => this.props.handleLogout(e)}>
-              <a className="nav-link">
+              <a className="nav-link" href="#">
                 <i className="material-icons">&#xE879;</i>
                 <span>Logout</span>
               </a>
