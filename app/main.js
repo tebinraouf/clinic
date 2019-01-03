@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var electron = require('electron');
 var BrowserWindow = electron.BrowserWindow;
 var app = electron.app;

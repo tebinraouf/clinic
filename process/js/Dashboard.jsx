@@ -3,7 +3,10 @@ const React = require("react");
 const ReactDOM = require('react-dom');
 const Sidebar = require("./Sidebar.jsx");
 const MainContent = require("./MainContent.jsx");
-const SignIn = require("./SignIn.jsx");
+// const MainInterface = require('./MainInterface');
+// import MainInterface from "./MainInterface.js";
+const SignIn = require('./SignIn.jsx');
+
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -19,7 +22,7 @@ class Dashboard extends React.Component {
     e.preventDefault();
     console.log("hi...");
   }
-  handleLogout() {
+  handleLogout(e) {
     localStorage.setItem("isLoggedIn", "false");
     this.setState({
       isLoggedIn: true,
@@ -30,7 +33,7 @@ class Dashboard extends React.Component {
     let isLoggedInStorage = localStorage.getItem("isLoggedIn");
     let isLoggedIn = isLoggedInStorage == "true" ? true : false;
 
-    if (this.state.isLoggedIn) {
+    if (isLoggedIn) {
       return (
         <div className="container-fluid">
           <div className="row"> 
@@ -43,12 +46,11 @@ class Dashboard extends React.Component {
         </div>
       );
     } else {
+      debugger
       return (
-        <SignIn />
+        <SignIn on/>
       );
     }
-
-    
   }
 }
 

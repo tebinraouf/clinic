@@ -1,6 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 
+
 class SignIn extends React.Component {
   render() {
     const { name, password, handleNameChange, handlePassChange, handleButton } = this.props;
