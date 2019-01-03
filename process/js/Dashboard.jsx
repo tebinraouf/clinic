@@ -48,7 +48,7 @@ class Dashboard extends React.Component {
     } else {
       debugger
       return (
-        <SignIn on/>
+        <SignIn />
       );
     }
   }
