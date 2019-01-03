@@ -33,20 +33,20 @@ class Sidebar extends React.Component {
         </div>
         <div className="nav-wrapper">
           <ul className="nav flex-column">
-            <li className="nav-item">
-              <a className="nav-link active" href="index.html">
+            <li className="nav-item" onClick={e => this.props.handleDashboard(e)}>
+              <a className={"nav-link " + (this.props.isDashboard ? "active" : "")} href="#">
                 <i className="material-icons">edit</i>
                 <span>Dashboard</span>
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link " href="components-blog-posts.html">
+            <li className="nav-item" onClick={e => this.props.allPatients(e)}>
+              <a className={"nav-link " + (this.props.isAllPatients ? "active" : "")} href="#">
                 <i className="material-icons">vertical_split</i>
                 <span>All Patients</span>
               </a>
             </li>
             <li className="nav-item" onClick={e => this.props.addPatient(e)}>
-              <a className="nav-link" href="add-new-post.html">
+              <a className={"nav-link " + (this.props.isAdding ? "active" : "")} href="#">
                 <i className="material-icons">note_add</i>
                 <span>Add New Patient</span>
               </a>
