@@ -46,7 +46,6 @@ class Dashboard extends React.Component {
         </div>
       );
     } else {
-      debugger
       return (
         <SignIn />
       );

@@ -1,8 +1,16 @@
+/* eslint-disable */
 const React = require('react');
 const PropTypes = require('prop-types');
 
 
 class SignIn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      reload: false,
+    };
+  }
+
   render() {
     const { name, password, handleNameChange, handlePassChange, handleButton } = this.props;
     return (
