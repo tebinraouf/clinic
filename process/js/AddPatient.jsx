@@ -3,7 +3,12 @@ const React = require("react");
 
 var patientObj = {
   firstName: "",
-  lastName: ""
+  lastName: "",
+  mobile: "",
+  email: "",
+  price: "",
+  date:"",
+  note: "",
 };
 
 class AddPatient extends React.Component {
@@ -12,16 +17,32 @@ class AddPatient extends React.Component {
     this.state = {
       patientObj: {
         firstName: "",
-        lastName: ""
+        lastName: "",
+        mobile: "",
+        email: "",
+        price: "",
+        gender: "",
+        date: "",
+        note: "",
       }
     };
     this.handleChange = this.handleChange.bind(this);
     this.createPatient = this.createPatient.bind(this);
+    this.handleGender = this.handleGender.bind(this);
   }
 
+  handleGender(target) {
+    if (target.value === "male" || target.value === "female" || target.value === "other") {
+        return "gender";
+    }
+    else {
+        return target.name;
+    }
+  }
   handleChange(event) {
     const patientObj = this.state.patientObj;
-    patientObj[event.target.name] = event.target.value;
+    var name = this.handleGender(event.target)
+    patientObj[name] = event.target.value;
     this.setState({
       patientObj: patientObj
     });
@@ -30,6 +51,8 @@ class AddPatient extends React.Component {
     e.preventDefault();
     console.log(this.state.patientObj);
   }
+
+
 
   render() {
     return (
@@ -86,7 +109,6 @@ class AddPatient extends React.Component {
                                 name="mobile"
                                 onChange={this.handleChange}
                                 placeholder="Mobile"
-                                value=""
                               />
                             </div>
 
@@ -99,7 +121,6 @@ class AddPatient extends React.Component {
                                 placeholder="Email"
                                 name="email"
                                 onChange={this.handleChange}
-                                value="sierra@example.com"
                               />
                             </div>
                           </div>
@@ -152,7 +173,6 @@ class AddPatient extends React.Component {
                                       name="inlineRadioOptions"
                                       id="inlineRadio3"
                                       value="other"
-                                      checked
                                     />
                                     Other
                                   </label>
@@ -171,64 +191,38 @@ class AddPatient extends React.Component {
                                 name="price"
                                 onChange={this.handleChange}
                                 placeholder="Price"
-                                value=""
+                                
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor="fePassword">Password</label>
-                              <input
-                                type="password"
-                                className="form-control"
-                                id="fePassword"
-                                placeholder="Password"
-                              />
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="feInputAddress">Address</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="feInputAddress"
-                              placeholder="1234 Main St"
-                            />
-                          </div>
-                          <div className="form-row">
-                            <div className="form-group col-md-6">
-                              <label htmlFor="feInputCity">City</label>
+                              <label htmlFor="feDate">Date</label>
                               <input
                                 type="text"
                                 className="form-control"
-                                id="feInputCity"
-                              />
-                            </div>
-                            <div className="form-group col-md-2">
-                              <label htmlFor="inputZip">Zip</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="inputZip"
+                                id="feDate"
+                                name="date"
+                                placeholder="Date"
+                                onChange={this.handleChange}
+                                value={(new Date()).toDateString()}
                               />
                             </div>
                           </div>
+                          
                           <div className="form-row">
                             <div className="form-group col-md-12">
-                              <label htmlFor="feDescription">Description</label>
+                              <label htmlFor="feNote">Note</label>
                               <textarea
                                 className="form-control"
-                                name="feDescription"
+                                name="feNote"
                                 rows="5"
+                                name="note"
+                                onChange={this.handleChange}
                               >
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Odio eaque, quidem, commodi
-                                soluta qui quae minima obcaecati quod dolorum
-                                sint alias, possimus illum assumenda eligendi
-                                cumque?
                               </textarea>
                             </div>
                           </div>
                           <button type="submit" className="btn btn-accent">
-                            Update Account
+                            Create
                           </button>
                         </form>
                       </div>
