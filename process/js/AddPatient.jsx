@@ -7,8 +7,8 @@ var patientObj = {
   mobile: "",
   email: "",
   price: "",
-  date:"",
-  note: "",
+  date: "",
+  note: ""
 };
 
 class AddPatient extends React.Component {
@@ -23,7 +23,7 @@ class AddPatient extends React.Component {
         price: "",
         gender: "",
         date: "",
-        note: "",
+        note: ""
       }
     };
     this.handleChange = this.handleChange.bind(this);
@@ -32,16 +32,19 @@ class AddPatient extends React.Component {
   }
 
   handleGender(target) {
-    if (target.value === "male" || target.value === "female" || target.value === "other") {
-        return "gender";
-    }
-    else {
-        return target.name;
+    if (
+      target.value === "male" ||
+      target.value === "female" ||
+      target.value === "other"
+    ) {
+      return "gender";
+    } else {
+      return target.name;
     }
   }
   handleChange(event) {
     const patientObj = this.state.patientObj;
-    var name = this.handleGender(event.target)
+    var name = this.handleGender(event.target);
     patientObj[name] = event.target.value;
     this.setState({
       patientObj: patientObj
@@ -51,8 +54,6 @@ class AddPatient extends React.Component {
     e.preventDefault();
     console.log(this.state.patientObj);
   }
-
-
 
   render() {
     return (
@@ -191,7 +192,6 @@ class AddPatient extends React.Component {
                                 name="price"
                                 onChange={this.handleChange}
                                 placeholder="Price"
-                                
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -203,11 +203,11 @@ class AddPatient extends React.Component {
                                 name="date"
                                 placeholder="Date"
                                 onChange={this.handleChange}
-                                value={(new Date()).toDateString()}
+                                value={new Date().toDateString()}
                               />
                             </div>
                           </div>
-                          
+
                           <div className="form-row">
                             <div className="form-group col-md-12">
                               <label htmlFor="feNote">Note</label>
@@ -217,10 +217,140 @@ class AddPatient extends React.Component {
                                 rows="5"
                                 name="note"
                                 onChange={this.handleChange}
-                              >
-                              </textarea>
+                              />
                             </div>
                           </div>
+
+                          <hr />
+
+                          <div className="form-row">
+                            <div className="form-group col-md-6">
+                              <label htmlFor="feDate">Date</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="feDate"
+                                name="date"
+                                placeholder="Date"
+                                onChange={this.handleChange}
+                                value={new Date().toDateString()}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="form-row">
+                            <div className="col-md-12">
+                              <label htmlFor="feDate">Procedure</label>
+                            </div>
+                          </div>
+
+                          <div className="form-row">
+                            {/* Procedure 1 Start */}
+                            <div className="form-group col-md-3">
+                              <div className="custom-control custom-checkbox mb-1">
+                                <input
+                                  type="checkbox"
+                                  className="custom-control-input"
+                                  id="prochk1"
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor="prochk1"
+                                >
+                                  Botox
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="feProcedure"
+                                  name="procedure1Note"
+                                  placeholder="note"
+                                  onChange={this.handleChange}
+                                />
+                              </div>
+                            </div>
+                            {/* Procedure 1 End */}
+
+                            {/* Procedure 2 Start */}
+                            <div className="form-group col-md-3">
+                              <div className="custom-control custom-checkbox mb-1">
+                                <input
+                                  type="checkbox"
+                                  className="custom-control-input"
+                                  id="prochk2"
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor="prochk2"
+                                >
+                                  Filler
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="feProcedure"
+                                  name="procedure2Note"
+                                  placeholder="note"
+                                  onChange={this.handleChange}
+                                />
+                              </div>
+                            </div>
+                            {/* Procedure 2 End */}
+
+                            {/* Procedure 3 Start */}
+                            <div className="form-group col-md-3">
+                              <div className="custom-control custom-checkbox mb-1">
+                                <input
+                                  type="checkbox"
+                                  className="custom-control-input"
+                                  id="prochk3"
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor="prochk3"
+                                >
+                                  PRP
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="feProcedure"
+                                  name="procedure3Note"
+                                  placeholder="note"
+                                  onChange={this.handleChange}
+                                />
+                              </div>
+                            </div>
+                            {/* Procedure 3 End */}
+
+                            {/* Procedure 4 Start */}
+                            <div className="form-group col-md-3">
+                              <div className="custom-control custom-checkbox mb-1">
+                                <input
+                                  type="checkbox"
+                                  className="custom-control-input"
+                                  id="prochk4"
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor="prochk4"
+                                >
+                                  Mesotherapy
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="feProcedure"
+                                  name="procedure4Note"
+                                  placeholder="note"
+                                  onChange={this.handleChange}
+                                />
+                              </div>
+                            </div>
+                            {/* Procedure 4 End */}
+
+                          </div>
+
                           <button type="submit" className="btn btn-accent">
                             Create
                           </button>
@@ -232,7 +362,6 @@ class AddPatient extends React.Component {
               </div>
             </div>
           </div>
-          {/* <!-- End Default Light Table --> */}
         </div>
       </div>
     );
