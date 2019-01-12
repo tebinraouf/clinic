@@ -1,5 +1,6 @@
 /* eslint-disable */
 const React = require("react");
+const Procedure = require("./Procedure.jsx");
 
 var patientObj = {
   firstName: "",
@@ -8,8 +9,43 @@ var patientObj = {
   email: "",
   price: "",
   date: "",
-  note: ""
+  note: "",
+  procedures: new Map()
 };
+var procedure = {
+  name: "",
+  note: "",
+  price: ""
+};
+var procedures = [
+  {
+    key: "p1",
+    prokey: "prokey1",
+    prikey: "prikey1",
+    labelName: "Botox",
+    procedureNote: "",
+    procedurePrice: "",
+    isChecked: "true"
+  },
+  {
+    key: "p2",
+    prokey: "prokey2",
+    prikey: "prikey2",
+    labelName: "Filler",
+    procedureNote: "",
+    procedurePrice: "",
+    isChecked: ""
+  },
+  {
+    key: "p3",
+    prokey: "prokey3",
+    prikey: "prikey3",
+    labelName: "PRP",
+    procedureNote: "",
+    procedurePrice: "",
+    isChecked: ""
+  }
+];
 
 class AddPatient extends React.Component {
   constructor(props) {
@@ -23,14 +59,18 @@ class AddPatient extends React.Component {
         price: "",
         gender: "",
         date: "",
-        note: ""
+        note: "",
+        procedures: procedures
       }
     };
+    
     this.handleChange = this.handleChange.bind(this);
     this.createPatient = this.createPatient.bind(this);
     this.handleGender = this.handleGender.bind(this);
+    this.handleProCheckbox = this.handleProCheckbox.bind(this);
+    this.handleProNote = this.handleProNote.bind(this);
+    this.handleProPrice = this.handleProPrice.bind(this);
   }
-
   handleGender(target) {
     if (
       target.value === "male" ||
@@ -50,6 +90,31 @@ class AddPatient extends React.Component {
       patientObj: patientObj
     });
   }
+  handleProCheckbox(event) {
+    debugger
+    var isChecked = event.target.checked;
+    var name = event.target.name;
+    var patientObj = this.state.patientObj;
+    var procedures = patientObj.procedures;
+    console.log(procedures)
+    if (isChecked) {
+      procedures.filter(e => e.key === name)[0].isChecked = "true"
+      console.log(procedures.filter(e => e.key === name)[0])
+    } else {
+      procedures.filter(e => e.key === name)[0].isChecked = "false"
+      console.log(procedures.filter(e => e.key === name)[0])
+    }
+    patientObj.procedures = procedures
+
+    this.setState({
+      patientObj: patientObj
+    })
+
+    //debugger;
+  }
+  handleProPrice(event) {}
+  handleProNote(event) {}
+
   createPatient(e) {
     e.preventDefault();
     console.log(this.state.patientObj);
@@ -245,110 +310,21 @@ class AddPatient extends React.Component {
                           </div>
 
                           <div className="form-row">
-                            {/* Procedure 1 Start */}
-                            <div className="form-group col-md-3">
-                              <div className="custom-control custom-checkbox mb-1">
-                                <input
-                                  type="checkbox"
-                                  className="custom-control-input"
-                                  id="prochk1"
-                                />
-                                <label
-                                  className="custom-control-label"
-                                  htmlFor="prochk1"
-                                >
-                                  Botox
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="feProcedure"
-                                  name="procedure1Note"
-                                  placeholder="note"
-                                  onChange={this.handleChange}
-                                />
-                              </div>
-                            </div>
-                            {/* Procedure 1 End */}
-
-                            {/* Procedure 2 Start */}
-                            <div className="form-group col-md-3">
-                              <div className="custom-control custom-checkbox mb-1">
-                                <input
-                                  type="checkbox"
-                                  className="custom-control-input"
-                                  id="prochk2"
-                                />
-                                <label
-                                  className="custom-control-label"
-                                  htmlFor="prochk2"
-                                >
-                                  Filler
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="feProcedure"
-                                  name="procedure2Note"
-                                  placeholder="note"
-                                  onChange={this.handleChange}
-                                />
-                              </div>
-                            </div>
-                            {/* Procedure 2 End */}
-
-                            {/* Procedure 3 Start */}
-                            <div className="form-group col-md-3">
-                              <div className="custom-control custom-checkbox mb-1">
-                                <input
-                                  type="checkbox"
-                                  className="custom-control-input"
-                                  id="prochk3"
-                                />
-                                <label
-                                  className="custom-control-label"
-                                  htmlFor="prochk3"
-                                >
-                                  PRP
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="feProcedure"
-                                  name="procedure3Note"
-                                  placeholder="note"
-                                  onChange={this.handleChange}
-                                />
-                              </div>
-                            </div>
-                            {/* Procedure 3 End */}
-
-                            {/* Procedure 4 Start */}
-                            <div className="form-group col-md-3">
-                              <div className="custom-control custom-checkbox mb-1">
-                                <input
-                                  type="checkbox"
-                                  className="custom-control-input"
-                                  id="prochk4"
-                                />
-                                <label
-                                  className="custom-control-label"
-                                  htmlFor="prochk4"
-                                >
-                                  Mesotherapy
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="feProcedure"
-                                  name="procedure4Note"
-                                  placeholder="note"
-                                  onChange={this.handleChange}
-                                />
-                              </div>
-                            </div>
-                            {/* Procedure 4 End */}
-
+                            {this.state.patientObj.procedures.map(item => (
+                              <Procedure
+                                key={item.key}
+                                prokey={item.prokey}
+                                prikey={item.prikey}
+                                isChecked={item.isChecked}
+                                chkName={item.key}
+                                labelName={item.labelName}
+                                procedureNote={item.procedureNote}
+                                procedurePrice={item.procedurePrice}
+                                handleProCheckbox={this.handleProCheckbox}
+                                handleProPrice={this.handleProPrice}
+                                handleProNote={this.handleProNote}
+                              />
+                            ))}
                           </div>
 
                           <button type="submit" className="btn btn-accent">
