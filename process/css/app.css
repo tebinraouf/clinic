@@ -112,3 +112,7 @@ body {
   color: white;
   background-color: #3b5998;
 }
+
+#procedure input {
+  margin-bottom: 10px;
+}

@@ -31,6 +31,18 @@ var procedures = [
     prokey: "prokey3",
     prikey: "prikey3",
     labelName: "PRP",
+  },
+  {
+    key: "p4",
+    prokey: "prokey4",
+    prikey: "prikey4",
+    labelName: "Mesotherapy",
+  },
+  {
+    key: "p5",
+    prokey: "prokey5",
+    prikey: "prikey5",
+    labelName: "Laser",
   }
 ];
 
@@ -296,7 +308,7 @@ class AddPatient extends React.Component {
                             </div>
                           </div>
 
-                          <div className="form-row">
+                          <div className="form-row" id="procedure">
                             {procedures.map(item => (
                               <Procedure
                                 key={item.key}
