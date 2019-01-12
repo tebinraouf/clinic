@@ -15,6 +15,7 @@ class Procedure extends React.Component {
             checked={this.props.isChecked}
             onChange={this.props.handleProCheckbox}
             name={this.props.chkName}
+            value={this.props.labelName}
           />
           <label className="custom-control-label" htmlFor={this.props.chkName}>
             {this.props.labelName}
@@ -22,18 +23,14 @@ class Procedure extends React.Component {
           <input
             type="text"
             className="form-control"
-            name={this.props.prokey}
+            id={this.props.prokey}
             placeholder="note"
-            onChange={this.props.handleProNote}
-            disabled={this.props.isChecked == "true" ? "false" : "true"}
           />
           <input
             type="text"
             className="form-control"
-            name={this.props.prikey}
+            id={this.props.prikey}
             placeholder="price"
-            onChange={this.props.handleProPrice}
-            disabled
           />
         </div>
       </div>

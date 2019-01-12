@@ -1,6 +1,8 @@
 /* eslint-disable */
 const React = require("react");
 const Procedure = require("./Procedure.jsx");
+const jquery = require("jquery");
+const $ = jquery;
 
 var patientObj = {
   firstName: "",
@@ -9,13 +11,7 @@ var patientObj = {
   email: "",
   price: "",
   date: "",
-  note: "",
-  procedures: new Map()
-};
-var procedure = {
-  name: "",
-  note: "",
-  price: ""
+  note: ""
 };
 var procedures = [
   {
@@ -23,27 +19,18 @@ var procedures = [
     prokey: "prokey1",
     prikey: "prikey1",
     labelName: "Botox",
-    procedureNote: "",
-    procedurePrice: "",
-    isChecked: "true"
   },
   {
     key: "p2",
     prokey: "prokey2",
     prikey: "prikey2",
     labelName: "Filler",
-    procedureNote: "",
-    procedurePrice: "",
-    isChecked: ""
   },
   {
     key: "p3",
     prokey: "prokey3",
     prikey: "prikey3",
     labelName: "PRP",
-    procedureNote: "",
-    procedurePrice: "",
-    isChecked: ""
   }
 ];
 
@@ -59,17 +46,15 @@ class AddPatient extends React.Component {
         price: "",
         gender: "",
         date: "",
-        note: "",
-        procedures: procedures
-      }
+        note: ""
+      },
+      procedures: new Map()
     };
-    
+
     this.handleChange = this.handleChange.bind(this);
     this.createPatient = this.createPatient.bind(this);
     this.handleGender = this.handleGender.bind(this);
     this.handleProCheckbox = this.handleProCheckbox.bind(this);
-    this.handleProNote = this.handleProNote.bind(this);
-    this.handleProPrice = this.handleProPrice.bind(this);
   }
   handleGender(target) {
     if (
@@ -90,34 +75,36 @@ class AddPatient extends React.Component {
       patientObj: patientObj
     });
   }
-  handleProCheckbox(event) {
-    debugger
-    var isChecked = event.target.checked;
-    var name = event.target.name;
-    var patientObj = this.state.patientObj;
-    var procedures = patientObj.procedures;
-    console.log(procedures)
-    if (isChecked) {
-      procedures.filter(e => e.key === name)[0].isChecked = "true"
-      console.log(procedures.filter(e => e.key === name)[0])
-    } else {
-      procedures.filter(e => e.key === name)[0].isChecked = "false"
-      console.log(procedures.filter(e => e.key === name)[0])
-    }
-    patientObj.procedures = procedures
-
-    this.setState({
-      patientObj: patientObj
-    })
-
-    //debugger;
+  handleProCheckbox(e) {
+    const key = e.target.name;
+    const value = e.target.value;
+    const isChecked = e.target.checked;
+    this.setState(prevState => ({
+      procedures: prevState.procedures.set(key, {
+        isChecked: isChecked,
+        name: value
+      })
+    }));
   }
-  handleProPrice(event) {}
-  handleProNote(event) {}
 
   createPatient(e) {
     e.preventDefault();
-    console.log(this.state.patientObj);
+
+    for (const item of this.state.procedures) {
+      var key = item[0];
+      var number = key[key.length - 1];
+
+      var prokey = `prokey${number}`;
+      var prikey = `prikey${number}`;
+
+      var proValue = $(`#${prokey}`).val();
+      var priValue = $(`#${prikey}`).val();
+
+      this.state.procedures.get(key)["note"] = proValue;
+      this.state.procedures.get(key)["price"] = priValue;
+    }
+
+    console.log(this.state.procedures);
   }
 
   render() {
@@ -310,19 +297,17 @@ class AddPatient extends React.Component {
                           </div>
 
                           <div className="form-row">
-                            {this.state.patientObj.procedures.map(item => (
+                            {procedures.map(item => (
                               <Procedure
                                 key={item.key}
                                 prokey={item.prokey}
                                 prikey={item.prikey}
-                                isChecked={item.isChecked}
+                                isChecked={this.state.procedures.get(item.name)}
                                 chkName={item.key}
                                 labelName={item.labelName}
                                 procedureNote={item.procedureNote}
                                 procedurePrice={item.procedurePrice}
                                 handleProCheckbox={this.handleProCheckbox}
-                                handleProPrice={this.handleProPrice}
-                                handleProNote={this.handleProNote}
                               />
                             ))}
                           </div>
