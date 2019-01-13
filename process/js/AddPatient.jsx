@@ -67,6 +67,8 @@ class AddPatient extends React.Component {
     this.createPatient = this.createPatient.bind(this);
     this.handleGender = this.handleGender.bind(this);
     this.handleProCheckbox = this.handleProCheckbox.bind(this);
+
+    this.handleUploadingPictures = this.handleUploadingPictures.bind(this);
   }
   handleGender(target) {
     if (
@@ -99,6 +101,16 @@ class AddPatient extends React.Component {
     }));
   }
 
+  handleUploadingPictures() {
+    var files = $("#procedureImages")[0].files;
+    for (var i = 0; i < files.length; i++) {
+      fs.copy(files[i].path, `/Users/Tebin/Downloads/${files[i].name}`)
+        .then(() => console.log("success!"))
+        .catch(err => console.error(err));
+      console.log(files[i].name);
+    }
+  }
+
   createPatient(e) {
     e.preventDefault();
 
@@ -115,19 +127,8 @@ class AddPatient extends React.Component {
       this.state.procedures.get(key)["note"] = proValue;
       this.state.procedures.get(key)["price"] = priValue;
     }
-
+    this.handleUploadingPictures();
     console.log(this.state.procedures);
-
-    var files = $("#procedureImages")[0].files;
-
-    for (var i = 0; i < files.length; i++) {
-      fs.copy(files[i].path, `/Users/Tebin/Downloads/${files[i].name}`)
-        .then(() => console.log("success!"))
-        .catch(err => console.error(err));
-      console.log(files[i].name);
-    }
-
-    debugger;
   }
 
   render() {
