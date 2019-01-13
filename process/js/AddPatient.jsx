@@ -18,31 +18,31 @@ var procedures = [
     key: "p1",
     prokey: "prokey1",
     prikey: "prikey1",
-    labelName: "Botox",
+    labelName: "Botox"
   },
   {
     key: "p2",
     prokey: "prokey2",
     prikey: "prikey2",
-    labelName: "Filler",
+    labelName: "Filler"
   },
   {
     key: "p3",
     prokey: "prokey3",
     prikey: "prikey3",
-    labelName: "PRP",
+    labelName: "PRP"
   },
   {
     key: "p4",
     prokey: "prokey4",
     prikey: "prikey4",
-    labelName: "Mesotherapy",
+    labelName: "Mesotherapy"
   },
   {
     key: "p5",
     prokey: "prokey5",
     prikey: "prikey5",
-    labelName: "Laser",
+    labelName: "Laser"
   }
 ];
 
@@ -117,6 +117,19 @@ class AddPatient extends React.Component {
     }
 
     console.log(this.state.procedures);
+
+    var files = $("#procedureImages")[0].files;
+
+    for (var i = 0; i < files.length; i++) {
+
+      fs.copyFile(files[i].path, `/Users/Tebin/Downloads/${files[i].name}`, (err) => {
+        if (err) throw err;
+        console.log('copied.');
+      });
+      console.log(files[i].name)
+    }
+
+    debugger;
   }
 
   render() {
@@ -322,6 +335,15 @@ class AddPatient extends React.Component {
                                 handleProCheckbox={this.handleProCheckbox}
                               />
                             ))}
+                          </div>
+
+                          <div className="form-row">
+                            <div className="col-md-12">
+                              <label>Images</label>
+                            </div>
+                          </div>
+                          <div className="form-row">
+                            <input type="file" id="procedureImages" multiple />
                           </div>
 
                           <button type="submit" className="btn btn-accent">
