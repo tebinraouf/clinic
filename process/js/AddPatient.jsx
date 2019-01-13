@@ -121,12 +121,10 @@ class AddPatient extends React.Component {
     var files = $("#procedureImages")[0].files;
 
     for (var i = 0; i < files.length; i++) {
-
-      fs.copyFile(files[i].path, `/Users/Tebin/Downloads/${files[i].name}`, (err) => {
-        if (err) throw err;
-        console.log('copied.');
-      });
-      console.log(files[i].name)
+      fs.copy(files[i].path, `/Users/Tebin/Downloads/${files[i].name}`)
+        .then(() => console.log("success!"))
+        .catch(err => console.error(err));
+      console.log(files[i].name);
     }
 
     debugger;
