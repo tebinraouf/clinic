@@ -48,7 +48,7 @@ class Patient {
   }
   copyPatientImages(files, path) {
     for (var i = 0; i < files.length; i++) {
-      fs.copy(files[i].path, path)
+      fs.copy(files[i].path, `${path}${files[i].name}`)
         .then(() => console.log("success!"))
         .catch(err => console.error(err));
       console.log(files[i].name);
