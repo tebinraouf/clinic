@@ -2,6 +2,9 @@
 const React = require("react");
 const Procedure = require("./Procedure.jsx");
 const jquery = require("jquery");
+const Patient = require("./Patient")
+
+
 const $ = jquery;
 
 var patientObj = {
@@ -45,6 +48,9 @@ var procedures = [
     labelName: "Laser"
   }
 ];
+
+
+
 
 class AddPatient extends React.Component {
   constructor(props) {
@@ -102,9 +108,16 @@ class AddPatient extends React.Component {
   }
 
   handleUploadingPictures() {
+    
+
+    //create a patient dir by date
+    var patient = new Patient();
+    patient.getNewID();
+
+    debugger
     var files = $("#procedureImages")[0].files;
     for (var i = 0; i < files.length; i++) {
-      fs.copy(files[i].path, `/Users/Tebin/Downloads/${files[i].name}`)
+      fs.copy(files[i].path, `${documentPath}${files[i].name}`)
         .then(() => console.log("success!"))
         .catch(err => console.error(err));
       console.log(files[i].name);
@@ -129,6 +142,7 @@ class AddPatient extends React.Component {
     }
     this.handleUploadingPictures();
     console.log(this.state.procedures);
+
   }
 
   render() {

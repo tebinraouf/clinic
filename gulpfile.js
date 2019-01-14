@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var gulp = require('gulp'),
     browserify = require('gulp-browserify'),
     concatCss = require('gulp-concat-css'),
