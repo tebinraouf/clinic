@@ -13,6 +13,7 @@ class Patient {
     this.copyPatientImages(files, newPatientPath);
 
     //store patient info and image locations in database 
+    this.insertIntoDatabase(patientObjc);
   }
 
 
@@ -54,6 +55,23 @@ class Patient {
       console.log(files[i].name);
     }
   }
+  insertIntoDatabase(objc) {
+
+    // Use mysql, create a class as a wrapper for mysql
+
+    // db.serialize(function(){
+    //   db.run(`INSERT INTO Patient (firstName, lastName, mobile, email, gender, note) VALUES ('${objc.firstName}', '${objc.lastName}', '${objc.mobile}', '${objc.email}', '${objc.gender}', '${objc.note}')`);
+    // });
+
+    // db.each("SELECT * FROM Patient", function (err, row) {
+    //   console.log(row);
+    // });
+
+    // db.close();
+    // debugger;
+  }
+
+
 
   getNewID() {
     return "hello again";

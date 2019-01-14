@@ -6,7 +6,7 @@ const SignIn = require("./SignIn.jsx");
 const SQL = require('sql.js');
 const fs = eRequire('fs');
 
-const filebuffer = fs.readFileSync('/Users/Tebin/Desktop/PatientManagement/test.sqlite');
+const filebuffer = fs.readFileSync('/Users/Tebin/Desktop/electron/test.sqlite');
 const db = new SQL.Database(filebuffer);
 
 class MainInterface extends React.Component {
