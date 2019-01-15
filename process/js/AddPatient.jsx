@@ -44,7 +44,121 @@ var procedures = [
     key: "p5",
     prokey: "prokey5",
     prikey: "prikey5",
-    labelName: "Laser"
+    labelName: "Laser Ruby"
+  },
+  {
+    key: "p6",
+    prokey: "prokey6",
+    prikey: "prikey6",
+    labelName: "Laser Er YAG"
+  },
+  {
+    key: "p7",
+    prokey: "prokey7",
+    prikey: "prikey7",
+    labelName: "Laser IPL"
+  },
+  {
+    key: "p8",
+    prokey: "prokey8",
+    prikey: "prikey8",
+    labelName: "Fat graft Face"
+  },
+  {
+    key: "p9",
+    prokey: "prokey9",
+    prikey: "prikey9",
+    labelName: "Fat graft Hand"
+  },
+  {
+    key: "p10",
+    prokey: "prokey10",
+    prikey: "prikey10",
+    labelName: "Fat graft breast"
+  },
+  {
+    key: "p11",
+    prokey: "prokey11",
+    prikey: "prikey11",
+    labelName: "Fat graft buttock"
+  },
+  {
+    key: "p12",
+    prokey: "prokey12",
+    prikey: "prikey12",
+    labelName: "Fat graft leg"
+  },
+  {
+    key: "p13",
+    prokey: "prokey13",
+    prikey: "prikey13",
+    labelName: "Body contouring"
+  },
+  {
+    key: "p14",
+    prokey: "prokey14",
+    prikey: "prikey14",
+    labelName: "Upper blepharoplasty"
+  },
+  {
+    key: "p15",
+    prokey: "prokey15",
+    prikey: "prikey15",
+    labelName: "Lower blepharoplasty"
+  },
+  {
+    key: "p16",
+    prokey: "prokey16",
+    prikey: "prikey16",
+    labelName: "Brow lift"
+  },
+  {
+    key: "p17",
+    prokey: "prokey17",
+    prikey: "prikey17",
+    labelName: "Face lift"
+  },
+  {
+    key: "p18",
+    prokey: "prokey18",
+    prikey: "prikey18",
+    labelName: "Rhinoplasty"
+  },
+  {
+    key: "p19",
+    prokey: "prokey19",
+    prikey: "prikey19",
+    labelName: "Mammoplasty augmentation"
+  },
+  {
+    key: "p20",
+    prokey: "prokey20",
+    prikey: "prikey20",
+    labelName: "Mammoplasty Reduction"
+  },
+  {
+    key: "p21",
+    prokey: "prokey21",
+    prikey: "prikey21",
+    labelName: "mammoplasty Liposuction"
+  },
+  {
+    key: "p22",
+    prokey: "prokey22",
+    prikey: "prikey22",
+    labelName: "Abdominoplasty"
+  },
+  {
+    key: "p23",
+    prokey: "prokey23",
+    prikey: "prikey23",
+    labelName: "Liposuction"
+  },
+  {
+    key: "p24",
+    prokey: "prokey24",
+    prikey: "prikey24",
+    labelName: "Otoplasty"
   }
 ];
 
