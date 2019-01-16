@@ -63,32 +63,28 @@ class Patient {
   }
   insertIntoDatabase(objc, procedures, id) {
     //connection is defined in index.html
-    var sql = `INSERT INTO Patient (firstName, lastName, mobile, email, gender, note, storageID, date) VALUES ('${objc.firstName}', '${objc.lastName}', '${objc.mobile}', '${objc.email}', '${objc.gender}', '${objc.note}', '${id}', '${objc.date}')`;
+    var sql = `INSERT INTO Patient (firstName, lastName, mobile, email, gender, note, storageID, date) VALUES ('${objc.firstName}', '${objc.lastName}', '${objc.mobile}', '${objc.email}', '${objc.gender}', '${objc.note}', '${id}', '${new Date().toDateString()}')`;
 
     var lastID;
     var query = connection.query(sql, function (error, results) {
       if (error) throw error;
       lastID = results.insertId
-      console.log('Inserted.');
-    });
-    debugger
-    
-    //insert the procedures
-    procedures.map(function (e) {
-      e.push("case1")
-      e.push(lastID)
-    })
 
-    procedures.forEach(element => {
-      var proSQL = `INSERT INTO mydb.Procedure (name, note, price, date, storageID, PatientID) VALUES ('${element[0]}','${element[1]}','${element[2]}','${element[3]}','${element[4]}',${element[5]});`
 
-      connection.query(proSQL, function (err, result) {
-        if (err) throw err;
-        console.log("Number of records inserted: " + result.affectedRows);
+      procedures.forEach(element => {
+        var proSQL = `INSERT INTO mydb.Procedure (name, note, price, date, storageID, PatientID) VALUES ('${element.name}','${element.note}','${element.price}','${new Date().toDateString()}','case1',${lastID});`
+  
+        connection.query(proSQL, function (err, result) {
+          if (err) throw err;
+          console.log("Number of records inserted: " + result.affectedRows);
+        });
       });
 
+
+      console.log('Inserted.');
     });
 
+    
 
 
   }

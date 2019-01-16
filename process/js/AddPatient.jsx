@@ -245,17 +245,11 @@ class AddPatient extends React.Component {
     }
     var selectedPro = [];
     for (const item of this.state.procedures) {
-      var aPro = [];
       if (item[1].isChecked) {
-        aPro[0] = item[1].name;
-        aPro[1] = item[1].note;
-        aPro[2] = item[1].price;
-        aPro[3] = this.state.patientObj.date;
-        selectedPro.push(aPro);
+        selectedPro.push(item[1]);
       } 
     }
 
-    debugger
     var files = $("#procedureImages")[0].files;
 
     //create a patient dir by date
