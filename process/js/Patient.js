@@ -1,19 +1,25 @@
 /* eslint-disable */
 
 const documentPath = "/Users/Tebin/Documents/";
+const mysql = require('mysql');
+
 
 class Patient {
 
   constructor(patientObjc, procedures, files) {
     this.initialize();
+
+    //new id for user
+    var id = this.getDateForID();
+
     //create patient image folder for the first time
-    var newPatientPath = this.createNewPatientPath();
-    
+    var newPatientPath = this.createNewPatientPath(id);
+
     //copy images to the newly created folder
     this.copyPatientImages(files, newPatientPath);
 
     //store patient info and image locations in database 
-    this.insertIntoDatabase(patientObjc);
+    this.insertIntoDatabase(patientObjc, procedures, id);
   }
 
 
@@ -30,8 +36,8 @@ class Patient {
     }
   }
 
-  createNewPatientPath() {
-    var path = `${documentPath}DrTanyaPatients/${this.getDateForID()}`;
+  createNewPatientPath(id) {
+    var path = `${documentPath}DrTanyaPatients/${id}`;
     if (!fs.existsSync(path)) {
       fs.mkdir(path, {
         recursive: true
@@ -55,20 +61,36 @@ class Patient {
       console.log(files[i].name);
     }
   }
-  insertIntoDatabase(objc) {
+  insertIntoDatabase(objc, procedures, id) {
+    //connection is defined in index.html
+    var sql = `INSERT INTO Patient (firstName, lastName, mobile, email, gender, note, storageID, date) VALUES ('${objc.firstName}', '${objc.lastName}', '${objc.mobile}', '${objc.email}', '${objc.gender}', '${objc.note}', '${id}', '${objc.date}')`;
 
-    // Use mysql, create a class as a wrapper for mysql
+    var lastID;
+    var query = connection.query(sql, function (error, results) {
+      if (error) throw error;
+      lastID = results.insertId
+      console.log('Inserted.');
+    });
+    debugger
+    
+    //insert the procedures
+    procedures.map(function (e) {
+      e.push("case1")
+      e.push(lastID)
+    })
 
-    // db.serialize(function(){
-    //   db.run(`INSERT INTO Patient (firstName, lastName, mobile, email, gender, note) VALUES ('${objc.firstName}', '${objc.lastName}', '${objc.mobile}', '${objc.email}', '${objc.gender}', '${objc.note}')`);
-    // });
+    procedures.forEach(element => {
+      var proSQL = `INSERT INTO mydb.Procedure (name, note, price, date, storageID, PatientID) VALUES ('${element[0]}','${element[1]}','${element[2]}','${element[3]}','${element[4]}',${element[5]});`
 
-    // db.each("SELECT * FROM Patient", function (err, row) {
-    //   console.log(row);
-    // });
+      connection.query(proSQL, function (err, result) {
+        if (err) throw err;
+        console.log("Number of records inserted: " + result.affectedRows);
+      });
 
-    // db.close();
-    // debugger;
+    });
+
+
+
   }
 
 

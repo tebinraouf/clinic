@@ -3,7 +3,6 @@ const React = require("react");
 const Procedure = require("./Procedure.jsx");
 const jquery = require("jquery");
 const Patient = require("./Patient");
-
 const $ = jquery;
 
 var patientObj = {
@@ -233,7 +232,7 @@ class AddPatient extends React.Component {
 
     for (const item of this.state.procedures) {
       var key = item[0];
-      var number = key[key.length - 1];
+      var number = key.substring(1);
 
       var prokey = `prokey${number}`;
       var prikey = `prikey${number}`;
@@ -244,11 +243,23 @@ class AddPatient extends React.Component {
       this.state.procedures.get(key)["note"] = proValue;
       this.state.procedures.get(key)["price"] = priValue;
     }
-    
+    var selectedPro = [];
+    for (const item of this.state.procedures) {
+      var aPro = [];
+      if (item[1].isChecked) {
+        aPro[0] = item[1].name;
+        aPro[1] = item[1].note;
+        aPro[2] = item[1].price;
+        aPro[3] = this.state.patientObj.date;
+        selectedPro.push(aPro);
+      } 
+    }
+
+    debugger
     var files = $("#procedureImages")[0].files;
 
     //create a patient dir by date
-    var patient = new Patient(this.state.patientObj, this.state.procedures, files);
+    var patient = new Patient(this.state.patientObj, selectedPro, files);
     patient.getNewID();
   }
 
@@ -420,21 +431,7 @@ class AddPatient extends React.Component {
 
                           <hr />
 
-                          <div className="form-row">
-                            <div className="form-group col-md-6">
-                              <label htmlFor="feDate">Date</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="feDate"
-                                name="date"
-                                placeholder="Date"
-                                onChange={this.handleChange}
-                                value={new Date().toDateString()}
-                              />
-                            </div>
-                          </div>
-
+                          
                           <div className="form-row">
                             <div className="col-md-12">
                               <label htmlFor="feDate">Procedure</label>
