@@ -233,9 +233,9 @@ class AddPatient extends React.Component {
   }
 
   handleDate(date) {
-    this.setState(function(prev){
-      prev.patientObj.date = date.toLocaleDateString()
-    })
+    this.setState(function(prev) {
+      prev.patientObj.date = date.toLocaleDateString();
+    });
   }
 
   createPatient(e) {
@@ -437,9 +437,7 @@ class AddPatient extends React.Component {
                             <div className="form-group col-md-6">
                               <label htmlFor="feDate">Date</label>
                               <br />
-                              <DayPickerInput
-                                onDayChange={this.handleDate}
-                              />
+                              <DayPickerInput onDayChange={this.handleDate} />
                             </div>
                           </div>
 
@@ -486,12 +484,21 @@ class AddPatient extends React.Component {
                             </div>
                           </div>
                           <div className="form-row">
-                            <input type="file" id="procedureImages" multiple />
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="procedureImages"
+                              multiple
+                            />
                           </div>
-
-                          <button type="submit" className="btn btn-accent">
-                            Create
-                          </button>
+                              <br />
+                          <div className="form-row">
+                            <div className="col-sm-12">
+                              <button type="submit" className="btn btn-accent">
+                                Create
+                              </button>
+                            </div>
+                          </div>
                         </form>
                       </div>
                     </div>
