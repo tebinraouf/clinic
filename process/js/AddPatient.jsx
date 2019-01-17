@@ -4,6 +4,7 @@ const Procedure = require("./Procedure.jsx");
 const jquery = require("jquery");
 const Patient = require("./Patient");
 const $ = jquery;
+const PropTypes = require('prop-types');
 
 var patientObj = {
   firstName: "",
@@ -185,7 +186,7 @@ class AddPatient extends React.Component {
     this.handleProCheckbox = this.handleProCheckbox.bind(this);
 
     this.handleUploadingPictures = this.handleUploadingPictures.bind(this);
-    this.addPatientAgaint = this.addPatientAgaint.bind(this);
+    this.addPatientAgain = this.addPatientAgain.bind(this);
   }
   handleGender(target) {
     if (
@@ -262,7 +263,7 @@ class AddPatient extends React.Component {
     });
   }
 
-  addPatientAgaint() {
+  addPatientAgain() {
     this.setState({
       isSaved: false
     })
@@ -275,7 +276,7 @@ class AddPatient extends React.Component {
           <div className="main-content-container container-fluid px-4">
             <div className="col-12 col-sm-12 text-center text-sm-left mb-0">
               <span className="text-uppercase page-subtitle" />
-              <h3 className="page-title">The new patient has been added. <span onClick={this.addPatientAgaint} id="addPatientAgain"> Add a new patient!</span></h3>
+              <h3 className="page-title">The new patient has been added. <span onClick={this.addPatientAgain} id="addPatientAgain"> Add a new patient!</span></h3>
             </div>
           </div>
         </div>
