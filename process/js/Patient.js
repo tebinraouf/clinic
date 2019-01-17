@@ -63,7 +63,7 @@ class Patient {
   }
   insertIntoDatabase(objc, procedures, id) {
     //connection is defined in index.html
-    var sql = `INSERT INTO Patient (firstName, lastName, mobile, email, gender, note, storageID, date) VALUES ('${objc.firstName}', '${objc.lastName}', '${objc.mobile}', '${objc.email}', '${objc.gender}', '${objc.note}', '${id}', '${new Date().toDateString()}')`;
+    var sql = `INSERT INTO Patient (firstName, lastName, mobile, email, gender, note, storageID, date) VALUES ('${objc.firstName}', '${objc.lastName}', '${objc.mobile}', '${objc.email}', '${objc.gender}', '${objc.note}', '${id}', '${objc.date}')`;
 
     var lastID;
     var query = connection.query(sql, function (error, results) {
@@ -72,7 +72,7 @@ class Patient {
 
 
       procedures.forEach(element => {
-        var proSQL = `INSERT INTO mydb.Procedure (name, note, price, date, storageID, PatientID) VALUES ('${element.name}','${element.note}','${element.price}','${new Date().toDateString()}','case1',${lastID});`
+        var proSQL = `INSERT INTO mydb.Procedure (name, note, price, date, storageID, PatientID) VALUES ('${element.name}','${element.note}','${element.price}','${objc.date}','case1',${lastID});`
   
         connection.query(proSQL, function (err, result) {
           if (err) throw err;

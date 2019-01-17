@@ -4,7 +4,8 @@ const Procedure = require("./Procedure.jsx");
 const jquery = require("jquery");
 const Patient = require("./Patient");
 const $ = jquery;
-const PropTypes = require('prop-types');
+const DayPickerInput = require("react-day-picker/DayPickerInput").default;
+// import DayPicker from 'react-day-picker';
 
 var patientObj = {
   firstName: "",
@@ -187,6 +188,7 @@ class AddPatient extends React.Component {
 
     this.handleUploadingPictures = this.handleUploadingPictures.bind(this);
     this.addPatientAgain = this.addPatientAgain.bind(this);
+    this.handleDate = this.handleDate.bind(this);
   }
   handleGender(target) {
     if (
@@ -230,9 +232,14 @@ class AddPatient extends React.Component {
     }
   }
 
+  handleDate(date) {
+    this.setState(function(prev){
+      prev.patientObj.date = date.toLocaleDateString()
+    })
+  }
+
   createPatient(e) {
     e.preventDefault();
-
     for (const item of this.state.procedures) {
       var key = item[0];
       var number = key.substring(1);
@@ -266,7 +273,7 @@ class AddPatient extends React.Component {
   addPatientAgain() {
     this.setState({
       isSaved: false
-    })
+    });
   }
 
   render() {
@@ -276,7 +283,13 @@ class AddPatient extends React.Component {
           <div className="main-content-container container-fluid px-4">
             <div className="col-12 col-sm-12 text-center text-sm-left mb-0">
               <span className="text-uppercase page-subtitle" />
-              <h3 className="page-title">The new patient has been added. <span onClick={this.addPatientAgain} id="addPatientAgain"> Add a new patient!</span></h3>
+              <h3 className="page-title">
+                The new patient has been added.{" "}
+                <span onClick={this.addPatientAgain} id="addPatientAgain">
+                  {" "}
+                  Add a new patient!
+                </span>
+              </h3>
             </div>
           </div>
         </div>
@@ -423,14 +436,9 @@ class AddPatient extends React.Component {
                             </div>
                             <div className="form-group col-md-6">
                               <label htmlFor="feDate">Date</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="feDate"
-                                name="date"
-                                placeholder="Date"
-                                onChange={this.handleChange}
-                                value={new Date().toDateString()}
+                              <br />
+                              <DayPickerInput
+                                onDayChange={this.handleDate}
                               />
                             </div>
                           </div>
