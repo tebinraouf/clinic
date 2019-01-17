@@ -175,7 +175,8 @@ class AddPatient extends React.Component {
         date: "",
         note: ""
       },
-      procedures: new Map()
+      procedures: new Map(),
+      isSaved: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -184,6 +185,7 @@ class AddPatient extends React.Component {
     this.handleProCheckbox = this.handleProCheckbox.bind(this);
 
     this.handleUploadingPictures = this.handleUploadingPictures.bind(this);
+    this.addPatientAgaint = this.addPatientAgaint.bind(this);
   }
   handleGender(target) {
     if (
@@ -247,22 +249,44 @@ class AddPatient extends React.Component {
     for (const item of this.state.procedures) {
       if (item[1].isChecked) {
         selectedPro.push(item[1]);
-      } 
+      }
     }
 
     var files = $("#procedureImages")[0].files;
 
     //create a patient dir by date
-    var patient = new Patient(this.state.patientObj, selectedPro, files);
-    patient.getNewID();
+    new Patient(this.state.patientObj, selectedPro, files);
+
+    this.setState({
+      isSaved: true
+    });
+  }
+
+  addPatientAgaint() {
+    this.setState({
+      isSaved: false
+    })
   }
 
   render() {
+    if (this.state.isSaved) {
+      return (
+        <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+          <div className="main-content-container container-fluid px-4">
+            <div className="col-12 col-sm-12 text-center text-sm-left mb-0">
+              <span className="text-uppercase page-subtitle" />
+              <h3 className="page-title">The new patient has been added. <span onClick={this.addPatientAgaint} id="addPatientAgain"> Add a new patient!</span></h3>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
         <div className="main-content-container container-fluid px-4">
           <div className="page-header row no-gutters py-4">
-            <div className="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <div className="col-12 col-sm-12 text-center text-sm-left mb-0">
               <span className="text-uppercase page-subtitle" />
               <h3 className="page-title">New Patient Profile</h3>
             </div>
@@ -425,7 +449,6 @@ class AddPatient extends React.Component {
 
                           <hr />
 
-                          
                           <div className="form-row">
                             <div className="col-md-12">
                               <label htmlFor="feDate">Procedure</label>
