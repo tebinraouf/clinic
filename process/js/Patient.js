@@ -9,7 +9,7 @@ class Patient {
   constructor() {
 
   }
-
+  //Create new patient account
   createAccount(patientObjc, procedures, files) {
     this.initialize();
 
@@ -90,7 +90,14 @@ class Patient {
 
   }
 
-
+  //get all patients
+  getAll(data) {
+    var all = [];
+    connection.query("SELECT * FROM Patient ORDER BY id DESC", function (err, result, fields) {
+      if (err) throw err;
+      data(result);
+    });
+  }
 
   getNewID() {
     return "hello again";

@@ -2,27 +2,30 @@
 const React = require("react");
 const jquery = require("jquery");
 const $ = jquery;
-var ReactBsTable = require("react-bootstrap-table");
-var BootstrapTable = ReactBsTable.BootstrapTable;
-var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+const ReactBsTable = require("react-bootstrap-table");
+const BootstrapTable = ReactBsTable.BootstrapTable;
+const TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+const Patient = require("./Patient");
+
+var allPatients = [];
 
 class AddAllPatients extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      data: null
+    };
+  }
+  componentDidMount() {
+    var self = this;
+    var p = new Patient();
+    p.getAll(function(allData) {
+      self.setState({ data: allData });
+    });
   }
   render() {
-    var products = [
-      {
-        id: 1,
-        name: "Product1",
-        price: 120
-      },
-      {
-        id: 2,
-        name: "Product2",
-        price: 80
-      }
-    ];
+    // debugger
     return (
       <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
         <div className="main-content-container container-fluid px-4">
@@ -34,7 +37,7 @@ class AddAllPatients extends React.Component {
           </div>
           <div className="row">
             <div className="col-sm-12">
-              <BootstrapTable data={products} striped hover>
+              <BootstrapTable data={this.state.data} striped hover>
                 <TableHeaderColumn
                   isKey
                   dataField="id"
@@ -43,13 +46,19 @@ class AddAllPatients extends React.Component {
                   ID
                 </TableHeaderColumn>
                 <TableHeaderColumn
-                  dataField="name"
+                  dataField="firstName"
                   filter={{ type: "TextFilter" }}
                 >
-                  Name
+                  First Name
                 </TableHeaderColumn>
                 <TableHeaderColumn
-                  dataField="price"
+                  dataField="lastName"
+                  filter={{ type: "TextFilter" }}
+                >
+                  Last Name
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                  dataField="date"
                   filter={{ type: "TextFilter" }}
                 >
                   Product Price
