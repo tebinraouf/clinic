@@ -263,8 +263,8 @@ class AddPatient extends React.Component {
     var files = $("#procedureImages")[0].files;
 
     //create a patient dir by date
-    new Patient(this.state.patientObj, selectedPro, files);
-
+    let patient = new Patient();
+    patient.createAccount(this.state.patientObj, selectedPro, files);
     this.setState({
       isSaved: true
     });

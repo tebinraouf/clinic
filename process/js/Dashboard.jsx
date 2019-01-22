@@ -7,6 +7,7 @@ const MainContent = require("./MainContent.jsx");
 // import MainInterface from "./MainInterface.js";
 const SignIn = require("./SignIn.jsx");
 const AddPatient = require("./AddPatient.jsx");
+const AddAllPatients = require("./AddAllPatients.jsx");
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -74,6 +75,24 @@ class Dashboard extends React.Component {
               />
               <MainContent />
               <AddPatient />
+            </div>
+          </div>
+        );
+      } else if (this.state.isAllPatients) {
+        return (
+          <div className="container-fluid">
+            <div className="row">
+            <Sidebar
+                handleDashboard={this.handleDashboard}
+                addPatient={this.addPatient}
+                allPatients={this.allPatients}
+                handleLogout={this.handleLogout}
+                isAdding={this.state.isAdding}
+                isAllPatients={this.state.isAllPatients}
+                isDashboard={this.state.isDashboard}
+              />
+              <MainContent />
+              <AddAllPatients />
             </div>
           </div>
         );

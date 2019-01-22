@@ -3,7 +3,6 @@ const React = require("react");
 
 class Procedure extends React.Component {
 
-
   render() {
     return (
       <div className="form-group col-md-3">

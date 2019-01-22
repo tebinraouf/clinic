@@ -6,7 +6,11 @@ const mysql = require('mysql');
 
 class Patient {
 
-  constructor(patientObjc, procedures, files) {
+  constructor() {
+
+  }
+
+  createAccount(patientObjc, procedures, files) {
     this.initialize();
 
     //new id for user
@@ -21,8 +25,6 @@ class Patient {
     //store patient info and image locations in database 
     this.insertIntoDatabase(patientObjc, procedures, id);
   }
-
-
   initialize() {
     //create the first dir if not exist
     var path = `${documentPath}DrTanyaPatients`;
@@ -35,7 +37,6 @@ class Patient {
       });
     }
   }
-
   createNewPatientPath(id) {
     var path = `${documentPath}DrTanyaPatients/${id}`;
     if (!fs.existsSync(path)) {
@@ -94,6 +95,8 @@ class Patient {
   getNewID() {
     return "hello again";
   }
+
+  //Utility Methods
   getDateForID() {
     var date = new Date();
     return date.getMilliseconds().toString() + date.getMinutes().toString() + date.getHours().toString() + date.getDate().toString() + date.getMonth().toString() + date.getFullYear().toString();
