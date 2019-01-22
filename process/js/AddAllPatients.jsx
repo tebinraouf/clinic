@@ -6,13 +6,16 @@ const ReactBsTable = require("react-bootstrap-table");
 const BootstrapTable = ReactBsTable.BootstrapTable;
 const TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 const Patient = require("./Patient");
+const SelectedPatient = require("./SelectedPatient.jsx");
 
 class AddAllPatients extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: null
+      data: null,
+      patient: null,
+      isClicked: false
     };
     this.onRowClick = this.onRowClick.bind(this);
   }
@@ -24,13 +27,19 @@ class AddAllPatients extends React.Component {
     });
   }
   onRowClick(row) {
-    debugger;
+    this.setState({ patient: row, isClicked: true });
   }
   render() {
     const options = {
       onRowClick: this.onRowClick
     };
-    // debugger
+
+    if (this.state.isClicked) {
+        return (
+            <SelectedPatient patient={this.state.patient} />
+        )
+    }
+
     return (
       <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
         <div className="main-content-container container-fluid px-4">
@@ -71,7 +80,19 @@ class AddAllPatients extends React.Component {
                   dataField="date"
                   filter={{ type: "TextFilter" }}
                 >
-                  Product Price
+                  First Visit Date
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                  dataField="mobile"
+                  filter={{ type: "TextFilter" }}
+                >
+                  Mobile
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                  dataField="gender"
+                  filter={{ type: "TextFilter" }}
+                >
+                  Gender
                 </TableHeaderColumn>
               </BootstrapTable>
             </div>

@@ -1,308 +1,32 @@
 /* eslint-disable */
 const React = require("react");
-const Procedure = require("./Procedure.jsx");
 const jquery = require("jquery");
 const Patient = require("./Patient");
 const $ = jquery;
 const DayPickerInput = require("react-day-picker/DayPickerInput").default;
-// import DayPicker from 'react-day-picker';
 
-var patientObj = {
-  firstName: "",
-  lastName: "",
-  mobile: "",
-  email: "",
-  price: "",
-  date: "",
-  note: ""
-};
-var procedures = [
-  {
-    key: "p1",
-    prokey: "prokey1",
-    prikey: "prikey1",
-    labelName: "Botox"
-  },
-  {
-    key: "p2",
-    prokey: "prokey2",
-    prikey: "prikey2",
-    labelName: "Filler"
-  },
-  {
-    key: "p3",
-    prokey: "prokey3",
-    prikey: "prikey3",
-    labelName: "PRP"
-  },
-  {
-    key: "p4",
-    prokey: "prokey4",
-    prikey: "prikey4",
-    labelName: "Mesotherapy"
-  },
-  {
-    key: "p5",
-    prokey: "prokey5",
-    prikey: "prikey5",
-    labelName: "Laser Ruby"
-  },
-  {
-    key: "p6",
-    prokey: "prokey6",
-    prikey: "prikey6",
-    labelName: "Laser Er YAG"
-  },
-  {
-    key: "p7",
-    prokey: "prokey7",
-    prikey: "prikey7",
-    labelName: "Laser IPL"
-  },
-  {
-    key: "p8",
-    prokey: "prokey8",
-    prikey: "prikey8",
-    labelName: "Fat graft Face"
-  },
-  {
-    key: "p9",
-    prokey: "prokey9",
-    prikey: "prikey9",
-    labelName: "Fat graft Hand"
-  },
-  {
-    key: "p10",
-    prokey: "prokey10",
-    prikey: "prikey10",
-    labelName: "Fat graft breast"
-  },
-  {
-    key: "p11",
-    prokey: "prokey11",
-    prikey: "prikey11",
-    labelName: "Fat graft buttock"
-  },
-  {
-    key: "p12",
-    prokey: "prokey12",
-    prikey: "prikey12",
-    labelName: "Fat graft leg"
-  },
-  {
-    key: "p13",
-    prokey: "prokey13",
-    prikey: "prikey13",
-    labelName: "Body contouring"
-  },
-  {
-    key: "p14",
-    prokey: "prokey14",
-    prikey: "prikey14",
-    labelName: "Upper blepharoplasty"
-  },
-  {
-    key: "p15",
-    prokey: "prokey15",
-    prikey: "prikey15",
-    labelName: "Lower blepharoplasty"
-  },
-  {
-    key: "p16",
-    prokey: "prokey16",
-    prikey: "prikey16",
-    labelName: "Brow lift"
-  },
-  {
-    key: "p17",
-    prokey: "prokey17",
-    prikey: "prikey17",
-    labelName: "Face lift"
-  },
-  {
-    key: "p18",
-    prokey: "prokey18",
-    prikey: "prikey18",
-    labelName: "Rhinoplasty"
-  },
-  {
-    key: "p19",
-    prokey: "prokey19",
-    prikey: "prikey19",
-    labelName: "Mammoplasty augmentation"
-  },
-  {
-    key: "p20",
-    prokey: "prokey20",
-    prikey: "prikey20",
-    labelName: "Mammoplasty Reduction"
-  },
-  {
-    key: "p21",
-    prokey: "prokey21",
-    prikey: "prikey21",
-    labelName: "mammoplasty Liposuction"
-  },
-  {
-    key: "p22",
-    prokey: "prokey22",
-    prikey: "prikey22",
-    labelName: "Abdominoplasty"
-  },
-  {
-    key: "p23",
-    prokey: "prokey23",
-    prikey: "prikey23",
-    labelName: "Liposuction"
-  },
-  {
-    key: "p24",
-    prokey: "prokey24",
-    prikey: "prikey24",
-    labelName: "Otoplasty"
-  }
-];
-
-class AddPatient extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      patientObj: {
-        firstName: "",
-        lastName: "",
-        mobile: "",
-        email: "",
-        price: "",
-        gender: "",
-        date: "",
-        note: ""
-      },
-      procedures: new Map(),
-      isSaved: false
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.createPatient = this.createPatient.bind(this);
-    this.handleGender = this.handleGender.bind(this);
-    this.handleProCheckbox = this.handleProCheckbox.bind(this);
-
-    this.handleUploadingPictures = this.handleUploadingPictures.bind(this);
-    this.addPatientAgain = this.addPatientAgain.bind(this);
-    this.handleDate = this.handleDate.bind(this);
-  }
-  handleGender(target) {
-    if (
-      target.value === "male" ||
-      target.value === "female" ||
-      target.value === "other"
-    ) {
-      return "gender";
-    } else {
-      return target.name;
+class SelectedPatient extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleDate = this.handleDate.bind(this);
     }
-  }
-  handleChange(event) {
-    const patientObj = this.state.patientObj;
-    var name = this.handleGender(event.target);
-    patientObj[name] = event.target.value;
-    this.setState({
-      patientObj: patientObj
-    });
-  }
-  handleProCheckbox(e) {
-    const key = e.target.name;
-    const value = e.target.value;
-    const isChecked = e.target.checked;
-    this.setState(prevState => ({
-      procedures: prevState.procedures.set(key, {
-        isChecked: isChecked,
-        name: value
-      })
-    }));
-  }
+    handleChange() {
 
-  handleUploadingPictures() {
-    debugger;
-    var files = $("#procedureImages")[0].files;
-    for (var i = 0; i < files.length; i++) {
-      fs.copy(files[i].path, `${documentPath}${files[i].name}`)
-        .then(() => console.log("success!"))
-        .catch(err => console.error(err));
-      console.log(files[i].name);
     }
-  }
+    handleDate() {
 
-  handleDate(date) {
-    this.setState(function(prev) {
-      prev.patientObj.date = date.toDateString();
-    });
-  }
-
-  createPatient(e) {
-    e.preventDefault();
-    for (const item of this.state.procedures) {
-      var key = item[0];
-      var number = key.substring(1);
-
-      var prokey = `prokey${number}`;
-      var prikey = `prikey${number}`;
-
-      var proValue = $(`#${prokey}`).val();
-      var priValue = $(`#${prikey}`).val();
-
-      this.state.procedures.get(key)["note"] = proValue;
-      this.state.procedures.get(key)["price"] = priValue;
-    }
-    var selectedPro = [];
-    for (const item of this.state.procedures) {
-      if (item[1].isChecked) {
-        selectedPro.push(item[1]);
-      }
     }
 
-    var files = $("#procedureImages")[0].files;
-
-    //create a patient dir by date
-    let patient = new Patient();
-    patient.createAccount(this.state.patientObj, selectedPro, files);
-    this.setState({
-      isSaved: true
-    });
-  }
-
-  addPatientAgain() {
-    this.setState({
-      isSaved: false
-    });
-  }
-
-  render() {
-    if (this.state.isSaved) {
-      return (
-        <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
-          <div className="main-content-container container-fluid px-4">
-            <div className="col-12 col-sm-12 text-center text-sm-left mb-0">
-              <span className="text-uppercase page-subtitle" />
-              <h3 className="page-title">
-                The new patient has been added.{" "}
-                <span onClick={this.addPatientAgain} id="addPatientAgain">
-                  {" "}
-                  Add a new patient!
-                </span>
-              </h3>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+    render() {
+        const {firstName, lastName} = this.props.patient;
+        return (
+            <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
         <div className="main-content-container container-fluid px-4">
           <div className="page-header row no-gutters py-4">
             <div className="col-12 col-sm-12 text-center text-sm-left mb-0">
               <span className="text-uppercase page-subtitle" />
-              <h3 className="page-title">New Patient Profile</h3>
+              <h3 className="page-title">{firstName} {lastName}</h3>
             </div>
           </div>
           <div className="row">
@@ -456,7 +180,7 @@ class AddPatient extends React.Component {
 
                           <hr />
 
-                          <div className="form-row">
+                          {/* <div className="form-row">
                             <div className="col-md-12">
                               <label htmlFor="feDate">Procedure</label>
                             </div>
@@ -499,6 +223,7 @@ class AddPatient extends React.Component {
                               </button>
                             </div>
                           </div>
+                        */}
                         </form>
                       </div>
                     </div>
@@ -509,8 +234,9 @@ class AddPatient extends React.Component {
           </div>
         </div>
       </div>
-    );
-  }
+        )
+    }
 }
 
-module.exports = AddPatient;
+
+module.exports = SelectedPatient;
