@@ -5,7 +5,6 @@ const $ = jquery;
 var ReactBsTable = require("react-bootstrap-table");
 var BootstrapTable = ReactBsTable.BootstrapTable;
 var TableHeaderColumn = ReactBsTable.TableHeaderColumn;
-// require("node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css");
 
 class AddAllPatients extends React.Component {
   constructor(props) {
