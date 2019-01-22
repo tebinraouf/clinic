@@ -7,8 +7,6 @@ const BootstrapTable = ReactBsTable.BootstrapTable;
 const TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 const Patient = require("./Patient");
 
-var allPatients = [];
-
 class AddAllPatients extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +14,7 @@ class AddAllPatients extends React.Component {
     this.state = {
       data: null
     };
+    this.onRowClick = this.onRowClick.bind(this);
   }
   componentDidMount() {
     var self = this;
@@ -24,7 +23,13 @@ class AddAllPatients extends React.Component {
       self.setState({ data: allData });
     });
   }
+  onRowClick(row) {
+    debugger;
+  }
   render() {
+    const options = {
+      onRowClick: this.onRowClick
+    };
     // debugger
     return (
       <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
@@ -37,7 +42,12 @@ class AddAllPatients extends React.Component {
           </div>
           <div className="row">
             <div className="col-sm-12">
-              <BootstrapTable data={this.state.data} striped hover>
+              <BootstrapTable
+                data={this.state.data}
+                options={options}
+                striped
+                hover
+              >
                 <TableHeaderColumn
                   isKey
                   dataField="id"
