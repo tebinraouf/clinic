@@ -19,7 +19,7 @@ class SelectedPatient extends React.Component {
     }
 
     render() {
-        const {firstName, lastName} = this.props.patient;
+        const {id, firstName, lastName, mobile, gender, email, note, date, birthday} = this.props.patient;
         return (
             <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
         <div className="main-content-container container-fluid px-4">
@@ -50,6 +50,7 @@ class SelectedPatient extends React.Component {
                                 name="firstName"
                                 onChange={this.handleChange}
                                 placeholder="First Name"
+                                value={firstName}
                               />
                             </div>
                             <div className="form-group col-md-6">
