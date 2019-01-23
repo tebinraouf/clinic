@@ -28,6 +28,8 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Patient` (
   `email` VARCHAR(45) NULL ,
   `note` TEXT NULL ,
   `storageID` VARCHAR(45) NULL ,
+  `date` VARCHAR(45) NULL ,
+  `birthday` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -39,16 +41,26 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Procedure` (
   `id` INT NOT NULL ,
   `note` TEXT NULL ,
   `price` VARCHAR(45) NULL ,
-  `PatientID` INT NOT NULL ,
+  `patientID` INT NOT NULL ,
   `date` TIMESTAMP NULL ,
   `storageID` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_Procedure_Patient_idx` (`PatientID` ASC) ,
+  INDEX `fk_Procedure_Patient_idx` (`patientID` ASC) ,
   CONSTRAINT `fk_Procedure_Patient`
-    FOREIGN KEY (`PatientID` )
+    FOREIGN KEY (`patientID` )
     REFERENCES `mydb`.`Patient` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ProcedureList`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `mydb`.`ProcedureList` (
+  `id` INT NOT NULL ,
+  `name` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
 USE `mydb` ;

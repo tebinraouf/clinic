@@ -22,13 +22,13 @@ class Procedure extends React.Component {
           <input
             type="text"
             className="form-control"
-            id={this.props.prokey}
+            id={"prokey"+this.props.prokey}
             placeholder="note"
           />
           <input
             type="text"
             className="form-control"
-            id={this.props.prikey}
+            id={"prikey"+this.props.prikey}
             placeholder="price"
           />
         </div>

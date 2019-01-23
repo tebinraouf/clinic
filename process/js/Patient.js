@@ -103,6 +103,19 @@ class Patient {
       data(result);
     });
   }
+  //add procedure to procedureList table
+  addProcedure(name) {
+    connection.query(`INSERT INTO ProcedureList (name) VALUES ('${name}')`, function (error, results) {
+      if (error) throw error;
+      debugger
+    });
+  }
+  getProcedureList(data) {
+    connection.query("SELECT * FROM ProcedureList", function (err, result, fields) {
+      if (err) throw err;
+      data(result);
+    });
+  }
 
   getNewID() {
     return "hello again";

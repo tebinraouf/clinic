@@ -2,6 +2,7 @@
 const React = require("react");
 const jquery = require("jquery");
 const Patient = require("./Patient");
+const Procedure = require("./Procedure.jsx");
 const $ = jquery;
 const DayPickerInput = require("react-day-picker/DayPickerInput").default;
 const ReactBsTable = require("react-bootstrap-table");
@@ -23,7 +24,9 @@ class SelectedPatient extends React.Component {
         date: "",
         note: ""
       },
-      procedureData: null
+      procedures: new Map(),
+      procedureData: null,
+      procedureList: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
@@ -43,6 +46,11 @@ class SelectedPatient extends React.Component {
     var p = new Patient();
     p.getProcedureByPatientID(id, function(data) {
       self.setState({ procedureData: data });
+    });
+
+    p.getProcedureList(function(allData) {
+      debugger;
+      self.setState({ procedureList: allData });
     });
   }
   handleGender(target) {
@@ -76,13 +84,13 @@ class SelectedPatient extends React.Component {
     });
     // and load the index.html of the app.
     childWindow.loadURL(`file://${dirName}/case.html`);
-    childWindow.webContents.on('did-finish-load', () => {
+    childWindow.webContents.on("did-finish-load", () => {
       var selectedProcedure = {
         row: row,
         storageID: this.props.patient.storageID
-      }
-      childWindow.webContents.send('sendData', selectedProcedure)
-    })
+      };
+      childWindow.webContents.send("sendData", selectedProcedure);
+    });
     childWindow.webContents.openDevTools();
   }
 
@@ -145,6 +153,7 @@ class SelectedPatient extends React.Component {
                                 name="lastName"
                                 onChange={this.handleChange}
                                 placeholder="Last Name"
+                                value={lastName}
                               />
                             </div>
                           </div>
@@ -330,28 +339,20 @@ class SelectedPatient extends React.Component {
                           </div>
 
                           <div className="form-row">
-                            <div className="col-sm-12">
-                              <button type="submit" className="btn btn-accent">
-                                Create
-                              </button>
-                            </div>
-                          </div>
-
-                          {/* <div className="form-row">
                             <div className="col-md-12">
-                              <label htmlFor="feDate">Procedure</label>
+                              <label htmlFor="feDate">Add Procedure(s)</label>
                             </div>
                           </div>
 
                           <div className="form-row" id="procedure">
-                            {procedures.map(item => (
+                            {this.state.procedureList.map(item => (
                               <Procedure
-                                key={item.key}
-                                prokey={item.prokey}
-                                prikey={item.prikey}
+                                key={item.id}
+                                prokey={item.id}
+                                prikey={item.id}
                                 isChecked={this.state.procedures.get(item.name)}
-                                chkName={item.key}
-                                labelName={item.labelName}
+                                chkName={item.id}
+                                labelName={item.name}
                                 procedureNote={item.procedureNote}
                                 procedurePrice={item.procedurePrice}
                                 handleProCheckbox={this.handleProCheckbox}
@@ -372,9 +373,14 @@ class SelectedPatient extends React.Component {
                               multiple
                             />
                           </div>
-                              <br />
-                          
-                        */}
+                          <br />
+                          <div className="form-row">
+                            <div className="col-sm-12">
+                              <button type="submit" className="btn btn-accent">
+                                Update
+                              </button>
+                            </div>
+                          </div>
                         </form>
                       </div>
                     </div>

@@ -51,6 +51,12 @@ class Sidebar extends React.Component {
                 <span>Add New Patient</span>
               </a>
             </li>
+            <li className="nav-item" onClick={e => this.props.addProcedureList(e)}>
+              <a className={"nav-link " + (this.props.isAddingProcedure ? "active" : "")} href="#">
+                <i className="material-icons">note_add</i>
+                <span>Add New Procedure</span>
+              </a>
+            </li>
             <li className="nav-item" onClick={e => this.props.handleLogout(e)}>
               <a className="nav-link" href="#">
                 <i className="material-icons">&#xE879;</i>
