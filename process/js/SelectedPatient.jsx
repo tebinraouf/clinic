@@ -4,12 +4,16 @@ const jquery = require("jquery");
 const Patient = require("./Patient");
 const $ = jquery;
 const DayPickerInput = require("react-day-picker/DayPickerInput").default;
+const ReactBsTable = require("react-bootstrap-table");
+const BootstrapTable = ReactBsTable.BootstrapTable;
+const TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 
 class SelectedPatient extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       patient: {
+        id: "",
         firstName: "",
         lastName: "",
         mobile: "",
@@ -18,16 +22,27 @@ class SelectedPatient extends React.Component {
         gender: "",
         date: "",
         note: ""
-      }
+      },
+      procedureData: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleGender = this.handleGender.bind(this);
   }
   componentDidMount() {
+    //set the state
     this.setState({
       patient: this.props.patient
     });
+
+    //use state and retrieve data
+    var self = this;
+    var id = this.props.patient.id;
+    var p = new Patient();
+    p.getProcedureByPatientID(id, function(data) {
+      self.setState({ procedureData: data });
+    });
+
   }
   handleGender(target) {
     if (
@@ -153,7 +168,9 @@ class SelectedPatient extends React.Component {
                                       name="inlineRadioOptions"
                                       id="inlineRadio1"
                                       value="female"
-                                      checked={(gender == "female") ? true : false}
+                                      checked={
+                                        gender == "female" ? true : false
+                                      }
                                     />
                                     Female
                                   </label>
@@ -170,7 +187,7 @@ class SelectedPatient extends React.Component {
                                       name="inlineRadioOptions"
                                       id="inlineRadio2"
                                       value="male"
-                                      checked={(gender == "male") ? true : false}
+                                      checked={gender == "male" ? true : false}
                                     />
                                     Male
                                   </label>
@@ -187,7 +204,7 @@ class SelectedPatient extends React.Component {
                                       name="inlineRadioOptions"
                                       id="inlineRadio3"
                                       value="other"
-                                      checked={(gender == "other") ? true : false}
+                                      checked={gender == "other" ? true : false}
                                     />
                                     Other
                                   </label>
@@ -206,13 +223,15 @@ class SelectedPatient extends React.Component {
                                 name="price"
                                 onChange={this.handleChange}
                                 placeholder="Price"
-                                
                               />
                             </div>
                             <div className="form-group col-md-6">
                               <label htmlFor="feDate">Date</label>
                               <br />
-                              <DayPickerInput onDayChange={this.handleDate} value={date} />
+                              <DayPickerInput
+                                onDayChange={this.handleDate}
+                                value={date}
+                              />
                             </div>
                           </div>
 
@@ -231,6 +250,59 @@ class SelectedPatient extends React.Component {
                           </div>
 
                           <hr />
+
+                          <div className="form-row">
+                            <div className="col-md-12">
+                              <label htmlFor="feDate">Past Procedure(s)</label>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="col-md-12">
+                              <BootstrapTable
+                                data={this.state.procedureData}
+                                striped
+                                hover
+                              >
+                                <TableHeaderColumn
+                                  isKey
+                                  dataField="id"
+                                  filter={{ type: "TextFilter" }}
+                                >
+                                  ID
+                                </TableHeaderColumn>
+                                <TableHeaderColumn
+                                  dataField="name"
+                                  filter={{ type: "TextFilter" }}
+                                >
+                                  Name
+                                </TableHeaderColumn>
+                                <TableHeaderColumn
+                                  dataField="note"
+                                  filter={{ type: "TextFilter" }}
+                                >
+                                  Note
+                                </TableHeaderColumn>
+                                <TableHeaderColumn
+                                  dataField="price"
+                                  filter={{ type: "TextFilter" }}
+                                >
+                                  Price
+                                </TableHeaderColumn>
+                                <TableHeaderColumn
+                                  dataField="date"
+                                  filter={{ type: "TextFilter" }}
+                                >
+                                  Date
+                                </TableHeaderColumn>
+                                <TableHeaderColumn
+                                  dataField="storageID"
+                                  filter={{ type: "TextFilter" }}
+                                >
+                                  Case #
+                                </TableHeaderColumn>
+                              </BootstrapTable>
+                            </div>
+                          </div>
 
                           {/* <div className="form-row">
                             <div className="col-md-12">

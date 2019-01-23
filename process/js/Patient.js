@@ -92,8 +92,14 @@ class Patient {
 
   //get all patients
   getAll(data) {
-    var all = [];
     connection.query("SELECT * FROM Patient ORDER BY id DESC", function (err, result, fields) {
+      if (err) throw err;
+      data(result);
+    });
+  }
+  //get procedures
+  getProcedureByPatientID(id, data) {
+    connection.query(`SELECT * FROM mydb.Procedure WHERE PatientID = ${id}`, function (err, result, fields) {
       if (err) throw err;
       data(result);
     });
