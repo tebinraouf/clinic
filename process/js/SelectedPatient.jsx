@@ -6,27 +6,71 @@ const $ = jquery;
 const DayPickerInput = require("react-day-picker/DayPickerInput").default;
 
 class SelectedPatient extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleDate = this.handleDate.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      patient: {
+        firstName: "",
+        lastName: "",
+        mobile: "",
+        email: "",
+        price: "",
+        gender: "",
+        date: "",
+        note: ""
+      }
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleDate = this.handleDate.bind(this);
+    this.handleGender = this.handleGender.bind(this);
+  }
+  componentDidMount() {
+    this.setState({
+      patient: this.props.patient
+    });
+  }
+  handleGender(target) {
+    if (
+      target.value === "male" ||
+      target.value === "female" ||
+      target.value === "other"
+    ) {
+      return "gender";
+    } else {
+      return target.name;
     }
-    handleChange() {
+  }
+  handleChange(event) {
+    const patient = this.state.patient;
+    var name = this.handleGender(event.target);
+    patient[name] = event.target.value;
+    this.setState({
+      patient: patient
+    });
+  }
+  handleDate() {}
 
-    }
-    handleDate() {
-
-    }
-
-    render() {
-        const {id, firstName, lastName, mobile, gender, email, note, date, birthday} = this.props.patient;
-        return (
-            <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+  render() {
+    const {
+      id,
+      firstName,
+      lastName,
+      mobile,
+      gender,
+      email,
+      note,
+      date,
+      birthday
+    } = this.state.patient;
+    return (
+      <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
         <div className="main-content-container container-fluid px-4">
           <div className="page-header row no-gutters py-4">
             <div className="col-12 col-sm-12 text-center text-sm-left mb-0">
               <span className="text-uppercase page-subtitle" />
-              <h3 className="page-title">{firstName} {lastName}</h3>
+              <h3 className="page-title">
+                {firstName} {lastName}
+              </h3>
             </div>
           </div>
           <div className="row">
@@ -75,6 +119,7 @@ class SelectedPatient extends React.Component {
                                 name="mobile"
                                 onChange={this.handleChange}
                                 placeholder="Mobile"
+                                value={mobile}
                               />
                             </div>
 
@@ -87,6 +132,7 @@ class SelectedPatient extends React.Component {
                                 placeholder="Email"
                                 name="email"
                                 onChange={this.handleChange}
+                                value={email}
                               />
                             </div>
                           </div>
@@ -107,6 +153,7 @@ class SelectedPatient extends React.Component {
                                       name="inlineRadioOptions"
                                       id="inlineRadio1"
                                       value="female"
+                                      checked={(gender == "female") ? true : false}
                                     />
                                     Female
                                   </label>
@@ -123,6 +170,7 @@ class SelectedPatient extends React.Component {
                                       name="inlineRadioOptions"
                                       id="inlineRadio2"
                                       value="male"
+                                      checked={(gender == "male") ? true : false}
                                     />
                                     Male
                                   </label>
@@ -139,6 +187,7 @@ class SelectedPatient extends React.Component {
                                       name="inlineRadioOptions"
                                       id="inlineRadio3"
                                       value="other"
+                                      checked={(gender == "other") ? true : false}
                                     />
                                     Other
                                   </label>
@@ -157,12 +206,13 @@ class SelectedPatient extends React.Component {
                                 name="price"
                                 onChange={this.handleChange}
                                 placeholder="Price"
+                                
                               />
                             </div>
                             <div className="form-group col-md-6">
                               <label htmlFor="feDate">Date</label>
                               <br />
-                              <DayPickerInput onDayChange={this.handleDate} />
+                              <DayPickerInput onDayChange={this.handleDate} value={date} />
                             </div>
                           </div>
 
@@ -175,6 +225,7 @@ class SelectedPatient extends React.Component {
                                 rows="5"
                                 name="note"
                                 onChange={this.handleChange}
+                                value={note}
                               />
                             </div>
                           </div>
@@ -235,9 +286,8 @@ class SelectedPatient extends React.Component {
           </div>
         </div>
       </div>
-        )
-    }
+    );
+  }
 }
-
 
 module.exports = SelectedPatient;
