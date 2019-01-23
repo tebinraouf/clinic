@@ -1,7 +1,6 @@
 /* eslint-disable */
 
 const documentPath = "/Users/Tebin/Documents/";
-const mysql = require('mysql');
 
 
 class Patient {

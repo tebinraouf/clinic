@@ -1,0 +1,41 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>hello....</h2>
+    <div id="images">
+
+    </div>
+</body>
+<script>
+    const documentPath = "/Users/Tebin/Documents/DrTanyaPatients";
+    const ipc = require("electron").ipcRenderer;
+    const fs = require('fs-extra');
+    const jquery = require("jquery");
+    const $ = jquery;
+
+    ipc.on("sendData", function (event, arg) {
+        console.log(arg);
+        if (fs.existsSync(documentPath)) {
+            var path = `${documentPath}/${arg.storageID}/${arg.row.storageID}`
+            console.log(path);
+            if (fs.existsSync(path)) {
+                fs.readdir(path, (err, files) => {
+                    files.forEach(file => {
+                        console.log(file);
+                        $("#images").append(`<img src="${path}/${file}" width="600" />`)
+                    });
+                })
+            }
+        }
+    });
+
+</script>
+
+</html>

@@ -28,6 +28,8 @@ class SelectedPatient extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleGender = this.handleGender.bind(this);
+    this.updatePatient = this.updatePatient.bind(this);
+    this.onRowClick = this.onRowClick.bind(this);
   }
   componentDidMount() {
     //set the state
@@ -42,7 +44,6 @@ class SelectedPatient extends React.Component {
     p.getProcedureByPatientID(id, function(data) {
       self.setState({ procedureData: data });
     });
-
   }
   handleGender(target) {
     if (
@@ -64,6 +65,26 @@ class SelectedPatient extends React.Component {
     });
   }
   handleDate() {}
+  updatePatient(e) {
+    e.preventDefault();
+  }
+  onRowClick(row) {
+    //create a new window
+    var childWindow = new BrowserWindow({
+      width: 800,
+      height: 600
+    });
+    // and load the index.html of the app.
+    childWindow.loadURL(`file://${dirName}/case.html`);
+    childWindow.webContents.on('did-finish-load', () => {
+      var selectedProcedure = {
+        row: row,
+        storageID: this.props.patient.storageID
+      }
+      childWindow.webContents.send('sendData', selectedProcedure)
+    })
+    childWindow.webContents.openDevTools();
+  }
 
   render() {
     const {
@@ -77,6 +98,9 @@ class SelectedPatient extends React.Component {
       date,
       birthday
     } = this.state.patient;
+    const options = {
+      onRowClick: this.onRowClick
+    };
     return (
       <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
         <div className="main-content-container container-fluid px-4">
@@ -98,7 +122,7 @@ class SelectedPatient extends React.Component {
                   <li className="list-group-item p-3">
                     <div className="row">
                       <div className="col">
-                        <form onSubmit={e => this.createPatient(e)}>
+                        <form onSubmit={e => this.updatePatient(e)}>
                           <div className="form-row">
                             <div className="form-group col-md-6">
                               <label htmlFor="feFirstName">First Name</label>
@@ -262,6 +286,7 @@ class SelectedPatient extends React.Component {
                                 data={this.state.procedureData}
                                 striped
                                 hover
+                                options={options}
                               >
                                 <TableHeaderColumn
                                   isKey
@@ -304,6 +329,14 @@ class SelectedPatient extends React.Component {
                             </div>
                           </div>
 
+                          <div className="form-row">
+                            <div className="col-sm-12">
+                              <button type="submit" className="btn btn-accent">
+                                Create
+                              </button>
+                            </div>
+                          </div>
+
                           {/* <div className="form-row">
                             <div className="col-md-12">
                               <label htmlFor="feDate">Procedure</label>
@@ -340,13 +373,7 @@ class SelectedPatient extends React.Component {
                             />
                           </div>
                               <br />
-                          <div className="form-row">
-                            <div className="col-sm-12">
-                              <button type="submit" className="btn btn-accent">
-                                Create
-                              </button>
-                            </div>
-                          </div>
+                          
                         */}
                         </form>
                       </div>

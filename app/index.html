@@ -30,7 +30,8 @@
     var eRequire = require;
     var dirName = __dirname;
     const fs = require('fs-extra');
-    const {dialog} = require("electron").remote
+    const {dialog, BrowserWindow} = require("electron").remote
+    var ipc = require("electron").ipcMain; 
     const mysql = require('mysql');
 
     var connection = mysql.createConnection({
@@ -47,9 +48,6 @@
         console.log(err.fatal);
       }
     });
-
-    
-
   </script>
   <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
