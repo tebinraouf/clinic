@@ -104,7 +104,6 @@ class AddPatient extends React.Component {
   createPatient(e) {
     e.preventDefault();
     for (const item of this.state.procedures) {
-      debugger
       var key = item[0];
       var number = key.substring(1);
 
