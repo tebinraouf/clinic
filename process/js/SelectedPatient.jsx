@@ -108,7 +108,7 @@ class SelectedPatient extends React.Component {
 
     //add new procedure for patient
 
-    p.addPatientProcedure(this.state.patient.id, this.state.procedureDate, selectedPro);
+    p.addPatientProcedure(this.state.patient, this.state.procedureDate, selectedPro, files);
 
 
   }

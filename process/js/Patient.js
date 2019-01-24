@@ -45,7 +45,7 @@ class Patient {
         if (err) throw err;
       });
     }
-    path += "/case1/"
+    path += "/case1"
     if (!fs.existsSync(path)) {
       fs.mkdir(path, err => {
         if (err) throw err;
@@ -55,7 +55,7 @@ class Patient {
   }
   copyPatientImages(files, path) {
     for (var i = 0; i < files.length; i++) {
-      fs.copy(files[i].path, `${path}${files[i].name}`)
+      fs.copy(files[i].path, `${path}/${files[i].name}`)
         .then(() => console.log("success!"))
         .catch(err => console.error(err));
       console.log(files[i].name);
@@ -125,11 +125,27 @@ class Patient {
       console.log(result.affectedRows + " record(s) updated");
     });
   }
+  createNewCaseForPatient(storageID, newID) {
+    var path = `${documentPath}DrTanyaPatients/${storageID}/${newID}`;
+    if (!fs.existsSync(path)) {
+      fs.mkdir(path, err => {
+        if (err) throw err;
+      });
+    }
+    return path;
+  }
   //add procedure to existing patient
-  addPatientProcedure(id, procedureDate, procedures) {
-    this.getLastCaseID(id, function (newCaseID) {
+  addPatientProcedure(patient, procedureDate, procedures, files) {
+    var self = this;
+    this.getLastCaseID(patient.id, function (newCaseID) {
+      //create folder for case images
+      var path = self.createNewCaseForPatient(patient.storageID, `case${newCaseID}`);
+      //copy uploaded images
+      self.copyPatientImages(files, path);
+
+      //add procedures to database
       procedures.forEach(element => {
-        var proSQL = `INSERT INTO mydb.Procedure (name, note, price, date, storageID, PatientID) VALUES ('${element.name}','${element.note}','${element.price}','${procedureDate}','case${newCaseID}',${id});`
+        var proSQL = `INSERT INTO mydb.Procedure (name, note, price, date, storageID, PatientID) VALUES ('${element.name}','${element.note}','${element.price}','${procedureDate}','case${newCaseID}',${patient.id});`
 
         connection.query(proSQL, function (err, result) {
           if (err) throw err;
