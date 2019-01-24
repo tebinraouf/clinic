@@ -8,22 +8,28 @@ class AddProcedureList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ""
+      value: "",
+      status: ""
     };
     this.AddProcedure = this.AddProcedure.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  
+
   AddProcedure(e) {
     e.preventDefault();
     console.log(this.state.value);
     var p = new Patient();
     p.addProcedure(this.state.value);
+    this.setState({
+      value: "",
+      status: "Added."
+    });
   }
   handleChange(e) {
     var name = e.target.value;
     this.setState({
-      value: name
+      value: name,
+      status: ""
     });
   }
   render() {
@@ -49,7 +55,13 @@ class AddProcedureList extends React.Component {
                       name="proName"
                       onChange={this.handleChange}
                       placeholder="Enter Procedure Name"
+                      value={this.state.value}
                     />
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                    <h5>{this.state.status}</h5>
                   </div>
                 </div>
                 <br />

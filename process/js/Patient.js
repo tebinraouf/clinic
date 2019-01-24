@@ -107,7 +107,6 @@ class Patient {
   addProcedure(name) {
     connection.query(`INSERT INTO ProcedureList (name) VALUES ('${name}')`, function (error, results) {
       if (error) throw error;
-      debugger
     });
   }
   getProcedureList(data) {
