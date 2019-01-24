@@ -26,7 +26,8 @@ class SelectedPatient extends React.Component {
       },
       procedures: new Map(),
       procedureData: null,
-      procedureList: []
+      procedureList: [],
+      procedureDate: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
@@ -34,6 +35,7 @@ class SelectedPatient extends React.Component {
     this.handleProCheckbox = this.handleProCheckbox.bind(this);
     this.updatePatient = this.updatePatient.bind(this);
     this.onRowClick = this.onRowClick.bind(this);
+    this.handleProcedureDate = this.handleProcedureDate.bind(this);
   }
   componentDidMount() {
     //set the state
@@ -75,6 +77,40 @@ class SelectedPatient extends React.Component {
   handleDate() {}
   updatePatient(e) {
     e.preventDefault();
+
+
+    for (const item of this.state.procedures) {
+      var key = item[0];
+      var number = key.substring(1);
+
+      var prokey = `prokey${number}`;
+      var prikey = `prikey${number}`;
+
+      var proValue = $(`#${prokey}`).val();
+      var priValue = $(`#${prikey}`).val();
+
+      this.state.procedures.get(key)["note"] = proValue;
+      this.state.procedures.get(key)["price"] = priValue;
+    }
+    var selectedPro = [];
+    for (const item of this.state.procedures) {
+      if (item[1].isChecked) {
+        selectedPro.push(item[1]);
+      }
+    }
+
+    var files = $("#procedureImages")[0].files;
+
+    //update patient info
+    var p = new Patient();
+    p.updatePatientInfo(this.state.patient);
+
+
+    //add new procedure for patient
+
+    p.addPatientProcedure(this.state.patient.id, this.state.procedureDate, selectedPro);
+
+
   }
   onRowClick(row) {
     //create a new window
@@ -93,7 +129,11 @@ class SelectedPatient extends React.Component {
     });
     childWindow.webContents.openDevTools();
   }
-
+  handleProcedureDate(date) {
+    this.setState(function(prev) {
+      prev.procedureDate = date.toDateString();
+    });
+  }
   handleProCheckbox(e) {
     const key = e.target.name;
     const value = e.target.value;
@@ -271,7 +311,7 @@ class SelectedPatient extends React.Component {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor="feDate">Date</label>
+                              <label htmlFor="feDate">First Visit Date</label>
                               <br />
                               <DayPickerInput
                                 onDayChange={this.handleDate}
@@ -357,7 +397,14 @@ class SelectedPatient extends React.Component {
                             </div>
                           </div>
 
-                         
+                          <div className="form-group col-md-6">
+                            <label htmlFor="feDate">Procedure Date</label>
+                            <br />
+                            <DayPickerInput
+                              onDayChange={this.handleProcedureDate}
+                            />
+                          </div>
+
                           <div className="form-row" id="procedure">
                             {this.state.procedureList.map(item => (
                               <Procedure

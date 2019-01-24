@@ -73,7 +73,7 @@ class Patient {
 
       procedures.forEach(element => {
         var proSQL = `INSERT INTO mydb.Procedure (name, note, price, date, storageID, PatientID) VALUES ('${element.name}','${element.note}','${element.price}','${objc.date}','case1',${lastID});`
-  
+
         connection.query(proSQL, function (err, result) {
           if (err) throw err;
           console.log("Number of records inserted: " + result.affectedRows);
@@ -84,7 +84,7 @@ class Patient {
       console.log('Inserted.');
     });
 
-    
+
 
 
   }
@@ -117,6 +117,38 @@ class Patient {
     });
   }
 
+  //update patient info
+  updatePatientInfo(data) {
+    const sql = `UPDATE Patient SET firstName = "${data.firstName}", lastName = "${data.lastName}", mobile="${data.mobile}", gender="${data.gender}", email="${data.email}", note="${data.note}", date="${data.date}", birthday="${data.birthday}" WHERE id= ${data.id};`;
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log(result.affectedRows + " record(s) updated");
+    });
+  }
+  //add procedure to existing patient
+  addPatientProcedure(id, procedureDate, procedures) {
+    this.getLastCaseID(id, function (newCaseID) {
+      procedures.forEach(element => {
+        var proSQL = `INSERT INTO mydb.Procedure (name, note, price, date, storageID, PatientID) VALUES ('${element.name}','${element.note}','${element.price}','${procedureDate}','case${newCaseID}',${id});`
+
+        connection.query(proSQL, function (err, result) {
+          if (err) throw err;
+          console.log("Number of records inserted: " + result.affectedRows);
+        });
+      });
+    })
+  }
+
+
+  //get latest case ID 
+  getLastCaseID(patientID, data) {
+    connection.query(`SELECT max(storageID) as "case" FROM mydb.Procedure WHERE patientID = ${patientID};`, function (err, result, fields) {
+      if (err) throw err;
+      var id = parseInt(result[0].case.substring(4))
+      var newID = id + 1;
+      data(newID);
+    });
+  }
   getNewID() {
     return "hello again";
   }
