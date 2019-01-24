@@ -16,152 +16,6 @@ var patientObj = {
   date: "",
   note: ""
 };
-var procedures = [
-  {
-    key: "p1",
-    prokey: "prokey1",
-    prikey: "prikey1",
-    labelName: "Botox"
-  },
-  {
-    key: "p2",
-    prokey: "prokey2",
-    prikey: "prikey2",
-    labelName: "Filler"
-  },
-  {
-    key: "p3",
-    prokey: "prokey3",
-    prikey: "prikey3",
-    labelName: "PRP"
-  },
-  {
-    key: "p4",
-    prokey: "prokey4",
-    prikey: "prikey4",
-    labelName: "Mesotherapy"
-  },
-  {
-    key: "p5",
-    prokey: "prokey5",
-    prikey: "prikey5",
-    labelName: "Laser Ruby"
-  },
-  {
-    key: "p6",
-    prokey: "prokey6",
-    prikey: "prikey6",
-    labelName: "Laser Er YAG"
-  },
-  {
-    key: "p7",
-    prokey: "prokey7",
-    prikey: "prikey7",
-    labelName: "Laser IPL"
-  },
-  {
-    key: "p8",
-    prokey: "prokey8",
-    prikey: "prikey8",
-    labelName: "Fat graft Face"
-  },
-  {
-    key: "p9",
-    prokey: "prokey9",
-    prikey: "prikey9",
-    labelName: "Fat graft Hand"
-  },
-  {
-    key: "p10",
-    prokey: "prokey10",
-    prikey: "prikey10",
-    labelName: "Fat graft breast"
-  },
-  {
-    key: "p11",
-    prokey: "prokey11",
-    prikey: "prikey11",
-    labelName: "Fat graft buttock"
-  },
-  {
-    key: "p12",
-    prokey: "prokey12",
-    prikey: "prikey12",
-    labelName: "Fat graft leg"
-  },
-  {
-    key: "p13",
-    prokey: "prokey13",
-    prikey: "prikey13",
-    labelName: "Body contouring"
-  },
-  {
-    key: "p14",
-    prokey: "prokey14",
-    prikey: "prikey14",
-    labelName: "Upper blepharoplasty"
-  },
-  {
-    key: "p15",
-    prokey: "prokey15",
-    prikey: "prikey15",
-    labelName: "Lower blepharoplasty"
-  },
-  {
-    key: "p16",
-    prokey: "prokey16",
-    prikey: "prikey16",
-    labelName: "Brow lift"
-  },
-  {
-    key: "p17",
-    prokey: "prokey17",
-    prikey: "prikey17",
-    labelName: "Face lift"
-  },
-  {
-    key: "p18",
-    prokey: "prokey18",
-    prikey: "prikey18",
-    labelName: "Rhinoplasty"
-  },
-  {
-    key: "p19",
-    prokey: "prokey19",
-    prikey: "prikey19",
-    labelName: "Mammoplasty augmentation"
-  },
-  {
-    key: "p20",
-    prokey: "prokey20",
-    prikey: "prikey20",
-    labelName: "Mammoplasty Reduction"
-  },
-  {
-    key: "p21",
-    prokey: "prokey21",
-    prikey: "prikey21",
-    labelName: "mammoplasty Liposuction"
-  },
-  {
-    key: "p22",
-    prokey: "prokey22",
-    prikey: "prikey22",
-    labelName: "Abdominoplasty"
-  },
-  {
-    key: "p23",
-    prokey: "prokey23",
-    prikey: "prikey23",
-    labelName: "Liposuction"
-  },
-  {
-    key: "p24",
-    prokey: "prokey24",
-    prikey: "prikey24",
-    labelName: "Otoplasty"
-  }
-];
 
 class AddPatient extends React.Component {
   constructor(props) {
@@ -178,6 +32,7 @@ class AddPatient extends React.Component {
         note: ""
       },
       procedures: new Map(),
+      procedureList: [],
       isSaved: false
     };
 
@@ -189,6 +44,14 @@ class AddPatient extends React.Component {
     this.handleUploadingPictures = this.handleUploadingPictures.bind(this);
     this.addPatientAgain = this.addPatientAgain.bind(this);
     this.handleDate = this.handleDate.bind(this);
+  }
+  componentDidMount() {
+    //use state and retrieve data
+    var self = this;
+    var p = new Patient();
+    p.getProcedureList(function(allData) {
+      self.setState({ procedureList: allData });
+    });
   }
   handleGender(target) {
     if (
@@ -241,6 +104,7 @@ class AddPatient extends React.Component {
   createPatient(e) {
     e.preventDefault();
     for (const item of this.state.procedures) {
+      debugger
       var key = item[0];
       var number = key.substring(1);
 
@@ -463,16 +327,12 @@ class AddPatient extends React.Component {
                           </div>
 
                           <div className="form-row" id="procedure">
-                            {procedures.map(item => (
+                            {this.state.procedureList.map(item => (
                               <Procedure
-                                key={item.key}
-                                prokey={item.prokey}
-                                prikey={item.prikey}
+                                key={item.id}
+                                id={item.id}
                                 isChecked={this.state.procedures.get(item.name)}
-                                chkName={item.key}
-                                labelName={item.labelName}
-                                procedureNote={item.procedureNote}
-                                procedurePrice={item.procedurePrice}
+                                labelName={item.name}
                                 handleProCheckbox={this.handleProCheckbox}
                               />
                             ))}

@@ -31,6 +31,7 @@ class SelectedPatient extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleGender = this.handleGender.bind(this);
+    this.handleProCheckbox = this.handleProCheckbox.bind(this);
     this.updatePatient = this.updatePatient.bind(this);
     this.onRowClick = this.onRowClick.bind(this);
   }
@@ -49,7 +50,6 @@ class SelectedPatient extends React.Component {
     });
 
     p.getProcedureList(function(allData) {
-      debugger;
       self.setState({ procedureList: allData });
     });
   }
@@ -92,6 +92,18 @@ class SelectedPatient extends React.Component {
       childWindow.webContents.send("sendData", selectedProcedure);
     });
     childWindow.webContents.openDevTools();
+  }
+
+  handleProCheckbox(e) {
+    const key = e.target.name;
+    const value = e.target.value;
+    const isChecked = e.target.checked;
+    this.setState(prevState => ({
+      procedures: prevState.procedures.set(key, {
+        isChecked: isChecked,
+        name: value
+      })
+    }));
   }
 
   render() {
@@ -282,7 +294,7 @@ class SelectedPatient extends React.Component {
                             </div>
                           </div>
 
-                          <hr />
+                          <br />
 
                           <div className="form-row">
                             <div className="col-md-12">
@@ -338,23 +350,21 @@ class SelectedPatient extends React.Component {
                             </div>
                           </div>
 
+                          <br />
                           <div className="form-row">
                             <div className="col-md-12">
                               <label htmlFor="feDate">Add Procedure(s)</label>
                             </div>
                           </div>
 
+                         
                           <div className="form-row" id="procedure">
                             {this.state.procedureList.map(item => (
                               <Procedure
                                 key={item.id}
-                                prokey={item.id}
-                                prikey={item.id}
+                                id={item.id}
                                 isChecked={this.state.procedures.get(item.name)}
-                                chkName={item.id}
                                 labelName={item.name}
-                                procedureNote={item.procedureNote}
-                                procedurePrice={item.procedurePrice}
                                 handleProCheckbox={this.handleProCheckbox}
                               />
                             ))}

@@ -10,25 +10,25 @@ class Procedure extends React.Component {
           <input
             type="checkbox"
             className="custom-control-input"
-            id={this.props.chkName}
+            id={"p"+this.props.id}
             checked={this.props.isChecked}
             onChange={this.props.handleProCheckbox}
-            name={this.props.chkName}
+            name={"p"+this.props.id}
             value={this.props.labelName}
           />
-          <label className="custom-control-label" htmlFor={this.props.chkName}>
+          <label className="custom-control-label" htmlFor={"p"+this.props.id}>
             {this.props.labelName}
           </label>
           <input
             type="text"
             className="form-control"
-            id={"prokey"+this.props.prokey}
+            id={"prokey"+this.props.id}
             placeholder="note"
           />
           <input
             type="text"
             className="form-control"
-            id={"prikey"+this.props.prikey}
+            id={"prikey"+this.props.id}
             placeholder="price"
           />
         </div>
