@@ -146,3 +146,8 @@ body {
   box-shadow: none;
   transition: box-shadow 250ms cubic-bezier(.27, .01, .38, 1.06), border 250ms cubic-bezier(.27, .01, .38, 1.06);
 }
+
+.delete {
+  color: #ea4335;
+  cursor: pointer;
+}

@@ -164,7 +164,7 @@ class Patient {
         var id = parseInt(result[0].case.substring(4))
         var newID = id + 1;
         data(newID);
-      }      
+      }
     });
   }
   getLogin(callback) {
@@ -173,6 +173,22 @@ class Patient {
       callback(result[0].userName, result[0].userPassword);
     });
   }
+  //delete patient profile
+  deletePatientProfile(id, callback) {
+    connection.query(`DELETE FROM mydb.Procedure WHERE patientID = ${id}`, function (err, result) {
+      if (err) throw err;
+      console.log("Number of records deleted: " + result.affectedRows);
+
+      connection.query(`DELETE FROM mydb.Patient WHERE id = ${id}`, function (err, result) {
+        if (err) throw err;
+        console.log("Number of records deleted: " + result.affectedRows);
+        callback(true);
+      });
+
+    });
+  }
+
+
   getNewID() {
     return "hello again";
   }
