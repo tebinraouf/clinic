@@ -167,6 +167,12 @@ class Patient {
       }      
     });
   }
+  getLogin(callback) {
+    connection.query("SELECT * FROM User", function (err, result, fields) {
+      if (err) throw err;
+      callback(result[0].userName, result[0].userPassword);
+    });
+  }
   getNewID() {
     return "hello again";
   }
