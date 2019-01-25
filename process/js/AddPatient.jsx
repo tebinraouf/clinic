@@ -26,7 +26,7 @@ class AddPatient extends React.Component {
         lastName: "",
         mobile: "",
         email: "",
-        price: "",
+        age: "",
         gender: "",
         date: "",
         note: ""
@@ -287,14 +287,14 @@ class AddPatient extends React.Component {
 
                           <div className="form-row">
                             <div className="form-group col-md-6">
-                              <label htmlFor="fePrice">Price</label>
+                              <label htmlFor="feAge">Age</label>
                               <input
                                 type="text"
                                 className="form-control"
-                                id="fePrice"
-                                name="price"
+                                id="feAge"
+                                placeholder="Age"
+                                name="age"
                                 onChange={this.handleChange}
-                                placeholder="Price"
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -350,7 +350,7 @@ class AddPatient extends React.Component {
                               multiple
                             />
                           </div>
-                              <br />
+                          <br />
                           <div className="form-row">
                             <div className="col-sm-12">
                               <button type="submit" className="btn btn-accent">

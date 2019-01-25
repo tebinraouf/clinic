@@ -19,7 +19,7 @@ class SelectedPatient extends React.Component {
         lastName: "",
         mobile: "",
         email: "",
-        price: "",
+        age: "",
         gender: "",
         date: "",
         note: ""
@@ -156,7 +156,7 @@ class SelectedPatient extends React.Component {
       email,
       note,
       date,
-      birthday
+      age
     } = this.state.patient;
     const options = {
       onRowClick: this.onRowClick
@@ -300,14 +300,15 @@ class SelectedPatient extends React.Component {
 
                           <div className="form-row">
                             <div className="form-group col-md-6">
-                              <label htmlFor="fePrice">Price</label>
+                              <label htmlFor="feAge">Age</label>
                               <input
                                 type="text"
                                 className="form-control"
-                                id="fePrice"
-                                name="price"
+                                id="feAge"
+                                name="age"
                                 onChange={this.handleChange}
-                                placeholder="Price"
+                                placeholder="Age"
+                                value={age}
                               />
                             </div>
                             <div className="form-group col-md-6">

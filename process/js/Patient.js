@@ -63,7 +63,7 @@ class Patient {
   }
   insertIntoDatabase(objc, procedures, id) {
     //connection is defined in index.html
-    var sql = `INSERT INTO Patient (firstName, lastName, mobile, email, gender, note, storageID, date) VALUES ('${objc.firstName}', '${objc.lastName}', '${objc.mobile}', '${objc.email}', '${objc.gender}', '${objc.note}', '${id}', '${objc.date}')`;
+    var sql = `INSERT INTO Patient (firstName, lastName, mobile, email, gender, note, storageID, date, age) VALUES ('${objc.firstName}', '${objc.lastName}', '${objc.mobile}', '${objc.email}', '${objc.gender}', '${objc.note}', '${id}', '${objc.date}', ${objc.age})`;
 
     var lastID;
     var query = connection.query(sql, function (error, results) {
@@ -118,7 +118,7 @@ class Patient {
 
   //update patient info
   updatePatientInfo(data) {
-    const sql = `UPDATE Patient SET firstName = "${data.firstName}", lastName = "${data.lastName}", mobile="${data.mobile}", gender="${data.gender}", email="${data.email}", note="${data.note}", date="${data.date}", birthday="${data.birthday}" WHERE id= ${data.id};`;
+    const sql = `UPDATE Patient SET firstName = "${data.firstName}", lastName = "${data.lastName}", mobile="${data.mobile}", gender="${data.gender}", email="${data.email}", note="${data.note}", date="${data.date}", age=${data.age} WHERE id= ${data.id};`;
     connection.query(sql, function (err, result) {
       if (err) throw err;
       console.log(result.affectedRows + " record(s) updated");
@@ -159,9 +159,12 @@ class Patient {
   getLastCaseID(patientID, data) {
     connection.query(`SELECT max(storageID) as "case" FROM mydb.Procedure WHERE patientID = ${patientID};`, function (err, result, fields) {
       if (err) throw err;
-      var id = parseInt(result[0].case.substring(4))
-      var newID = id + 1;
-      data(newID);
+
+      if (result[0].case != null) {
+        var id = parseInt(result[0].case.substring(4))
+        var newID = id + 1;
+        data(newID);
+      }      
     });
   }
   getNewID() {
