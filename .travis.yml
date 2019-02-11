@@ -19,4 +19,4 @@ before_script:
   - npm install --save-dev electron
   - npm install electron-packager -g
 script:
-  electron-packager . 'Dr Tanya Clinic' --out . --overwrite
+  electron-packager $TRAVIS_BUILD_DIR 'Dr Tanya Clinic' --out . --overwrite
