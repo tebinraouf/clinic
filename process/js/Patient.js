@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-const documentPath = "/Users/Tebin/Documents/";
+const documentPath = "/Users/Tanya/Documents/";
 
 
 class Patient {
