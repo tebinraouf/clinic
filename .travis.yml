@@ -1,7 +1,17 @@
 language: node_js
 os: osx
+
+addons:
+  apt:
+    packages:
+      - xvfb
+
+install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+  
 cache:
   directories:
   - node_modules
 script:
-  ./packageApp.sh
+  electron-packager . 'Dr Tanya Clinic' --out . --overwrite
