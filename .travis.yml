@@ -20,4 +20,4 @@ before_script:
   - npm install electron-packager -g
   - pwd
 script:
-  electron-packager ~/. 'Dr Tanya Clinic' --out ~/. --overwrite
+  electron-packager /Users/travis/build/tebinraouf/clinic 'Dr Tanya Clinic' --out ../ --overwrite
