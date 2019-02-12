@@ -21,13 +21,14 @@ before_script:
   - npm install electron-packager -g
   - pwd
 script:
-  - mkdir ../clinic_release
-  - electron-packager /Users/travis/build/tebinraouf/clinic 'Dr Tanya Clinic' --out ../clinic_release --overwrite
+  # - mkdir ../clinic_release
+  # - electron-packager /Users/travis/build/tebinraouf/clinic 'Dr Tanya Clinic' --out ../clinic_release --overwrite
+  - electron-packager . 
 
 before_deploy:
-  - cd ..
+  # - cd ..
   - ls -lha
-  - tar -zcf clinic_release.tar.gz clinic_release/
+  - tar -zcf clinic_release.tar.gz .
   - ls -lha
 
 deploy:
