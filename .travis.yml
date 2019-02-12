@@ -33,5 +33,5 @@ before_deploy:
 deploy:
     provider: releases
     api_key: "$GitHub_Token"
-    file: ../clinic_release.tar.gz
+    file: clinic_release.tar.gz
     skip_cleanup: true
