@@ -26,7 +26,9 @@ script:
 
 before_deploy:
   - cd ..
+  - ls -lha
   - tar -zcf clinic_release.tar.gz clinic_release/
+  - ls -lha
 
 deploy:
     provider: releases
