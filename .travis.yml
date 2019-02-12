@@ -21,4 +21,15 @@ before_script:
   - npm install electron-packager -g
   - pwd
 script:
-  electron-packager /Users/travis/build/tebinraouf/clinic 'Dr Tanya Clinic' --out ../ --overwrite
+  - mkdir ../clinic_release
+  - electron-packager /Users/travis/build/tebinraouf/clinic 'Dr Tanya Clinic' --out ../clinic_release --overwrite
+
+before_deploy:
+  - cd ..
+  - tar -zcf clinic_release.tar.gz clinic_release/
+
+deploy:
+    provider: releases
+    api_key: "$Github_Token"
+    file: ../clinic_release.tar.gz
+    skip_cleanup: true
