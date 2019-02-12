@@ -18,5 +18,6 @@ install:
 before_script:
   - npm install --save-dev electron
   - npm install electron-packager -g
+  - pwd
 script:
   electron-packager $TRAVIS_BUILD_DIR 'Dr Tanya Clinic' --out . --overwrite
