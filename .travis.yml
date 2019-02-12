@@ -17,6 +17,7 @@ install:
 #   - node_modules
 before_script:
   - npm install --save-dev electron
+  - npm install electron-packager --save-dev
   - npm install electron-packager -g
   - pwd
 script:
