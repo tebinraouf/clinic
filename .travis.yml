@@ -23,16 +23,16 @@ before_script:
 script:
   # - mkdir ../clinic_release
   # - electron-packager /Users/travis/build/tebinraouf/clinic 'Dr Tanya Clinic' --out ../clinic_release --overwrite
-  - electron-packager . 
+  - electron-packager . 'Clinic' --out clinicApp
 
 before_deploy:
   # - cd ..
   - ls -lha
-  - tar -zcf clinic_release.tar.gz .
+  - tar -zcf clinicApp.tar.gz .
   - ls -lha
 
 deploy:
     provider: releases
     api_key: "$GitHub_Token"
-    file: clinic_release.tar.gz
+    file: clinicApp.tar.gz
     skip_cleanup: true
