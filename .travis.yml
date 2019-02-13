@@ -15,22 +15,18 @@ install:
 cache:
   directories:
   - node_modules
+
 before_script:
   - npm install electron --save-dev
   - npm install electron-packager --save-dev
   - npm install electron-packager -g
-  - pwd
+  
 script:
-  # - mkdir ../clinic_release
-  # - electron-packager /Users/travis/build/tebinraouf/clinic 'Dr Tanya Clinic' --out ../clinic_release --overwrite
   - electron-packager . 'Clinic' --out clinicApp
-  # - electron .
 
 before_deploy:
-  # - cd ..
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
   - git tag $TRAVIS_TAG
-  - tar -zcf clinicApp.tar.gz .
 
 deploy:
     provider: releases
