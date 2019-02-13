@@ -20,6 +20,8 @@ before_script:
   - npm install electron --save-dev
   - npm install electron-packager --save-dev
   - npm install electron-packager -g
+  - npm install gulp -g
+  - gulp
   
 script:
   - electron-packager . 'Clinic' --out clinicApp
