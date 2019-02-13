@@ -1,12 +1,15 @@
 /* eslint-disable */
 
-const documentPath = "/Users/Tanya/Documents/";
-
+// const documentPath = "/Users/Tanya/Documents/";
+var documentPath = "";
+fullname().then(name => {
+  documentPath = `/Users/${name}/Documents/`
+});
 
 class Patient {
 
   constructor() {
-
+    
   }
   //Create new patient account
   createAccount(patientObjc, procedures, files) {
