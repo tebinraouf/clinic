@@ -46,4 +46,8 @@ gulp.task('serve', ['html', 'js', 'css'], function() {
   run('electron app/main.js').exec();
 });
 
+gulp.task('build', ['html', 'js', 'css'] ,function() {
+  console.log("Gulp is building...");
+});
+
 gulp.task('default', ['watch', 'fonts', 'serve']);
