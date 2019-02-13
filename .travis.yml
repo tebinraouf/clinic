@@ -12,9 +12,9 @@ install:
   - export DISPLAY=':99.0'
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 
-# cache:
-#   directories:
-#   - node_modules
+cache:
+  directories:
+  - node_modules
 before_script:
   - npm install electron --save-dev
   - npm install electron-packager --save-dev
@@ -23,17 +23,17 @@ before_script:
 script:
   # - mkdir ../clinic_release
   # - electron-packager /Users/travis/build/tebinraouf/clinic 'Dr Tanya Clinic' --out ../clinic_release --overwrite
-  # - electron-packager . 'Clinic' --out clinicApp
-  - electron .
+  - electron-packager . 'Clinic' --out clinicApp
+  # - electron .
 
-# before_deploy:
-#   # - cd ..
-#   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
-#   - git tag $TRAVIS_TAG
-#   - tar -zcf clinicApp.tar.gz .
+before_deploy:
+  # - cd ..
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - git tag $TRAVIS_TAG
+  - tar -zcf clinicApp.tar.gz .
 
-# deploy:
-#     provider: releases
-#     api_key: "$GitHub_Token"
-#     file: clinicApp.tar.gz
-#     skip_cleanup: true
+deploy:
+    provider: releases
+    api_key: "$GitHub_Token"
+    file: clinicApp.tar.gz
+    skip_cleanup: true
