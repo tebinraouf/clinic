@@ -24,14 +24,15 @@ before_script:
   - gulp build
   
 script:
-  - electron-packager . 'Clinic' --out clinicApp
+  - electron-packager . 'Clinic' --out ../clinicApp
 
 before_deploy:
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
   - git tag $TRAVIS_TAG
+  - tar -zcvf clinicApp.tar.gz ../clinicApp 
 
 deploy:
     provider: releases
     api_key: "$GitHub_Token"
-    file: clinicApp.tar.gz
+    file: ../clinicApp.tar.gz
     skip_cleanup: true
