@@ -5,11 +5,13 @@ var gulp = require('gulp'),
   concatCss = require('gulp-concat-css'),
   run = require('gulp-run');
 var terser = require('gulp-terser');
+var exec = require('child_process').exec;
 
 var src = './process',
   app = './app';
 
 gulp.task('js', function () {
+  process.env.NODE_ENV = 'production';
   return gulp.src(src + '/js/render.js')
     .pipe(browserify({
       transform: 'reactify',
@@ -54,7 +56,17 @@ gulp.task('minify', ['js'],function () {
 })
 
 gulp.task('build', ['html', 'js', 'css', 'fonts', 'minify'], function () {
-  console.log("gulp has built the project.");
+  console.log("The app has been built.");
 });
 
+gulp.task('package', ['build'], function (cb) {
+  exec('electron-packager ~/Desktop/electron/ "Dr Tanya Clinic" --out ~/Desktop/ --overwrite --icon ~/Desktop/electron/drfblogo.icns --ignore={"utility/","process/"}', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+    console.log("The app has been packaged.");
+  });
+})
+
 gulp.task('default', ['watch', 'fonts', 'minify', 'serve']);
+
