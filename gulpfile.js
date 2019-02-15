@@ -68,5 +68,14 @@ gulp.task('package', ['build'], function (cb) {
   });
 })
 
+gulp.task('package-travis', ['build'], function (cb) {
+  exec('electron-packager . "Dr Tanya Clinic" --out ../ClinicApp --overwrite --icon drfblogo.icns --ignore={"utility/","process/"}', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+    console.log("The app has been packaged.");
+  });
+})
+
 gulp.task('default', ['watch', 'fonts', 'minify', 'serve']);
 
