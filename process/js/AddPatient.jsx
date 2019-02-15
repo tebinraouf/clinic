@@ -26,7 +26,7 @@ class AddPatient extends React.Component {
         lastName: "",
         mobile: "",
         email: "",
-        age: "",
+        age: 0,
         gender: "",
         date: "",
         note: ""
