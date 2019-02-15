@@ -4,6 +4,7 @@ var gulp = require('gulp'),
   browserify = require('gulp-browserify'),
   concatCss = require('gulp-concat-css'),
   run = require('gulp-run');
+var terser = require('gulp-terser');
 
 var src = './process',
   app = './app';
@@ -46,8 +47,14 @@ gulp.task('serve', ['html', 'js', 'css'], function () {
   run('electron app/main.js').exec();
 });
 
-gulp.task('build', ['html', 'js', 'css', 'fonts'], function () {
+gulp.task('minify', ['js'],function () {
+  gulp.src('./app/js/render.js')
+  .pipe(terser())
+  .pipe(gulp.dest('./app/js/'))
+})
+
+gulp.task('build', ['html', 'js', 'css', 'fonts', 'minify'], function () {
   console.log("gulp has built the project.");
 });
 
-gulp.task('default', ['watch', 'fonts', 'serve']);
+gulp.task('default', ['watch', 'fonts', 'minify', 'serve']);
