@@ -2,6 +2,7 @@
 const React = require("react");
 const jquery = require("jquery");
 const Patient = require("./Patient");
+const AddAllPatients = require("./AddAllPatients.jsx");
 const Procedure = require("./Procedure.jsx");
 const MainInterface = require("./MainInterface.jsx");
 const $ = jquery;
@@ -171,6 +172,8 @@ class SelectedPatient extends React.Component {
         isPatientDeleted: true
       });
     });
+    debugger
+    // <AddAllPatients />
   }
 
   render() {
@@ -190,7 +193,7 @@ class SelectedPatient extends React.Component {
     };
 
     if (this.state.isPatientDeleted) {
-      return <MainInterface />;
+      return <AddAllPatients />;
     } else {
       return (
         <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
@@ -507,6 +510,9 @@ class SelectedPatient extends React.Component {
             </div>
           </div>
         </div>
+
+        
+
       );
     }
   }

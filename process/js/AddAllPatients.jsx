@@ -18,6 +18,7 @@ class AddAllPatients extends React.Component {
       isClicked: false
     };
     this.onRowClick = this.onRowClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   componentDidMount() {
     var self = this;
@@ -29,6 +30,22 @@ class AddAllPatients extends React.Component {
   onRowClick(row) {
     this.setState({ patient: row, isClicked: true });
   }
+  selectedRow() {
+    debugger
+  }
+  handleDelete() {
+    var self = this;
+    debugger
+    var p = new Patient();
+    p.deletePatientProfile(this.state.patient.id, function(isDeleted) {
+      self.setState({
+        isClicked: false
+      });
+    });
+    // debugger
+    // <AddAllPatients />
+  }
+
   render() {
     const options = {
       onRowClick: this.onRowClick
@@ -36,7 +53,22 @@ class AddAllPatients extends React.Component {
 
     if (this.state.isClicked) {
         return (
+          <div>
+            <div className="row">
+            <div className="offset-sm-0 offset-md-2 col-sm-12">
+            <h6 className="delete" onClick={this.handleDelete}>
+                  Delete
+                </h6>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-12">
             <SelectedPatient patient={this.state.patient} />
+            </div>
+          </div>
+          </div>
+          
+            
         )
     }
 
@@ -57,6 +89,9 @@ class AddAllPatients extends React.Component {
                 striped
                 hover
               >
+              <TableHeaderColumn>
+                Delete
+              </TableHeaderColumn>
                 <TableHeaderColumn
                   isKey
                   dataField="id"
