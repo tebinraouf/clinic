@@ -44,7 +44,7 @@ class AddAllPatients extends React.Component {
       self.updateData();
     });
   }
-  
+
   updateData() {
     var self = this;
     //update patients data
@@ -53,16 +53,30 @@ class AddAllPatients extends React.Component {
       self.setState({ data: allData });
     });
   }
+  onDeleteRow(rows) {
+    debugger
+    var self = this;
+    var p = new Patient();
+    p.deletePatientProfile(rows[0], function(isDeleted) {
+      //
+    });
+  }
 
   render() {
-
     const options = {
-      onRowClick: this.onRowClick
+      onRowClick: this.onRowClick,
+      onDeleteRow: this.onDeleteRow
+    };
+    const selectRow = {
+      mode: "radio" //radio or checkbox
     };
 
     if (this.state.isClicked) {
       return (
-        <SelectedPatient patient={this.state.patient} handleDelete={this.handleDelete}/>
+        <SelectedPatient
+          patient={this.state.patient}
+          handleDelete={this.handleDelete}
+        />
       );
     } else {
       return (
@@ -79,10 +93,11 @@ class AddAllPatients extends React.Component {
                 <BootstrapTable
                   data={this.state.data}
                   options={options}
+                  deleteRow
+                  selectRow={selectRow}
                   striped
                   hover
                 >
-                  <TableHeaderColumn>Delete</TableHeaderColumn>
                   <TableHeaderColumn
                     isKey
                     dataField="id"
@@ -127,8 +142,6 @@ class AddAllPatients extends React.Component {
         </div>
       );
     }
-
-    
   }
 }
 

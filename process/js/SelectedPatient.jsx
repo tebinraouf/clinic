@@ -38,9 +38,8 @@ class SelectedPatient extends React.Component {
     this.onRowClick = this.onRowClick.bind(this);
     this.handleProcedureDate = this.handleProcedureDate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.updatePatientProcedureList = this.updatePatientProcedureList.bind(
-      this
-    );
+    this.updatePatientProcedureList = this.updatePatientProcedureList.bind(this);
+    this.onDeleteRow = this.onDeleteRow.bind(this);
   }
   componentDidMount() {
     //set the state
@@ -171,7 +170,9 @@ class SelectedPatient extends React.Component {
   handleDelete() {
     this.props.handleDelete();
   }
-
+  onDeleteRow(rows) {
+    debugger
+  }
 
   render() {
     const {
@@ -186,7 +187,11 @@ class SelectedPatient extends React.Component {
       age
     } = this.state.patient;
     const options = {
-      onRowClick: this.onRowClick
+      onRowClick: this.onRowClick,
+      onDeleteRow: this.onDeleteRow
+    };
+    const selectRow = {
+      mode: 'radio' //radio or checkbox
     };
 
     return (
@@ -390,6 +395,8 @@ class SelectedPatient extends React.Component {
                             <div className="col-md-12">
                               <BootstrapTable
                                 data={this.state.procedureData}
+                                deleteRow
+                                selectRow={ selectRow }
                                 striped
                                 hover
                                 options={options}
@@ -431,6 +438,7 @@ class SelectedPatient extends React.Component {
                                 >
                                   Case #
                                 </TableHeaderColumn>
+                                
                               </BootstrapTable>
                             </div>
                           </div>
