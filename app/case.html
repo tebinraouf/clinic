@@ -13,9 +13,22 @@
 </head>
 
 <body>
+    <div>
+        <h4>Name</h4>
+        <p id="name"></p>
+    </div>
+    <div>
+        <h4>Date</h4>
+        <p id="date"></p>
+    </div>
+    <div>
+        <h4>Note</h4>
+        <p id="note"></p>
+    </div>
     <div id="images">
 
     </div>
+
 </body>
 <script>
     const documentPath = "/Users/Tebin/Documents/DrTanyaPatients";
@@ -26,6 +39,11 @@
 
     ipc.on("sendData", function (event, arg) {
         console.log(arg);
+
+        $("#name").text(arg.row.name);
+        $("#date").text(arg.row.date);
+        $("#note").text(arg.row.note);
+
         if (fs.existsSync(documentPath)) {
             var path = `${documentPath}/${arg.storageID}/${arg.row.storageID}`
             console.log(path);
@@ -39,7 +57,6 @@
             }
         }
     });
-
 </script>
 
 </html>

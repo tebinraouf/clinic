@@ -118,7 +118,6 @@ class SelectedPatient extends React.Component {
     this.updatePatientProcedureList();
   }
   updatePatientProcedureList() {
-    console.log("hello update list")
     var self = this;
     var p = new Patient();
     var id = this.props.patient.id;
@@ -172,9 +171,7 @@ class SelectedPatient extends React.Component {
   handleDelete() {
     this.props.handleDelete();
   }
-  // handleProcedureRefresh() {
-  //   this.updatePatientProcedureList();
-  // }
+
 
   render() {
     const {
