@@ -15,10 +15,12 @@ class AddAllPatients extends React.Component {
     this.state = {
       data: null,
       patient: null,
-      isClicked: false
+      isClicked: false,
+      isDeleted: false
     };
     this.onRowClick = this.onRowClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.updateData = this.updateData.bind(this);
   }
   componentDidMount() {
     var self = this;
@@ -30,111 +32,103 @@ class AddAllPatients extends React.Component {
   onRowClick(row) {
     this.setState({ patient: row, isClicked: true });
   }
-  selectedRow() {
-    debugger
-  }
   handleDelete() {
     var self = this;
-    debugger
+    // debugger;
     var p = new Patient();
     p.deletePatientProfile(this.state.patient.id, function(isDeleted) {
       self.setState({
-        isClicked: false
+        isClicked: false,
+        isDeleted: true
       });
+      self.updateData();
     });
-    // debugger
-    // <AddAllPatients />
+  }
+  
+  updateData() {
+    var self = this;
+    //update patients data
+    var p = new Patient();
+    p.getAll(function(allData) {
+      self.setState({ data: allData });
+    });
   }
 
   render() {
+
     const options = {
       onRowClick: this.onRowClick
     };
 
     if (this.state.isClicked) {
-        return (
-          <div>
+      return (
+        <SelectedPatient patient={this.state.patient} handleDelete={this.handleDelete}/>
+      );
+    } else {
+      return (
+        <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+          <div className="main-content-container container-fluid px-4">
+            <div className="page-header row no-gutters py-4">
+              <div className="col-12 col-sm-12 text-center text-sm-left mb-0">
+                <span className="text-uppercase page-subtitle" />
+                <h3 className="page-title">All Patients</h3>
+              </div>
+            </div>
             <div className="row">
-            <div className="offset-sm-0 offset-md-2 col-sm-12">
-            <h6 className="delete" onClick={this.handleDelete}>
-                  Delete
-                </h6>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-12">
-            <SelectedPatient patient={this.state.patient} />
-            </div>
-          </div>
-          </div>
-          
-            
-        )
-    }
-
-    return (
-      <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
-        <div className="main-content-container container-fluid px-4">
-          <div className="page-header row no-gutters py-4">
-            <div className="col-12 col-sm-12 text-center text-sm-left mb-0">
-              <span className="text-uppercase page-subtitle" />
-              <h3 className="page-title">All Patients</h3>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-12">
-              <BootstrapTable
-                data={this.state.data}
-                options={options}
-                striped
-                hover
-              >
-              <TableHeaderColumn>
-                Delete
-              </TableHeaderColumn>
-                <TableHeaderColumn
-                  isKey
-                  dataField="id"
-                  filter={{ type: "TextFilter" }}
+              <div className="col-sm-12">
+                <BootstrapTable
+                  data={this.state.data}
+                  options={options}
+                  striped
+                  hover
                 >
-                  ID
-                </TableHeaderColumn>
-                <TableHeaderColumn
-                  dataField="firstName"
-                  filter={{ type: "TextFilter" }}
-                >
-                  First Name
-                </TableHeaderColumn>
-                <TableHeaderColumn
-                  dataField="lastName"
-                  filter={{ type: "TextFilter" }}
-                >
-                  Last Name
-                </TableHeaderColumn>
-                <TableHeaderColumn
-                  dataField="date"
-                  filter={{ type: "TextFilter" }}
-                >
-                  First Visit Date
-                </TableHeaderColumn>
-                <TableHeaderColumn
-                  dataField="mobile"
-                  filter={{ type: "TextFilter" }}
-                >
-                  Mobile
-                </TableHeaderColumn>
-                <TableHeaderColumn
-                  dataField="gender"
-                  filter={{ type: "TextFilter" }}
-                >
-                  Gender
-                </TableHeaderColumn>
-              </BootstrapTable>
+                  <TableHeaderColumn>Delete</TableHeaderColumn>
+                  <TableHeaderColumn
+                    isKey
+                    dataField="id"
+                    filter={{ type: "TextFilter" }}
+                  >
+                    ID
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="firstName"
+                    filter={{ type: "TextFilter" }}
+                  >
+                    First Name
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="lastName"
+                    filter={{ type: "TextFilter" }}
+                  >
+                    Last Name
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="date"
+                    filter={{ type: "TextFilter" }}
+                  >
+                    First Visit Date
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="mobile"
+                    filter={{ type: "TextFilter" }}
+                  >
+                    Mobile
+                  </TableHeaderColumn>
+                  <TableHeaderColumn
+                    dataField="gender"
+                    filter={{ type: "TextFilter" }}
+                  >
+                    Gender
+                  </TableHeaderColumn>
+                </BootstrapTable>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
+
+    
   }
 }
 
