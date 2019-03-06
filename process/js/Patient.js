@@ -167,6 +167,8 @@ class Patient {
         var id = parseInt(result[0].case.substring(4))
         var newID = id + 1;
         data(newID);
+      } else {
+        data(1);
       }
     });
   }

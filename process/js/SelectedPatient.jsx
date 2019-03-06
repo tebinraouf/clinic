@@ -28,7 +28,7 @@ class SelectedPatient extends React.Component {
       procedureData: null,
       procedureList: [],
       procedureDate: "",
-      isUpdated: false,
+      isUpdated: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
@@ -38,6 +38,9 @@ class SelectedPatient extends React.Component {
     this.onRowClick = this.onRowClick.bind(this);
     this.handleProcedureDate = this.handleProcedureDate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.updatePatientProcedureList = this.updatePatientProcedureList.bind(
+      this
+    );
   }
   componentDidMount() {
     //set the state
@@ -46,16 +49,7 @@ class SelectedPatient extends React.Component {
     });
 
     //use state and retrieve data
-    var self = this;
-    var id = this.props.patient.id;
-    var p = new Patient();
-    p.getProcedureByPatientID(id, function(data) {
-      self.setState({ procedureData: data });
-    });
-
-    p.getProcedureList(function(allData) {
-      self.setState({ procedureList: allData });
-    });
+    this.updatePatientProcedureList();
   }
   handleGender(target) {
     if (
@@ -121,7 +115,22 @@ class SelectedPatient extends React.Component {
     this.setState({
       isUpdated: true
     });
+    this.updatePatientProcedureList();
   }
+  updatePatientProcedureList() {
+    console.log("hello update list")
+    var self = this;
+    var p = new Patient();
+    var id = this.props.patient.id;
+    p.getProcedureByPatientID(id, function(data) {
+      self.setState({ procedureData: data });
+    });
+
+    p.getProcedureList(function(allData) {
+      self.setState({ procedureList: allData });
+    });
+  }
+
   onRowClick(row) {
     //create a new window
     var childWindow = new BrowserWindow({
@@ -163,6 +172,9 @@ class SelectedPatient extends React.Component {
   handleDelete() {
     this.props.handleDelete();
   }
+  // handleProcedureRefresh() {
+  //   this.updatePatientProcedureList();
+  // }
 
   render() {
     const {
@@ -192,7 +204,7 @@ class SelectedPatient extends React.Component {
             </div>
             <div className="col-1 col-sm-1 text-center text-sm-right mb-0">
               <span className="text-uppercase page-subtitle" />
-              <h6 className="delete" data-toggle="modal" data-target="#exampleModal" onClick={this.handleDelete}>
+              <h6 className="delete" onClick={this.handleDelete}>
                 Delete
               </h6>
             </div>
@@ -297,9 +309,7 @@ class SelectedPatient extends React.Component {
                                       name="inlineRadioOptions"
                                       id="inlineRadio2"
                                       value="male"
-                                      checked={
-                                        gender == "male" ? true : false
-                                      }
+                                      checked={gender == "male" ? true : false}
                                     />
                                     Male
                                   </label>
@@ -316,9 +326,7 @@ class SelectedPatient extends React.Component {
                                       name="inlineRadioOptions"
                                       id="inlineRadio3"
                                       value="other"
-                                      checked={
-                                        gender == "other" ? true : false
-                                      }
+                                      checked={gender == "other" ? true : false}
                                     />
                                     Other
                                   </label>
@@ -367,10 +375,18 @@ class SelectedPatient extends React.Component {
                           <br />
 
                           <div className="form-row">
-                            <div className="col-md-12">
-                              <label htmlFor="feDate">
-                                Past Procedure(s)
-                              </label>
+                            <div className="col-sm-10">
+                              <label htmlFor="feDate">Past Procedure(s)</label>
+
+                            </div>
+                            <div className="col-1 col-sm-2 text-center text-sm-right mb-0">
+                              <span className="text-uppercase page-subtitle" />
+                              <h6
+                                className="refresh"
+                                onClick={this.updatePatientProcedureList}
+                              >
+                                Refresh
+                              </h6>
                             </div>
                           </div>
                           <div>
@@ -442,9 +458,7 @@ class SelectedPatient extends React.Component {
                               <Procedure
                                 key={item.id}
                                 id={item.id}
-                                isChecked={this.state.procedures.get(
-                                  item.name
-                                )}
+                                isChecked={this.state.procedures.get(item.name)}
                                 labelName={item.name}
                                 handleProCheckbox={this.handleProCheckbox}
                               />
@@ -467,10 +481,7 @@ class SelectedPatient extends React.Component {
                           <br />
                           <div className="form-row">
                             <div className="col-sm-12">
-                              <button
-                                type="submit"
-                                className="btn btn-accent"
-                              >
+                              <button type="submit" className="btn btn-accent">
                                 Update
                               </button>
                             </div>
@@ -496,7 +507,6 @@ class SelectedPatient extends React.Component {
         </div>
       </div>
     );
-
   }
 }
 
