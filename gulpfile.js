@@ -24,6 +24,20 @@ gulp.task('js', function () {
     })
     .pipe(gulp.dest(app + '/js'));
 });
+gulp.task('js-case', function () {
+  // process.env.NODE_ENV = 'production';
+  process.env.NODE_ENV = 'development';
+  return gulp.src(src + '/js/render-case.js')
+    .pipe(browserify({
+      transform: 'reactify',
+      extensions: 'browserify-css',
+      debug: true
+    }))
+    .on('error', function (err) {
+      console.error('Error!', err.message);
+    })
+    .pipe(gulp.dest(app + '/js'));
+});
 
 gulp.task('html', function () {
   gulp.src(src + '/**/*.html');
@@ -41,12 +55,12 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('watch', ['serve'], function () {
-  gulp.watch(src + '/js/**/*', ['js']);
+  gulp.watch(src + '/js/**/*', ['js', 'js-case']);
   gulp.watch(src + '/css/**/*.css', ['css']);
   gulp.watch([app + '/**/*.html'], ['html']);
 });
 
-gulp.task('serve', ['html', 'js', 'css'], function () {
+gulp.task('serve', ['html', 'js', 'js-case' ,'css'], function () {
   run('electron app/main.js').exec();
 });
 
@@ -55,8 +69,13 @@ gulp.task('minify', ['js'],function () {
   .pipe(terser())
   .pipe(gulp.dest('./app/js/'))
 })
+gulp.task('minify-case', ['js-case'],function () {
+  gulp.src('./app/js/render-case.js')
+  .pipe(terser())
+  .pipe(gulp.dest('./app/js/'))
+})
 
-gulp.task('build', ['html', 'js', 'css', 'fonts', 'minify'], function () {
+gulp.task('build', ['html', 'js', 'js-case','css', 'fonts', 'minify', 'minify-case'], function () {
   console.log("The app has been built.");
 });
 

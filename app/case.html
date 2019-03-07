@@ -1,19 +1,23 @@
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
-        #images {
-            text-align: center
-        }
-    </style>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Dr Tanya Clinic</title>
+        <link rel="stylesheet" href="css/app.css">
+        <!-- <link rel="stylesheet" href="css/extras.1.1.0.min.css">
+        <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="css/shards-dashboards.1.1.0.min.css"> -->
+      
+        <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <link rel="stylesheet" href='../node_modules/react-day-picker/lib/style.css'>
+        <link rel="stylesheet" href="../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css">
+      </head>
 
 <body>
-    <div>
+    <!-- <div>
         <h4>Name</h4>
         <p id="name"></p>
     </div>
@@ -28,6 +32,9 @@
     <div id="images">
 
     </div>
+    <input type="file" className="form-control" id="procedureImages" multiple /> -->
+
+    <div id="main-case"></div>
 
 </body>
 <script>
@@ -37,26 +44,8 @@
     const jquery = require("jquery");
     const $ = jquery;
 
-    ipc.on("sendData", function (event, arg) {
-        console.log(arg);
-
-        $("#name").text(arg.row.name);
-        $("#date").text(arg.row.date);
-        $("#note").text(arg.row.note);
-
-        if (fs.existsSync(documentPath)) {
-            var path = `${documentPath}/${arg.storageID}/${arg.row.storageID}`
-            console.log(path);
-            if (fs.existsSync(path)) {
-                fs.readdir(path, (err, files) => {
-                    files.forEach(file => {
-                        console.log(file);
-                        $("#images").append(`<img src="${path}/${file}" width="600" />`)
-                    });
-                })
-            }
-        }
-    });
+    
 </script>
+<script src="js/render-case.js"></script>
 
 </html>
