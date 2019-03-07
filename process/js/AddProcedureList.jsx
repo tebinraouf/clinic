@@ -3,16 +3,35 @@ const React = require("react");
 const jquery = require("jquery");
 const $ = jquery;
 const Patient = require("./Patient");
+const ReactBsTable = require("react-bootstrap-table");
+const BootstrapTable = ReactBsTable.BootstrapTable;
+const TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 
 class AddProcedureList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: "",
-      status: ""
+      status: "",
+      procedureList: new Array()
     };
     this.AddProcedure = this.AddProcedure.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onDeleteRow = this.onDeleteRow.bind(this);
+    this.updateData = this.updateData.bind(this);
+  }
+  componentDidMount() {
+    this.updateData();
+  }
+
+  updateData() {
+    let self = this;
+    let p = new Patient();
+    p.getProcedureTypes(function(data) {
+      self.setState({
+        procedureList: data
+      });
+    });
   }
 
   AddProcedure(e) {
@@ -24,6 +43,7 @@ class AddProcedureList extends React.Component {
       value: "",
       status: "Added."
     });
+    this.updateData()
   }
   handleChange(e) {
     var name = e.target.value;
@@ -32,7 +52,24 @@ class AddProcedureList extends React.Component {
       status: ""
     });
   }
+  onDeleteRow(rows) {
+    var self = this;
+    let p = new Patient();
+    p.deleteProcedureTypeByID(rows[0], function(isDeleted){
+      if (isDeleted) {
+        self.updateData();
+      }
+    });
+  }
+
   render() {
+    const options = {
+      onDeleteRow: this.onDeleteRow
+    };
+    const selectRow = {
+      mode: "radio" //radio or checkbox
+    };
+
     return (
       <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
         <div className="main-content-container container-fluid px-4">
@@ -73,6 +110,33 @@ class AddProcedureList extends React.Component {
                   </div>
                 </div>
               </form>
+            </div>
+          </div>
+          <hr />
+          <div className="row">
+            <div className="col-sm-12">
+              <BootstrapTable
+                data={this.state.procedureList}
+                options={options}
+                deleteRow
+                selectRow={selectRow}
+                striped
+                hover
+              >
+                <TableHeaderColumn
+                  isKey
+                  dataField="id"
+                  filter={{ type: "TextFilter" }}
+                >
+                  ID
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                  dataField="name"
+                  filter={{ type: "TextFilter" }}
+                >
+                  First Name
+                </TableHeaderColumn>
+              </BootstrapTable>
             </div>
           </div>
         </div>

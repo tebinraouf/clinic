@@ -109,6 +109,14 @@ class Patient {
       data(result);
     });
   }
+  //get all procedure types
+  getProcedureTypes(data) {
+    connection.query("SELECT * FROM mydb.ProcedureList;", function (err, result, fields) {
+      if (err) throw err;
+      data(result);
+    });
+  }
+
   //get procedure by id
   getProcedureByID(id, data) {
     connection.query(`SELECT * FROM mydb.Procedure WHERE id = ${id}`, function (err, result, fields) {
@@ -212,7 +220,15 @@ class Patient {
       callback(true)
     });
   }
-
+  //delete procedure type by id
+  deleteProcedureTypeByID(id, callback) {
+    var sql = `DELETE FROM mydb.ProcedureList WHERE id = ${id}`;
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("Number of records deleted: " + result.affectedRows);
+      callback(true)
+    });
+  }
 
   getNewID() {
     return "hello again";
