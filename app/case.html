@@ -20,14 +20,17 @@
     <div id="main-case"></div>
 </body>
 <script>
-    const documentPath = "/Users/Tebin/Documents/DrTanyaPatients";
+    // const documentPath = "/Users/Tebin/Documents/DrTanyaPatients";
     const ipc = require("electron").ipcRenderer;
     const fs = require('fs-extra');
     const jquery = require("jquery");
     const $ = jquery;
 
     const fullname = require('fullname');
-    
+    fullname().then(name => {
+        documentPath = `/Users/${name}/Documents/DrTanyaPatients`
+    });
+
 </script>
 <script src="js/render-case.js"></script>
 

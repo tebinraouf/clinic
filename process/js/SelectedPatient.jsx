@@ -171,7 +171,29 @@ class SelectedPatient extends React.Component {
     this.props.handleDelete();
   }
   onDeleteRow(rows) {
-    debugger
+    var self = this;
+    var p = new Patient();
+    p.getProcedureByID(rows[0], function(data) {
+      console.log(data);
+
+      let patientStorageID = self.props.patient.storageID;
+      let procedureStorageID = data.storageID;
+
+    //delete images 
+    let path = `${documentPath}/${patientStorageID}/${procedureStorageID}`;
+    fs.removeSync(path); 
+
+
+    //delete record in database
+      p.deleteProcedureByID(rows[0], function(isDeleted) {
+        console.log(isDeleted);
+      });
+      
+    });
+
+    
+
+
   }
 
   render() {

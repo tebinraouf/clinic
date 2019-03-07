@@ -9,7 +9,10 @@ fullname().then(name => {
 class Patient {
 
   constructor() {
-    
+
+  }
+  getDocumentPath() {
+    return documentPath;
   }
   //Create new patient account
   createAccount(patientObjc, procedures, files) {
@@ -106,6 +109,14 @@ class Patient {
       data(result);
     });
   }
+  //get procedure by id
+  getProcedureByID(id, data) {
+    connection.query(`SELECT * FROM mydb.Procedure WHERE id = ${id}`, function (err, result, fields) {
+      if (err) throw err;
+      data(result[0]);
+    });
+  }
+
   //add procedure to procedureList table
   addProcedure(name) {
     connection.query(`INSERT INTO ProcedureList (name) VALUES ('${name}')`, function (error, results) {
@@ -190,6 +201,15 @@ class Patient {
         callback(true);
       });
 
+    });
+  }
+  //delete procedure
+  deleteProcedureByID(id, callback) {
+    var sql = `DELETE FROM mydb.Procedure WHERE id = ${id}`;
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("Number of records deleted: " + result.affectedRows);
+      callback(true)
     });
   }
 
