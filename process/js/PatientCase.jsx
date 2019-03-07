@@ -50,13 +50,15 @@ class PatientCase extends React.Component {
   }
   onAddPhoto() {
     var files = $("#procedureImages")[0].files;
-    var p = new Patient();
-    debugger;
-    let path = `${documentPath}/${this.state.patientStorageID}/${
-      this.state.procedure.storageID
-    }`;
-    p.copyPatientImages(files, path);
-    window.location.reload();
+
+    if (files.length !== 0) {
+      var p = new Patient();
+      let path = `${documentPath}/${this.state.patientStorageID}/${
+        this.state.procedure.storageID
+      }`;
+      p.copyPatientImages(files, path);
+      window.location.reload();
+    }
   }
 
   render() {
