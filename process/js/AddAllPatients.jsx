@@ -54,7 +54,6 @@ class AddAllPatients extends React.Component {
     });
   }
   onDeleteRow(rows) {
-    debugger
     var self = this;
     var p = new Patient();
     p.deletePatientProfile(rows[0], function(isDeleted) {
