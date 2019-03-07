@@ -1,12 +1,14 @@
 /* eslint-disable */
 const React = require("react");
+const Patient = require("./Patient");
 
 class PatientCase extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       imagePaths: new Array(),
-      procedure: {}
+      procedure: {},
+      patientStorageID: ""
     };
     this.onImageDelete = this.onImageDelete.bind(this);
     this.onAddPhoto = this.onAddPhoto.bind(this);
@@ -17,7 +19,8 @@ class PatientCase extends React.Component {
       console.log(arg);
       var procedure = arg.row;
       self.setState({
-        procedure: procedure
+        procedure: procedure,
+        patientStorageID: arg.storageID
       });
 
       if (fs.existsSync(documentPath)) {
@@ -26,12 +29,14 @@ class PatientCase extends React.Component {
         if (fs.existsSync(path)) {
           fs.readdir(path, (err, files) => {
             files.forEach(file => {
-              let absPath = `${path}/${file}`;
-              let paths = self.state.imagePaths;
-              paths.push(absPath);
-              self.setState({
-                imagePaths: paths
-              });
+              if (file !== ".DS_Store") {
+                let absPath = `${path}/${file}`;
+                let paths = self.state.imagePaths;
+                paths.push(absPath);
+                self.setState({
+                  imagePaths: paths
+                });
+              }
             });
           });
         }
@@ -40,10 +45,18 @@ class PatientCase extends React.Component {
   }
 
   onImageDelete(path) {
-    debugger;
+    fs.unlinkSync(path);
+    window.location.reload();
   }
   onAddPhoto() {
+    var files = $("#procedureImages")[0].files;
+    var p = new Patient();
     debugger;
+    let path = `${documentPath}/${this.state.patientStorageID}/${
+      this.state.procedure.storageID
+    }`;
+    p.copyPatientImages(files, path);
+    window.location.reload();
   }
 
   render() {
