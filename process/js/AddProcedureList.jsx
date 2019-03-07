@@ -114,7 +114,7 @@ class AddProcedureList extends React.Component {
           </div>
           <hr />
           <div className="row">
-            <div className="col-sm-12">
+            <div className="col-sm-6">
               <BootstrapTable
                 data={this.state.procedureList}
                 options={options}
@@ -134,9 +134,10 @@ class AddProcedureList extends React.Component {
                   dataField="name"
                   filter={{ type: "TextFilter" }}
                 >
-                  First Name
+                  Name
                 </TableHeaderColumn>
               </BootstrapTable>
+              <br/>
             </div>
           </div>
         </div>
