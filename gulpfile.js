@@ -97,7 +97,7 @@ gulp.task('package-travis', ['build'], function (cb) {
   });
 })
 
-// gulp.task('default', ['watch', 'fonts', 'minify', 'serve']);
+gulp.task('default', ['watch', 'fonts', 'minify', 'serve']);
 
-gulp.task('default', ['watch', 'fonts', 'serve']);
+// gulp.task('default', ['watch', 'fonts', 'serve']);
 
