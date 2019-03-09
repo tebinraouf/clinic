@@ -11,8 +11,8 @@ var src = './process',
   app = './app';
 
 gulp.task('js', function () {
-  process.env.NODE_ENV = 'production';
-  // process.env.NODE_ENV = 'development';
+  // process.env.NODE_ENV = 'production';
+  process.env.NODE_ENV = 'development';
   return gulp.src(src + '/js/render.js')
     .pipe(browserify({
       transform: 'reactify',
@@ -25,8 +25,8 @@ gulp.task('js', function () {
     .pipe(gulp.dest(app + '/js'));
 });
 gulp.task('js-case', function () {
-  process.env.NODE_ENV = 'production';
-  // process.env.NODE_ENV = 'development';
+  // process.env.NODE_ENV = 'production';
+  process.env.NODE_ENV = 'development';
   return gulp.src(src + '/js/render-case.js')
     .pipe(browserify({
       transform: 'reactify',
@@ -97,7 +97,7 @@ gulp.task('package-travis', ['build'], function (cb) {
   });
 })
 
-gulp.task('default', ['watch', 'fonts', 'minify', 'serve']);
+// gulp.task('default', ['watch', 'fonts', 'minify', 'serve']);
 
-// gulp.task('default', ['watch', 'fonts', 'serve']);
+gulp.task('default', ['watch', 'fonts', 'serve']);
 
