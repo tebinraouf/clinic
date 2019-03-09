@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.2.1",
+    "d3": "^5.9.1",
     "electron-reload": "^1.0.2",
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
@@ -37,6 +38,7 @@
     "react": "^15.1.0",
     "react-bootstrap-table": "^4.3.1",
     "react-day-picker": "^7.2.4",
-    "react-dom": "^15.1.0"
+    "react-dom": "^15.1.0",
+    "recharts": "^1.5.0"
   }
 }

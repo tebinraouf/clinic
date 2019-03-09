@@ -90,7 +90,7 @@ class Dashboard extends React.Component {
                 isDashboard={this.state.isDashboard}
                 isAddingProcedure={this.state.isAddingProcedure}
               />
-              <MainContent />
+              {/* <MainContent /> */}
               <AddPatient />
             </div>
           </div>
@@ -110,7 +110,7 @@ class Dashboard extends React.Component {
                 isDashboard={this.state.isDashboard}
                 isAddingProcedure={this.state.isAddingProcedure}
               />
-              <MainContent />
+              {/* <MainContent /> */}
               <AddAllPatients />
             </div>
           </div>
@@ -130,7 +130,7 @@ class Dashboard extends React.Component {
                 isDashboard={this.state.isDashboard}
                 isAddingProcedure={this.state.isAddingProcedure}
               />
-              <MainContent />
+              {/* <MainContent /> */}
               <AddProcedureList />
             </div>
           </div>

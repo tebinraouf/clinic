@@ -39,6 +39,7 @@ gulp.task('js-case', function () {
     .pipe(gulp.dest(app + '/js'));
 });
 
+
 gulp.task('html', function () {
   gulp.src(src + '/**/*.html');
 });
@@ -60,7 +61,7 @@ gulp.task('watch', ['serve'], function () {
   gulp.watch([app + '/**/*.html'], ['html']);
 });
 
-gulp.task('serve', ['html', 'js', 'js-case' ,'css'], function () {
+gulp.task('serve', ['html', 'js', 'js-case', 'css'], function () {
   run('electron app/main.js').exec();
 });
 
@@ -75,7 +76,7 @@ gulp.task('minify-case', ['js-case'],function () {
   .pipe(gulp.dest('./app/js/'))
 })
 
-gulp.task('build', ['html', 'js', 'js-case','css', 'fonts', 'minify', 'minify-case'], function () {
+gulp.task('build', ['html', 'js', 'js-case', 'css', 'fonts', 'minify', 'minify-case'], function () {
   console.log("The app has been built.");
 });
 
