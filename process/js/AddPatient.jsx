@@ -144,7 +144,7 @@ class AddPatient extends React.Component {
       return (
         <div className="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
           <div className="main-content-container container-fluid px-4">
-            <div className="col-12 col-sm-12 text-center text-sm-left mb-0">
+            <div className="col-12 col-sm-12 text-center text-sm-left mb-0 mt-4">
               <span className="text-uppercase page-subtitle" />
               <h3 className="page-title">
                 The new patient has been added.{" "}
