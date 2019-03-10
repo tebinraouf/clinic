@@ -239,6 +239,54 @@ class Patient {
     var date = new Date();
     return date.getMilliseconds().toString() + date.getMinutes().toString() + date.getHours().toString() + date.getDate().toString() + date.getMonth().toString() + date.getFullYear().toString();
   }
+
+
+  //Graphs
+  getGenderCounts(callback) {
+    var sql = `SELECT count(*) as 'value', gender as 'name' FROM mydb.Patient GROUP BY gender;`
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      callback(result)
+    });
+  }
+  getPatientByMonthYear(month, year, callback) {
+    var sql = `SELECT count('date') as 'value', date as 'name' FROM mydb.Patient
+    WHERE date like '%${year}%' and date like '%${month}%'
+    GROUP BY date;`;
+
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      callback(result)
+    });
+  }
+  getPatientByAge(callback) {
+    var sql = `SELECT name, count(*) AS value 
+    FROM (SELECT
+        CASE WHEN age BETWEEN 0 AND 9 THEN '0 to 9'
+        WHEN age BETWEEN 10 and 19 THEN '10 to 19'
+        WHEN age BETWEEN 20 and 29 THEN '20 to 29'
+        WHEN age BETWEEN 30 and 39 THEN '30 to 39'
+        WHEN age BETWEEN 40 and 49 THEN '40 to 49'
+        WHEN age BETWEEN 50 and 59 THEN '50 to 59'
+        WHEN age >= 60 THEN '60+' END AS name
+        FROM Patient) Patient
+    GROUP BY name ORDER BY name ASC`;
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      callback(result)
+    });
+  }
+  getProcedureByTypeCount(callback) {
+    var sql = `SELECT count(name) 'value', name FROM mydb.Procedure GROUP BY name;`
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      callback(result)
+    });
+  }
+
+
+
+
 }
 
 
