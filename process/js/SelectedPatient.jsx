@@ -38,8 +38,11 @@ class SelectedPatient extends React.Component {
     this.onRowClick = this.onRowClick.bind(this);
     this.handleProcedureDate = this.handleProcedureDate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.updatePatientProcedureList = this.updatePatientProcedureList.bind(this);
+    this.updatePatientProcedureList = this.updatePatientProcedureList.bind(
+      this
+    );
     this.onDeleteRow = this.onDeleteRow.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
   componentDidMount() {
     //set the state
@@ -179,21 +182,18 @@ class SelectedPatient extends React.Component {
       let patientStorageID = self.props.patient.storageID;
       let procedureStorageID = data.storageID;
 
-    //delete images 
-    let path = `${documentPath}/${patientStorageID}/${procedureStorageID}`;
-    fs.removeSync(path); 
+      //delete images
+      let path = `${documentPath}/${patientStorageID}/${procedureStorageID}`;
+      fs.removeSync(path);
 
-
-    //delete record in database
+      //delete record in database
       p.deleteProcedureByID(rows[0], function(isDeleted) {
         console.log(isDeleted);
       });
-      
     });
-
-    
-
-
+  }
+  onBack() {
+    this.props.onBack();
   }
 
   render() {
@@ -213,7 +213,7 @@ class SelectedPatient extends React.Component {
       onDeleteRow: this.onDeleteRow
     };
     const selectRow = {
-      mode: 'radio' //radio or checkbox
+      mode: "radio" //radio or checkbox
     };
 
     return (
@@ -221,6 +221,11 @@ class SelectedPatient extends React.Component {
         <div className="main-content-container container-fluid px-4">
           <div className="page-header row no-gutters py-4">
             <div className="col-11 col-sm-11 text-center text-sm-left mb-0">
+              <div className="pb-4">
+              <button type="submit" className="btn btn-accent" onClick={this.onBack}>
+                Back
+              </button>
+              </div>
               <span className="text-uppercase page-subtitle" />
               <h3 className="page-title">
                 {firstName} {lastName}
@@ -401,7 +406,6 @@ class SelectedPatient extends React.Component {
                           <div className="form-row">
                             <div className="col-sm-10">
                               <label htmlFor="feDate">Past Procedure(s)</label>
-
                             </div>
                             <div className="col-1 col-sm-2 text-center text-sm-right mb-0">
                               <span className="text-uppercase page-subtitle" />
@@ -418,10 +422,11 @@ class SelectedPatient extends React.Component {
                               <BootstrapTable
                                 data={this.state.procedureData}
                                 deleteRow
-                                selectRow={ selectRow }
+                                selectRow={selectRow}
                                 striped
                                 hover
                                 options={options}
+                                pagination
                               >
                                 <TableHeaderColumn
                                   isKey
@@ -460,7 +465,6 @@ class SelectedPatient extends React.Component {
                                 >
                                   Case #
                                 </TableHeaderColumn>
-                                
                               </BootstrapTable>
                             </div>
                           </div>

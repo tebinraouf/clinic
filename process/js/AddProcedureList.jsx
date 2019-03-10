@@ -122,6 +122,7 @@ class AddProcedureList extends React.Component {
                 selectRow={selectRow}
                 striped
                 hover
+                pagination
               >
                 <TableHeaderColumn
                   isKey

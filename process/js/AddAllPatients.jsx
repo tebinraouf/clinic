@@ -21,6 +21,7 @@ class AddAllPatients extends React.Component {
     this.onRowClick = this.onRowClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.updateData = this.updateData.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
   componentDidMount() {
     var self = this;
@@ -60,6 +61,11 @@ class AddAllPatients extends React.Component {
       //
     });
   }
+  onBack() {
+    this.setState({
+      isClicked: false
+    })
+  }
 
   render() {
     const options = {
@@ -75,6 +81,7 @@ class AddAllPatients extends React.Component {
         <SelectedPatient
           patient={this.state.patient}
           handleDelete={this.handleDelete}
+          onBack={this.onBack}
         />
       );
     } else {
@@ -96,6 +103,7 @@ class AddAllPatients extends React.Component {
                   selectRow={selectRow}
                   striped
                   hover
+                  pagination
                 >
                   <TableHeaderColumn
                     isKey
