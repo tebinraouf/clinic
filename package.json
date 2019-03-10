@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.2.1",
+    "cleave.js": "^1.4.9",
     "d3": "^5.9.1",
     "electron-reload": "^1.0.2",
     "express": "^4.16.4",
