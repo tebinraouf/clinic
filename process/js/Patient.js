@@ -250,7 +250,7 @@ class Patient {
     });
   }
   getPatientByMonthYear(month, year, callback) {
-    var sql = `SELECT count('date') as 'value', date as 'name' FROM mydb.Patient
+    var sql = `SELECT count('date') as 'value', substring(date,9,2) as 'name' FROM mydb.Patient
     WHERE date like '%${year}%' and date like '%${month}%'
     GROUP BY date;`;
 
@@ -281,6 +281,27 @@ class Patient {
     connection.query(sql, function (err, result) {
       if (err) throw err;
       callback(result)
+    });
+  }
+  getPatientYear(callback) {
+    var sql = `SELECT name year FROM (
+      SELECT count('date') as 'value', substring(date,12,4) as 'name' FROM mydb.Patient
+      GROUP BY date)
+      Patient GROUP BY name;`;
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      callback(result)
+    });
+  }
+  getTotalPatientPerMonthYear(month, year, callback) {
+    var sql = `Select count(value) as total FROM (
+      SELECT count('date') as 'value', substring(date,9,2) as 'name' FROM mydb.Patient
+          WHERE date like '%${year}%' and date like '%${month}%'
+          GROUP BY date
+          ) Patient;`;
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      callback(result[0].total)
     });
   }
 
