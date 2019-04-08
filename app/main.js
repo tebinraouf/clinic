@@ -4,6 +4,8 @@
 const {
   app,
   BrowserWindow,
+  Menu,
+  dialog
 } = require('electron');
 
 const exec = require('child_process').exec;
@@ -11,6 +13,38 @@ const exec = require('child_process').exec;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+
+var showOpen = function () {
+  dialog.showOpenDialog(mainWindow, {
+    properties: ['openFile', 'multiSelections'],
+    filters: [{
+      name: 'Images',
+      extensions: ['jpg', 'png', 'gif', 'jpeg']
+    }]
+  }, (filenames) => {
+    console.log(filenames);
+    debugger
+  });
+};
+
+const template = [{
+  label: 'Menu',
+  submenu: [{
+      label: 'Add to Portfolio',
+      click() {
+        showOpen();
+      }
+    },
+    {
+      label: 'Quit',
+      click() {
+        app.quit();
+      }
+    }
+  ]
+}];
+
+
 
 function createWindow() {
   // Create the browser window.
@@ -35,7 +69,12 @@ function createWindow() {
   })
 
   exec("cd server && cd getting-started && npm start")
-  
+
+  //handle menu
+  var menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu);
+
+
 }
 
 // This method will be called when Electron has finished

@@ -81,7 +81,7 @@ gulp.task('build', ['html', 'js', 'js-case', 'css', 'fonts', 'minify', 'minify-c
 });
 
 gulp.task('package', ['build'], function (cb) {
-  exec('electron-packager ~/Desktop/electron/ "Dr Tanya Clinic" --out ~/Desktop/ --overwrite --icon ~/Desktop/electron/drfblogo.icns --ignore={"utility/","process/"}', function (err, stdout, stderr) {
+  exec('electron-packager . "Dr Tanya Clinic" --out ~/Desktop/ --overwrite --icon ./drfblogo.icns --ignore={"utility/","process/"}', function (err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
     cb(err);
