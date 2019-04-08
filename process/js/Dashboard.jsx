@@ -9,6 +9,7 @@ const SignIn = require("./SignIn.jsx");
 const AddPatient = require("./AddPatient.jsx");
 const AddAllPatients = require("./AddAllPatients.jsx");
 const AddProcedureList = require("./AddProcedureList.jsx");
+const Portfolio = require("./Portfolio.jsx");
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -18,12 +19,14 @@ class Dashboard extends React.Component {
       isAllPatients: false,
       isAdding: false,
       isAddingProcedure: false,
+      isPortfolio: false,
       isLoggedIn: true,
     };
     this.handleDashboard = this.handleDashboard.bind(this);
     this.allPatients = this.allPatients.bind(this);
     this.addPatient = this.addPatient.bind(this);
     this.addProcedureList = this.addProcedureList.bind(this);
+    this.handlePortfolio = this.handlePortfolio.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
@@ -33,7 +36,8 @@ class Dashboard extends React.Component {
       isAllPatients: false,
       isAdding: false,
       isDashboard: true,
-      isAddingProcedure: false
+      isAddingProcedure: false,
+      isPortfolio: false
     });
   }
   addPatient(e) {
@@ -42,7 +46,8 @@ class Dashboard extends React.Component {
       isAllPatients: false,
       isAdding: true,
       isDashboard: false,
-      isAddingProcedure: false
+      isAddingProcedure: false,
+      isPortfolio: false
     });
   }
   allPatients(e) {
@@ -51,7 +56,8 @@ class Dashboard extends React.Component {
       isAllPatients: true,
       isAdding: false,
       isDashboard: false,
-      isAddingProcedure: false
+      isAddingProcedure: false,
+      isPortfolio: false
     });
   }
   addProcedureList(e) {
@@ -60,13 +66,24 @@ class Dashboard extends React.Component {
       isAllPatients: false,
       isAdding: false,
       isDashboard: false,
-      isAddingProcedure: true
+      isAddingProcedure: true,
+      isPortfolio: false
     });
   }
   handleLogout(e) {
     localStorage.setItem("isLoggedIn", "false");
     this.setState({
       isLoggedIn: true
+    });
+  }
+  handlePortfolio(e) {
+    e.preventDefault();
+    this.setState({
+      isAllPatients: false,
+      isAdding: false,
+      isDashboard: false,
+      isAddingProcedure: false,
+      isPortfolio: true
     });
   }
 
@@ -84,13 +101,14 @@ class Dashboard extends React.Component {
                 addPatient={this.addPatient}
                 allPatients={this.allPatients}
                 addProcedureList={this.addProcedureList}
+                handlePortfolio={this.handlePortfolio}
                 handleLogout={this.handleLogout}
                 isAdding={this.state.isAdding}
                 isAllPatients={this.state.isAllPatients}
                 isDashboard={this.state.isDashboard}
                 isAddingProcedure={this.state.isAddingProcedure}
+                isPortfolio={this.state.isPortfolio}
               />
-              {/* <MainContent /> */}
               <AddPatient />
             </div>
           </div>
@@ -104,13 +122,14 @@ class Dashboard extends React.Component {
                 addPatient={this.addPatient}
                 allPatients={this.allPatients}
                 addProcedureList={this.addProcedureList}
+                handlePortfolio={this.handlePortfolio}
                 handleLogout={this.handleLogout}
                 isAdding={this.state.isAdding}
                 isAllPatients={this.state.isAllPatients}
                 isDashboard={this.state.isDashboard}
                 isAddingProcedure={this.state.isAddingProcedure}
+                isPortfolio={this.state.isPortfolio}
               />
-              {/* <MainContent /> */}
               <AddAllPatients />
             </div>
           </div>
@@ -124,14 +143,36 @@ class Dashboard extends React.Component {
                 addPatient={this.addPatient}
                 allPatients={this.allPatients}
                 addProcedureList={this.addProcedureList}
+                handlePortfolio={this.handlePortfolio}
                 handleLogout={this.handleLogout}
                 isAdding={this.state.isAdding}
                 isAllPatients={this.state.isAllPatients}
                 isDashboard={this.state.isDashboard}
                 isAddingProcedure={this.state.isAddingProcedure}
+                isPortfolio={this.state.isPortfolio}
               />
-              {/* <MainContent /> */}
               <AddProcedureList />
+            </div>
+          </div>
+        )
+      } else if (this.state.isPortfolio) {
+        return (
+          <div className="container-fluid">
+            <div className="row">
+            <Sidebar
+                handleDashboard={this.handleDashboard}
+                addPatient={this.addPatient}
+                allPatients={this.allPatients}
+                addProcedureList={this.addProcedureList}
+                handlePortfolio={this.handlePortfolio}
+                handleLogout={this.handleLogout}
+                isAdding={this.state.isAdding}
+                isAllPatients={this.state.isAllPatients}
+                isDashboard={this.state.isDashboard}
+                isAddingProcedure={this.state.isAddingProcedure}
+                isPortfolio={this.state.isPortfolio}
+              />
+              <Portfolio />
             </div>
           </div>
         )
@@ -145,11 +186,13 @@ class Dashboard extends React.Component {
               addPatient={this.addPatient}
               allPatients={this.allPatients}
               addProcedureList={this.addProcedureList}
+              handlePortfolio={this.handlePortfolio}
               handleLogout={this.handleLogout}
               isAdding={this.state.isAdding}
               isAllPatients={this.state.isAllPatients}
               isDashboard={this.state.isDashboard}
               isAddingProcedure={this.state.isAddingProcedure}
+              isPortfolio={this.state.isPortfolio}
             />
             <MainContent />
           </div>
