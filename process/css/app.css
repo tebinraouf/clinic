@@ -155,3 +155,10 @@ body {
   color: #007bff;
   cursor: pointer;
 }
+
+.addToPortfolio {
+  cursor: pointer;
+}
+.addToPortfolio:hover {
+  color: #007bff;
+}

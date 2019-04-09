@@ -28,6 +28,10 @@
       BrowserWindow
     } = require("electron").remote
     var ipc = require("electron").ipcMain;
+    const { remote } = require('electron')
+    const currentWindow = remote.getCurrentWindow()
+
+
     const mysql = require('mysql');
 
     var connection = mysql.createConnection({
@@ -48,8 +52,8 @@
 
     const fullname = require('fullname');
     fullname().then(name => {
-        documentPath = `/Users/${name}/Documents/DrTanyaPatients`
-    });    
+      documentPath = `/Users/${name}/Documents/DrTanyaPatients`
+    });
   </script>
   <script src="js/render.js"></script>
 

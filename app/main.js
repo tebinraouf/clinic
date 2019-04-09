@@ -14,16 +14,16 @@ const exec = require('child_process').exec;
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-var showOpen = function () {
+function showOpen() {
   dialog.showOpenDialog(mainWindow, {
     properties: ['openFile', 'multiSelections'],
     filters: [{
       name: 'Images',
       extensions: ['jpg', 'png', 'gif', 'jpeg']
     }]
-  }, (filenames) => {
-    console.log(filenames);
-    debugger
+  }, paths => {
+    console.log(paths);
+    mainWindow.webContents.send("paths", paths);
   });
 };
 
@@ -71,8 +71,8 @@ function createWindow() {
   exec("cd server && cd getting-started && npm start")
 
   //handle menu
-  var menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu);
+  // var menu = Menu.buildFromTemplate(template)
+  // Menu.setApplicationMenu(menu);
 
 
 }
