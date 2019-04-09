@@ -311,4 +311,4 @@ class Patient {
 }
 
 
-module.exports = Patient;
+export default Patient;

@@ -6,6 +6,6 @@ const $ = jQuery;
 require('bootstrap');
 
 
-const MainInterface = require('./MainInterface.jsx')
+import MainInterface from "./MainInterface.jsx";
 
 ReactDOM.render(<MainInterface />, document.getElementById('main'));

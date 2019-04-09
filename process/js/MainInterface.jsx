@@ -1,11 +1,11 @@
 /* eslint-disable */
-const React = require("react");
-const Dashboard = require("./Dashboard.jsx");
-const SignIn = require("./SignIn.jsx");
-const Patient = require("./Patient");
+import React, { Component } from 'react';
+import Dashboard from "./Dashboard.jsx";
+import SignIn from "./SignIn.jsx";
+import Patient from "./Patient";
 
 
-class MainInterface extends React.Component {
+class MainInterface extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,4 +80,4 @@ class MainInterface extends React.Component {
   }
 }
 
-module.exports = MainInterface;
+export default MainInterface;

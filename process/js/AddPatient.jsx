@@ -1,11 +1,11 @@
 /* eslint-disable */
-const React = require("react");
-const Procedure = require("./Procedure.jsx");
+import React, {Component} from "react";
 const jquery = require("jquery");
-const Patient = require("./Patient");
 const $ = jquery;
-const DayPickerInput = require("react-day-picker/DayPickerInput").default;
-// import DayPicker from 'react-day-picker';
+
+import Procedure from "./Procedure.jsx";
+import Patient from "./Patient";
+import DayPickerInput from "react-day-picker/DayPickerInput";
 
 var patientObj = {
   firstName: "",
@@ -17,7 +17,7 @@ var patientObj = {
   note: ""
 };
 
-class AddPatient extends React.Component {
+class AddPatient extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -372,4 +372,4 @@ class AddPatient extends React.Component {
   }
 }
 
-module.exports = AddPatient;
+export default AddPatient;

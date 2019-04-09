@@ -1,7 +1,7 @@
 /* eslint-disable */
-const React = require("react");
+import React, { Component } from "react";
 
-class Sidebar extends React.Component {
+class Sidebar extends Component {
   render() {
     return (
       <aside className="main-sidebar col-12 col-md-3 col-lg-2 px-0">
@@ -76,4 +76,4 @@ class Sidebar extends React.Component {
   }
 }
 
-module.exports = Sidebar;
+export default Sidebar;

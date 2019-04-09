@@ -1,9 +1,9 @@
 /* eslint-disable */
-const React = require('react');
+import React, { Component } from "react";
 const PropTypes = require('prop-types');
 
 
-class SignIn extends React.Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -90,4 +90,4 @@ SignIn.defaultProps = {
 };
 
 
-module.exports = SignIn;
+export default SignIn;

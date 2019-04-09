@@ -2,14 +2,26 @@
 const React = require("react");
 const jquery = require("jquery");
 const $ = jquery;
+import Gallery from 'react-photo-gallery';
 
-
+const photos = [
+  {
+    src: 'https://via.placeholder.com/150',
+    width: 4,
+    height: 3
+  },
+  {
+    src: 'https://via.placeholder.com/350',
+    width: 1,
+    height: 1
+  }
+];
 class Portfolio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        lightboxIsOpen: false,
-    }
+      lightboxIsOpen: false
+    };
     this.handleAddImages = this.handleAddImages.bind(this);
   }
 
@@ -52,7 +64,7 @@ class Portfolio extends React.Component {
           </div>
           <div className="row">
             <div className="col-sm-12">
-              hello
+            <Gallery photos={photos} />
             </div>
           </div>
           <hr />
@@ -62,4 +74,4 @@ class Portfolio extends React.Component {
   }
 }
 
-module.exports = Portfolio;
+export default Portfolio;

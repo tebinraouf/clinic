@@ -6,24 +6,39 @@ var gulp = require('gulp'),
   run = require('gulp-run');
 var terser = require('gulp-terser');
 var exec = require('child_process').exec;
+const webpack = require('webpack-stream');
 
 var src = './process',
   app = './app';
+
+// gulp.task('js', function () {
+//   // process.env.NODE_ENV = 'production';
+//   process.env.NODE_ENV = 'development';
+//   return gulp.src(src + '/js/render.js')
+//     .pipe(browserify({
+//       transform: 'reactify',
+//       extensions: 'browserify-css',
+//       debug: true
+//     }))
+//     .on('error', function (err) {
+//       console.error('Error!', err.message);
+//     })
+//     .pipe(gulp.dest(app + '/js'));
+// });
 
 gulp.task('js', function () {
   // process.env.NODE_ENV = 'production';
   process.env.NODE_ENV = 'development';
   return gulp.src(src + '/js/render.js')
-    .pipe(browserify({
-      transform: 'reactify',
-      extensions: 'browserify-css',
-      debug: true
+    .pipe(webpack({
+      config: require('./webpack.config.js')
     }))
     .on('error', function (err) {
       console.error('Error!', err.message);
     })
     .pipe(gulp.dest(app + '/js'));
 });
+
 gulp.task('js-case', function () {
   // process.env.NODE_ENV = 'production';
   process.env.NODE_ENV = 'development';
@@ -65,15 +80,15 @@ gulp.task('serve', ['html', 'js', 'js-case', 'css'], function () {
   run('electron app/main.js').exec();
 });
 
-gulp.task('minify', ['js'],function () {
+gulp.task('minify', ['js'], function () {
   gulp.src('./app/js/render.js')
-  .pipe(terser())
-  .pipe(gulp.dest('./app/js/'))
+    .pipe(terser())
+    .pipe(gulp.dest('./app/js/'))
 })
-gulp.task('minify-case', ['js-case'],function () {
+gulp.task('minify-case', ['js-case'], function () {
   gulp.src('./app/js/render-case.js')
-  .pipe(terser())
-  .pipe(gulp.dest('./app/js/'))
+    .pipe(terser())
+    .pipe(gulp.dest('./app/js/'))
 })
 
 gulp.task('build', ['html', 'js', 'js-case', 'css', 'fonts', 'minify', 'minify-case'], function () {
@@ -101,4 +116,3 @@ gulp.task('package-travis', ['build'], function (cb) {
 // gulp.task('default', ['watch', 'fonts', 'minify', 'serve']);
 
 gulp.task('default', ['watch', 'fonts', 'serve']);
-

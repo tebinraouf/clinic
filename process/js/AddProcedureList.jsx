@@ -1,13 +1,11 @@
 /* eslint-disable */
-const React = require("react");
+import React, { Component } from "react";
 const jquery = require("jquery");
 const $ = jquery;
-const Patient = require("./Patient");
-const ReactBsTable = require("react-bootstrap-table");
-const BootstrapTable = ReactBsTable.BootstrapTable;
-const TableHeaderColumn = ReactBsTable.TableHeaderColumn;
+import Patient from "./Patient";
+import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 
-class AddProcedureList extends React.Component {
+class AddProcedureList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,7 +41,7 @@ class AddProcedureList extends React.Component {
       value: "",
       status: "Added."
     });
-    this.updateData()
+    this.updateData();
   }
   handleChange(e) {
     var name = e.target.value;
@@ -55,7 +53,7 @@ class AddProcedureList extends React.Component {
   onDeleteRow(rows) {
     var self = this;
     let p = new Patient();
-    p.deleteProcedureTypeByID(rows[0], function(isDeleted){
+    p.deleteProcedureTypeByID(rows[0], function(isDeleted) {
       if (isDeleted) {
         self.updateData();
       }
@@ -138,7 +136,7 @@ class AddProcedureList extends React.Component {
                   Name
                 </TableHeaderColumn>
               </BootstrapTable>
-              <br/>
+              <br />
             </div>
           </div>
         </div>
@@ -147,4 +145,4 @@ class AddProcedureList extends React.Component {
   }
 }
 
-module.exports = AddProcedureList;
+export default AddProcedureList;

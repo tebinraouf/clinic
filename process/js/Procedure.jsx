@@ -1,8 +1,8 @@
 /* eslint-disable */
-const React = require("react");
+import React, { Component } from 'react';
 const Cleave = require("cleave.js/react");
 
-class Procedure extends React.Component {
+class Procedure extends Component {
   render() {
     return (
       <div className="form-group col-md-3">
@@ -44,4 +44,4 @@ class Procedure extends React.Component {
   }
 }
 
-module.exports = Procedure;
+export default Procedure;

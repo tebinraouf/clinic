@@ -1,14 +1,12 @@
 /* eslint-disable */
-const React = require("react");
+import React, {Component} from "react";
 const jquery = require("jquery");
 const $ = jquery;
-const ReactBsTable = require("react-bootstrap-table");
-const BootstrapTable = ReactBsTable.BootstrapTable;
-const TableHeaderColumn = ReactBsTable.TableHeaderColumn;
-const Patient = require("./Patient");
-const SelectedPatient = require("./SelectedPatient.jsx");
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import Patient from "./Patient";
+import SelectedPatient  from "./SelectedPatient.jsx";
 
-class AddAllPatients extends React.Component {
+class AddAllPatients extends Component {
   constructor(props) {
     super(props);
 
@@ -152,4 +150,4 @@ class AddAllPatients extends React.Component {
   }
 }
 
-module.exports = AddAllPatients;
+export default AddAllPatients;

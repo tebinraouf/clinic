@@ -1,8 +1,8 @@
 /* eslint-disable */
-const React = require("react");
-const Patient = require("./Patient");
+import React, { Component } from 'react';
+import Patient from "./Patient";
 
-class PatientCase extends React.Component {
+class PatientCase extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -114,4 +114,4 @@ class PatientCase extends React.Component {
   }
 }
 
-module.exports = PatientCase;
+export default PatientCase;

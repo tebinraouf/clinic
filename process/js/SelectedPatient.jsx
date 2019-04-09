@@ -1,15 +1,14 @@
 /* eslint-disable */
-const React = require("react");
+import React, { Component } from "react";
 const jquery = require("jquery");
-const Patient = require("./Patient");
-const Procedure = require("./Procedure.jsx");
 const $ = jquery;
-const DayPickerInput = require("react-day-picker/DayPickerInput").default;
-const ReactBsTable = require("react-bootstrap-table");
-const BootstrapTable = ReactBsTable.BootstrapTable;
-const TableHeaderColumn = ReactBsTable.TableHeaderColumn;
 
-class SelectedPatient extends React.Component {
+import Patient from "./Patient";
+import Procedure from "./Procedure.jsx";
+import DayPickerInput from "react-day-picker/DayPickerInput";
+import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
+
+class SelectedPatient extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -541,4 +540,4 @@ class SelectedPatient extends React.Component {
   }
 }
 
-module.exports = SelectedPatient;
+export default SelectedPatient;

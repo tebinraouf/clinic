@@ -1,6 +1,6 @@
 /* eslint-disable */
-const React = require("react");
-const Patient = require("./Patient");
+import React, { Component } from 'react';
+import Patient from "./Patient";
 
 var PieChart = require("recharts").PieChart;
 var Pie = require("recharts").Pie;
@@ -46,7 +46,7 @@ const COLORS = [
   "#332C2C"
 ];
 
-class MainContent extends React.Component {
+class MainContent extends Component {
   constructor(props) {
     super(props);
 
@@ -381,4 +381,4 @@ class MainContent extends React.Component {
   }
 }
 
-module.exports = MainContent;
+export default MainContent;

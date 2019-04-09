@@ -1,17 +1,15 @@
 /* eslint-disable */
-const React = require("react");
-const ReactDOM = require("react-dom");
-const Sidebar = require("./Sidebar.jsx");
-const MainContent = require("./MainContent.jsx");
-// const MainInterface = require('./MainInterface');
-// import MainInterface from "./MainInterface.js";
-const SignIn = require("./SignIn.jsx");
-const AddPatient = require("./AddPatient.jsx");
-const AddAllPatients = require("./AddAllPatients.jsx");
-const AddProcedureList = require("./AddProcedureList.jsx");
-const Portfolio = require("./Portfolio.jsx");
+import React, {Component} from "react";
+import ReactDOM  from "react-dom";
+import Sidebar  from "./Sidebar.jsx"
+import MainContent  from "./MainContent.jsx";
+import SignIn  from "./SignIn.jsx";
+import AddPatient  from "./AddPatient.jsx";
+import AddAllPatients  from "./AddAllPatients.jsx";
+import AddProcedureList  from "./AddProcedureList.jsx";
+import Portfolio from "./Portfolio.jsx";
 
-class Dashboard extends React.Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -204,4 +202,4 @@ class Dashboard extends React.Component {
   }
 }
 
-module.exports = Dashboard;
+export default Dashboard;
