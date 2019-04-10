@@ -2,16 +2,17 @@
 const React = require("react");
 const jquery = require("jquery");
 const $ = jquery;
-import Gallery from 'react-photo-gallery';
+import Gallery from "react-photo-gallery";
+import Lightbox from "react-images";
 
 const photos = [
   {
-    src: 'https://via.placeholder.com/150',
+    src: "https://via.placeholder.com/150",
     width: 4,
     height: 3
   },
   {
-    src: 'https://via.placeholder.com/350',
+    src: "https://via.placeholder.com/350",
     width: 1,
     height: 1
   }
@@ -23,6 +24,12 @@ class Portfolio extends React.Component {
       lightboxIsOpen: false
     };
     this.handleAddImages = this.handleAddImages.bind(this);
+
+    this.state = { currentImage: 0 };
+    this.closeLightbox = this.closeLightbox.bind(this);
+    this.openLightbox = this.openLightbox.bind(this);
+    this.gotoNext = this.gotoNext.bind(this);
+    this.gotoPrevious = this.gotoPrevious.bind(this);
   }
 
   handleAddImages() {
@@ -42,6 +49,29 @@ class Portfolio extends React.Component {
         console.log(paths);
       }
     );
+  }
+
+  openLightbox(event, obj) {
+    this.setState({
+      currentImage: obj.index,
+      lightboxIsOpen: true
+    });
+  }
+  closeLightbox() {
+    this.setState({
+      currentImage: 0,
+      lightboxIsOpen: false
+    });
+  }
+  gotoPrevious() {
+    this.setState({
+      currentImage: this.state.currentImage - 1
+    });
+  }
+  gotoNext() {
+    this.setState({
+      currentImage: this.state.currentImage + 1
+    });
   }
 
   render() {
@@ -64,7 +94,15 @@ class Portfolio extends React.Component {
           </div>
           <div className="row">
             <div className="col-sm-12">
-            <Gallery photos={photos} />
+              <Gallery photos={photos} onClick={this.openLightbox} />
+              <Lightbox
+                images={photos}
+                onClose={this.closeLightbox}
+                onClickPrev={this.gotoPrevious}
+                onClickNext={this.gotoNext}
+                currentImage={this.state.currentImage}
+                isOpen={this.state.lightboxIsOpen}
+              />
             </div>
           </div>
           <hr />
