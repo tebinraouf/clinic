@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import Patient from "./Patient";
 
 class PatientCase extends Component {
@@ -22,25 +22,27 @@ class PatientCase extends Component {
         procedure: procedure,
         patientStorageID: arg.storageID
       });
-      
-      if (fs.existsSync(documentPath)) {
-        var path = `${documentPath}/${arg.storageID}/${arg.row.storageID}`;
-        // console.log(path);
-        if (fs.existsSync(path)) {
-          fs.readdir(path, (err, files) => {
-            files.forEach(file => {
-              if (file !== ".DS_Store") {
-                let absPath = `${path}/${file}`;
-                let paths = self.state.imagePaths;
-                paths.push(absPath);
-                self.setState({
-                  imagePaths: paths
-                });
-              }
+
+      documentPath.then(storagePath => {
+        if (fs.existsSync(storagePath)) {
+          var path = `${storagePath}/${arg.storageID}/${arg.row.storageID}`;
+          if (fs.existsSync(path)) {
+            fs.readdir(path, (err, files) => {
+              files.forEach(file => {
+                if (file !== ".DS_Store") {
+                  let absPath = `${path}/${file}`;
+                  let paths = self.state.imagePaths;
+                  paths.push(absPath);
+                  self.setState({
+                    imagePaths: paths
+                  });
+                }
+              });
             });
-          });
+          }
         }
-      }
+      });
+          
     });
   }
 
@@ -50,7 +52,6 @@ class PatientCase extends Component {
   }
   onAddPhoto() {
     var files = $("#procedureImages")[0].files;
-
     if (files.length !== 0) {
       var p = new Patient();
       let path = `${documentPath}/${this.state.patientStorageID}/${

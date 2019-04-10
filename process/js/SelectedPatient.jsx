@@ -146,7 +146,7 @@ class SelectedPatient extends Component {
       };
       childWindow.webContents.send("sendData", selectedProcedure);
     });
-    childWindow.webContents.openDevTools();
+    // childWindow.webContents.openDevTools();
   }
   handleProcedureDate(date) {
     this.setState(function(prev) {

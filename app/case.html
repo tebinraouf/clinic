@@ -1,37 +1,37 @@
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Dr Tanya Clinic</title>
-        <link rel="stylesheet" href="css/app.css">
-        <!-- <link rel="stylesheet" href="css/extras.1.1.0.min.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dr Tanya Clinic</title>
+    <link rel="stylesheet" href="css/app.css">
+    <!-- <link rel="stylesheet" href="css/extras.1.1.0.min.css">
         <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="css/shards-dashboards.1.1.0.min.css"> -->
-      
-        <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script async defer src="https://buttons.github.io/buttons.js"></script>
-        <link rel="stylesheet" href='../node_modules/react-day-picker/lib/style.css'>
-        <link rel="stylesheet" href="../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css">
-      </head>
+
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <link rel="stylesheet" href='../node_modules/react-day-picker/lib/style.css'>
+    <link rel="stylesheet" href="../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css">
+</head>
 
 <body>
     <div id="main-case"></div>
 </body>
 <script>
-    // const documentPath = "/Users/Tebin/Documents/DrTanyaPatients";
     const ipc = require("electron").ipcRenderer;
     const fs = require('fs-extra');
     const jquery = require("jquery");
+    const fullname = require('fullname');
     const $ = jquery;
 
-    documentPath = '';
-    const fullname = require('fullname');
-    fullname().then(name => {
-        documentPath = `/Users/${name}/Documents/DrTanyaPatients`
+    var documentPath = new Promise(function (resolve, reject) {
+        fullname().then(name => {
+            documentPath = `/Users/${name}/Documents/DrTanyaPatients`
+            resolve(documentPath)
+        });
     });
-    debugger
 </script>
 <script src="js/renderCase.js"></script>
 
