@@ -26,12 +26,13 @@
     const jquery = require("jquery");
     const $ = jquery;
 
+    documentPath = '';
     const fullname = require('fullname');
     fullname().then(name => {
         documentPath = `/Users/${name}/Documents/DrTanyaPatients`
     });
-
+    debugger
 </script>
-<script src="js/render-case.js"></script>
+<script src="js/renderCase.js"></script>
 
 </html>

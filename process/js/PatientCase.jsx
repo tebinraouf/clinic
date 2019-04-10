@@ -22,7 +22,7 @@ class PatientCase extends Component {
         procedure: procedure,
         patientStorageID: arg.storageID
       });
-
+      
       if (fs.existsSync(documentPath)) {
         var path = `${documentPath}/${arg.storageID}/${arg.row.storageID}`;
         // console.log(path);

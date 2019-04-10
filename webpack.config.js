@@ -1,8 +1,12 @@
 /* eslint-disable */
 
 module.exports = {
+    entry: {
+      render: './process/js/render.js',
+      renderCase: './process/js/render-case.js'
+    },
     output: {
-      filename: 'bundle.js',
+      filename: '[name].js',
     },
     mode: 'development',
     module: {

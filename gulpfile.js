@@ -7,53 +7,24 @@ var gulp = require('gulp'),
 var terser = require('gulp-terser');
 var exec = require('child_process').exec;
 const webpack = require('webpack-stream');
+var merge = require('merge-stream');
 
 var src = './process',
   app = './app';
 
-// gulp.task('js', function () {
-//   // process.env.NODE_ENV = 'production';
-//   process.env.NODE_ENV = 'development';
-//   return gulp.src(src + '/js/render.js')
-//     .pipe(browserify({
-//       transform: 'reactify',
-//       extensions: 'browserify-css',
-//       debug: true
-//     }))
-//     .on('error', function (err) {
-//       console.error('Error!', err.message);
-//     })
-//     .pipe(gulp.dest(app + '/js'));
-// });
-
 gulp.task('js', function () {
   // process.env.NODE_ENV = 'production';
   process.env.NODE_ENV = 'development';
-  return gulp.src(src + '/js/render.js')
+
+  var mainRender = gulp.src(src + '/js/render.js');
+  var caseRender = gulp.src(src + '/js/render-case.js');
+
+  return merge(mainRender, caseRender)
     .pipe(webpack({
       config: require('./webpack.config.js')
     }))
-    .on('error', function (err) {
-      console.error('Error!', err.message);
-    })
     .pipe(gulp.dest(app + '/js'));
 });
-
-gulp.task('js-case', function () {
-  // process.env.NODE_ENV = 'production';
-  process.env.NODE_ENV = 'development';
-  return gulp.src(src + '/js/render-case.js')
-    .pipe(browserify({
-      transform: 'reactify',
-      extensions: 'browserify-css',
-      debug: true
-    }))
-    .on('error', function (err) {
-      console.error('Error!', err.message);
-    })
-    .pipe(gulp.dest(app + '/js'));
-});
-
 
 gulp.task('html', function () {
   gulp.src(src + '/**/*.html');
@@ -71,12 +42,12 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('watch', ['serve'], function () {
-  gulp.watch(src + '/js/**/*', ['js', 'js-case']);
+  gulp.watch(src + '/js/**/*', ['js']);
   gulp.watch(src + '/css/**/*.css', ['css']);
   gulp.watch([app + '/**/*.html'], ['html']);
 });
 
-gulp.task('serve', ['html', 'js', 'js-case', 'css'], function () {
+gulp.task('serve', ['html', 'js', 'css'], function () {
   run('electron app/main.js').exec();
 });
 
@@ -91,7 +62,7 @@ gulp.task('minify-case', ['js-case'], function () {
     .pipe(gulp.dest('./app/js/'))
 })
 
-gulp.task('build', ['html', 'js', 'js-case', 'css', 'fonts', 'minify', 'minify-case'], function () {
+gulp.task('build', ['html', 'js', 'css', 'fonts', 'minify'], function () {
   console.log("The app has been built.");
 });
 
