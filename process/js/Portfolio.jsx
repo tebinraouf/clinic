@@ -21,11 +21,10 @@ class Portfolio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lightboxIsOpen: false
+      currentImage: 0
     };
+    
     this.handleAddImages = this.handleAddImages.bind(this);
-
-    this.state = { currentImage: 0 };
     this.closeLightbox = this.closeLightbox.bind(this);
     this.openLightbox = this.openLightbox.bind(this);
     this.gotoNext = this.gotoNext.bind(this);
