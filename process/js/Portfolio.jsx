@@ -4,6 +4,7 @@ const jquery = require("jquery");
 const $ = jquery;
 import Gallery from "react-photo-gallery";
 import Lightbox from "react-images";
+import SelectedImage from "./SelectedImage";
 
 const photos = [
   {
@@ -21,10 +22,19 @@ class Portfolio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentImage: 0
+      currentImage: 0,
+      isEditing: false,
+      photos: photos,
+      isSelectedAll: false
     };
-    
+
     this.handleAddImages = this.handleAddImages.bind(this);
+    this.handleEditing = this.handleEditing.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleSelectAll = this.handleSelectAll.bind(this);
+    this.handleDone = this.handleDone.bind(this);
+    this.selectPhoto = this.selectPhoto.bind(this);
+
     this.closeLightbox = this.closeLightbox.bind(this);
     this.openLightbox = this.openLightbox.bind(this);
     this.gotoNext = this.gotoNext.bind(this);
@@ -48,6 +58,41 @@ class Portfolio extends React.Component {
         console.log(paths);
       }
     );
+  }
+  handleEditing() {
+    this.setState({
+      isEditing: true
+    });
+  }
+  handleDelete() {}
+  selectPhoto(event, obj) {
+    let photos = this.state.photos;
+    photos[obj.index].selected = !photos[obj.index].selected;
+    this.setState({ photos: photos });
+  }
+  handleSelectAll() {
+
+    let photos = this.state.photos.map((photo, index) => {
+      return { ...photo, selected: !this.state.isSelectedAll };
+    });
+    this.setState({
+      isSelectedAll: !this.state.isSelectedAll,
+      photos: photos
+    })
+
+    
+  }
+  handleDone() {
+    let photos = this.state.photos.map((photo, index) => {
+      return { ...photo, selected: false };
+    });
+
+    
+    this.setState({
+      isEditing: false,
+      photos: photos,
+      isSelectedAll: false
+    })
   }
 
   openLightbox(event, obj) {
@@ -88,12 +133,49 @@ class Portfolio extends React.Component {
                 >
                   library_add
                 </i>
+                <i
+                  onClick={this.handleEditing}
+                  className="addToPortfolio material-icons"
+                >
+                  edit
+                </i>
               </h3>
             </div>
           </div>
+          {this.state.isEditing ? (
+            <div className="row pb-2">
+              <div className="col-sm-2">
+                <button
+                  type="button"
+                  className="btn btn-warning react-bs-table-del-btn "
+                  onClick={this.handleDelete}
+                >
+                  Delete
+                </button>
+              </div>
+              <button
+                  type="button"
+                  className="btn btn-warning react-bs-table-del-btn "
+                  onClick={this.handleSelectAll}
+                >
+                  {!this.state.isSelectedAll ? 'Select All' : 'Deselect All'}
+                </button>
+              <div className="col-sm-2">
+                <button type="button" className="btn btn-accent" onClick={this.handleDone}>
+                  Done
+                </button>
+              </div>
+            </div>
+          ) : null}
           <div className="row">
             <div className="col-sm-12">
-              <Gallery photos={photos} onClick={this.openLightbox} />
+              <Gallery
+                photos={this.state.photos}
+                onClick={
+                  this.state.isEditing ? this.selectPhoto : this.openLightbox
+                }
+                ImageComponent={SelectedImage}
+              />
               <Lightbox
                 images={photos}
                 onClose={this.closeLightbox}
