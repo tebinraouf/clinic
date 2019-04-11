@@ -6,29 +6,29 @@ import Gallery from "react-photo-gallery";
 import Lightbox from "react-images";
 import SelectedImage from "./SelectedImage";
 
-var photos = [
-  {
-    src: "https://via.placeholder.com/150",
-    width: 4,
-    height: 3
-  },
-  {
-    src: "https://via.placeholder.com/350",
-    width: 1,
-    height: 1
-  }
-];
+// var photos = [
+//   {
+//     src: "https://via.placeholder.com/150",
+//     width: 4,
+//     height: 3
+//   },
+//   {
+//     src: "https://via.placeholder.com/350",
+//     width: 1,
+//     height: 1
+//   }
+// ];
 class Portfolio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentImage: 0,
       isEditing: false,
-      photos: photos,
-      isSelectedAll: false,
-      imagePaths: new Array(),
+      photos: new Array(),
+      isSelectedAll: false
     };
 
+    this.imageLoader = this.imageLoader.bind(this);
     this.handleAddImages = this.handleAddImages.bind(this);
     this.handleEditing = this.handleEditing.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -42,36 +42,35 @@ class Portfolio extends React.Component {
     this.gotoPrevious = this.gotoPrevious.bind(this);
   }
   componentDidMount() {
+    this.imageLoader();
+  }
+  imageLoader() {
     let paths = [];
+    let photos = [];
     let path = `${documentPath}/portfolio`;
     if (fs.existsSync(path)) {
       fs.readdir(path, (err, files) => {
         files.forEach(file => {
           if (file !== ".DS_Store") {
             let absPath = `${path}/${file}`;
-            paths.push(absPath);
+
+            let objc = {
+              src: absPath,
+              width: 5,
+              height: 3
+            };
+
+            photos.push(objc);
           }
         });
       });
     }
 
-    paths.forEach(file=>{
-      var objc = {
-        src: file,
-        width: 2,
-        height: 3
-      }
-      photos.push(objc);
-    })
-
-
     this.setState({
-      imagePaths: paths
+      photos: photos
     });
   }
-
   handleAddImages() {
-    debugger
     //currentWindow is defined in index.html
     dialog.showOpenDialog(
       currentWindow,
@@ -89,8 +88,22 @@ class Portfolio extends React.Component {
           let r = paths[i].split("/");
           let name = r[r.length - 1];
           //documentPath is global
-          fs.copy(paths[i], `${documentPath}/portfolio/${name}`)
-            .then(() => console.log("success!"))
+          let destinationPath = `${documentPath}/portfolio/${name}`;
+          fs.copy(paths[i], destinationPath)
+            .then(() => {
+              //update the photos
+              let objc = {
+                src: destinationPath,
+                width: 5,
+                height: 3
+              };
+              
+              let photos = this.state.photos;
+              photos.push(objc);
+              this.setState({
+                photos: photos
+              })
+            })
             .catch(err => console.error(err));
         }
       }
@@ -213,7 +226,7 @@ class Portfolio extends React.Component {
                 ImageComponent={SelectedImage}
               />
               <Lightbox
-                images={photos}
+                images={this.state.photos}
                 onClose={this.closeLightbox}
                 onClickPrev={this.gotoPrevious}
                 onClickNext={this.gotoNext}
