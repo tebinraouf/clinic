@@ -185,26 +185,26 @@ class Portfolio extends React.Component {
           </div>
           {this.state.isEditing ? (
             <div className="row pb-2">
-              <div className="col-sm-2">
+              <div className="col-sm-12">
                 <button
                   type="button"
-                  className="btn btn-warning react-bs-table-del-btn "
+                  className="btn btn-warning react-bs-table-del-btn mr-2"
                   onClick={this.handleDelete}
                 >
                   Delete
                 </button>
-              </div>
-              <button
-                type="button"
-                className="btn btn-accent"
-                onClick={this.handleSelectAll}
-              >
-                {!this.state.isSelectedAll ? "Select All" : "Deselect All"}
-              </button>
-              <div className="col-sm-2">
+
                 <button
                   type="button"
-                  className="btn btn-accent"
+                  className="btn btn-accent mr-2"
+                  onClick={this.handleSelectAll}
+                >
+                  {!this.state.isSelectedAll ? "Select All" : "Deselect All"}
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-accent mr-2"
                   onClick={this.handleDone}
                 >
                   Done
