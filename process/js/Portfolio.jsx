@@ -6,7 +6,7 @@ import Gallery from "react-photo-gallery";
 import Lightbox from "react-images";
 import SelectedImage from "./SelectedImage";
 
-const photos = [
+var photos = [
   {
     src: "https://via.placeholder.com/150",
     width: 4,
@@ -25,7 +25,8 @@ class Portfolio extends React.Component {
       currentImage: 0,
       isEditing: false,
       photos: photos,
-      isSelectedAll: false
+      isSelectedAll: false,
+      imagePaths: new Array(),
     };
 
     this.handleAddImages = this.handleAddImages.bind(this);
@@ -40,8 +41,37 @@ class Portfolio extends React.Component {
     this.gotoNext = this.gotoNext.bind(this);
     this.gotoPrevious = this.gotoPrevious.bind(this);
   }
+  componentDidMount() {
+    let paths = [];
+    let path = `${documentPath}/portfolio`;
+    if (fs.existsSync(path)) {
+      fs.readdir(path, (err, files) => {
+        files.forEach(file => {
+          if (file !== ".DS_Store") {
+            let absPath = `${path}/${file}`;
+            paths.push(absPath);
+          }
+        });
+      });
+    }
+
+    paths.forEach(file=>{
+      var objc = {
+        src: file,
+        width: 2,
+        height: 3
+      }
+      photos.push(objc);
+    })
+
+
+    this.setState({
+      imagePaths: paths
+    });
+  }
 
   handleAddImages() {
+    debugger
     //currentWindow is defined in index.html
     dialog.showOpenDialog(
       currentWindow,
@@ -55,7 +85,14 @@ class Portfolio extends React.Component {
         ]
       },
       paths => {
-        console.log(paths);
+        for (var i = 0; i < paths.length; i++) {
+          let r = paths[i].split("/");
+          let name = r[r.length - 1];
+          //documentPath is global
+          fs.copy(paths[i], `${documentPath}/portfolio/${name}`)
+            .then(() => console.log("success!"))
+            .catch(err => console.error(err));
+        }
       }
     );
   }
@@ -71,28 +108,23 @@ class Portfolio extends React.Component {
     this.setState({ photos: photos });
   }
   handleSelectAll() {
-
     let photos = this.state.photos.map((photo, index) => {
       return { ...photo, selected: !this.state.isSelectedAll };
     });
     this.setState({
       isSelectedAll: !this.state.isSelectedAll,
       photos: photos
-    })
-
-    
+    });
   }
   handleDone() {
     let photos = this.state.photos.map((photo, index) => {
       return { ...photo, selected: false };
     });
-
-    
     this.setState({
       isEditing: false,
       photos: photos,
       isSelectedAll: false
-    })
+    });
   }
 
   openLightbox(event, obj) {
@@ -154,14 +186,18 @@ class Portfolio extends React.Component {
                 </button>
               </div>
               <button
+                type="button"
+                className="btn btn-accent"
+                onClick={this.handleSelectAll}
+              >
+                {!this.state.isSelectedAll ? "Select All" : "Deselect All"}
+              </button>
+              <div className="col-sm-2">
+                <button
                   type="button"
                   className="btn btn-accent"
-                  onClick={this.handleSelectAll}
+                  onClick={this.handleDone}
                 >
-                  {!this.state.isSelectedAll ? 'Select All' : 'Deselect All'}
-                </button>
-              <div className="col-sm-2">
-                <button type="button" className="btn btn-accent" onClick={this.handleDone}>
                   Done
                 </button>
               </div>
