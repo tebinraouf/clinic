@@ -155,7 +155,7 @@ class Portfolio extends React.Component {
               </div>
               <button
                   type="button"
-                  className="btn btn-warning react-bs-table-del-btn "
+                  className="btn btn-accent"
                   onClick={this.handleSelectAll}
                 >
                   {!this.state.isSelectedAll ? 'Select All' : 'Deselect All'}
