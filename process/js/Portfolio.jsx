@@ -6,18 +6,6 @@ import Gallery from "react-photo-gallery";
 import Lightbox from "react-images";
 import SelectedImage from "./SelectedImage";
 
-// var photos = [
-//   {
-//     src: "https://via.placeholder.com/150",
-//     width: 4,
-//     height: 3
-//   },
-//   {
-//     src: "https://via.placeholder.com/350",
-//     width: 1,
-//     height: 1
-//   }
-// ];
 class Portfolio extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +17,8 @@ class Portfolio extends React.Component {
     };
 
     this.imageLoader = this.imageLoader.bind(this);
+    this.photoDisplayCreater = this.photoDisplayCreater.bind(this);
+
     this.handleAddImages = this.handleAddImages.bind(this);
     this.handleEditing = this.handleEditing.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -45,6 +35,7 @@ class Portfolio extends React.Component {
     this.imageLoader();
   }
   imageLoader() {
+    let self = this;
     let paths = [];
     let photos = [];
     let path = `${documentPath}/portfolio`;
@@ -53,23 +44,33 @@ class Portfolio extends React.Component {
         files.forEach(file => {
           if (file !== ".DS_Store") {
             let absPath = `${path}/${file}`;
-
-            let objc = {
-              src: absPath,
-              width: 5,
-              height: 3
-            };
-
-            photos.push(objc);
+            self.photoDisplayCreater(absPath, photos => photos);
           }
         });
       });
     }
-
     this.setState({
       photos: photos
     });
   }
+
+  photoDisplayCreater(destinationPath, callback) {
+    let self = this;
+    var img = new Image();
+    img.onload = function() {
+      //update the photos
+      let objc = {
+        src: destinationPath,
+        width: img.width / 100,
+        height: img.height / 100
+      };
+      let photos = self.state.photos;
+      photos.push(objc);
+      callback(photos);
+    };
+    img.src = destinationPath;
+  }
+
   handleAddImages() {
     //currentWindow is defined in index.html
     dialog.showOpenDialog(
@@ -84,6 +85,7 @@ class Portfolio extends React.Component {
         ]
       },
       paths => {
+        var self = this;
         for (var i = 0; i < paths.length; i++) {
           let r = paths[i].split("/");
           let name = r[r.length - 1];
@@ -91,18 +93,12 @@ class Portfolio extends React.Component {
           let destinationPath = `${documentPath}/portfolio/${name}`;
           fs.copy(paths[i], destinationPath)
             .then(() => {
-              //update the photos
-              let objc = {
-                src: destinationPath,
-                width: 5,
-                height: 3
-              };
-              
-              let photos = this.state.photos;
-              photos.push(objc);
-              this.setState({
-                photos: photos
-              })
+              //code goes here
+              self.photoDisplayCreater(destinationPath, photos => {
+                self.setState({
+                  photos: photos
+                });
+              });
             })
             .catch(err => console.error(err));
         }
@@ -224,6 +220,7 @@ class Portfolio extends React.Component {
                   this.state.isEditing ? this.selectPhoto : this.openLightbox
                 }
                 ImageComponent={SelectedImage}
+                direction={"column"}
               />
               <Lightbox
                 images={this.state.photos}
