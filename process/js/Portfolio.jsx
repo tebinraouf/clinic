@@ -110,7 +110,16 @@ class Portfolio extends React.Component {
       isEditing: true
     });
   }
-  handleDelete() {}
+  handleDelete() {
+    //update screen first
+    var filteredPhotos = this.state.photos.filter(a=> a.selected==undefined);
+    this.setState({
+      photos: filteredPhotos
+    })
+    //delete from disk
+    var photosToBeDeleted = this.state.photos.filter(a=> a.selected==true);
+    photosToBeDeleted.map(e => fs.unlinkSync(e.src));
+  }
   selectPhoto(event, obj) {
     let photos = this.state.photos;
     photos[obj.index].selected = !photos[obj.index].selected;
