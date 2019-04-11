@@ -13,8 +13,8 @@ var src = './process',
   app = './app';
 
 gulp.task('js', function () {
-  // process.env.NODE_ENV = 'production';
-  process.env.NODE_ENV = 'development';
+  process.env.NODE_ENV = 'production';
+  // process.env.NODE_ENV = 'development';
 
   var mainRender = gulp.src(src + '/js/render.js');
   var caseRender = gulp.src(src + '/js/render-case.js');
