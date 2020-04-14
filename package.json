@@ -41,7 +41,7 @@
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
     "fullname": "^3.3.0",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "lodash": "^4.13.1",
     "merge-stream": "^1.0.1",
     "mysql": "^2.16.0",
