@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "app/main.js",
   "scripts": {
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -41,7 +43,7 @@
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
     "fullname": "^3.3.0",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "lodash": "^4.13.1",
     "merge-stream": "^1.0.1",
     "mysql": "^2.16.0",
@@ -53,6 +55,8 @@
     "react-dom": "^15.1.0",
     "react-images": "^0.5.19",
     "react-photo-gallery": "^6.3.2",
-    "recharts": "^1.5.0"
-  }
+    "recharts": "^1.5.0",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
