@@ -36,7 +36,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "cleave.js": "^1.4.9",
-    "d3": "^5.9.1",
+    "d3": "^7.0.0",
     "electron-reload": "^1.0.2",
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
