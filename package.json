@@ -38,7 +38,7 @@
     "cleave.js": "^1.4.9",
     "d3": "^5.9.1",
     "electron-reload": "^1.0.2",
-    "express": "^4.16.4",
+    "express": "^4.19.2",
     "fs-extra": "^7.0.1",
     "fullname": "^3.3.0",
     "jquery": "^3.4.0",
